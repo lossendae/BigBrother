@@ -2,7 +2,7 @@
 	height: 78px !important;
 }
 #modx-leftbar .x-tab-panel-noborder {
-	margin: 10px 0 10px 10px;	
+	margin: 16px 0 10px 10px;	
 }
 #modx-content{
 	top: 78px !important;
@@ -48,13 +48,6 @@ h3{
     color: #7F8F62;
     padding-left: 45px !important;
 }
-.desc-error{
-	background-color: #FFEFEF;
-    border-color: #CF9B9B !important;
-    color: #7F0000;
-    margin-bottom: 8px;
-}
-.desc-error a{}
 
 .metas-wrapper{
 	margin: 20px 0;
@@ -149,9 +142,9 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
 
 /* CUSTOM GRID STYLES */
 
-.ga-grid-preview {}
-.ga-grid-preview .x-panel-header,
-.ga-panel .x-panel-header{
+.bb-preview-grid {}
+.bb-preview-grid .x-panel-header,
+.bb-panel .x-panel-header{
 	background: none repeat scroll 0 0 #DADADA;
     background:-moz-linear-gradient(center bottom,#DADADA 0%,#EAEAEA 100%) repeat scroll 0 0 transparent;
     background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#EAEAEA),color-stop(100%,#DADADA));
@@ -165,22 +158,22 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
     border-width: 1px;
 	padding: 6px 10px;
 }
-.ga-grid-preview .x-panel-header .x-panel-header-text,
-.ga-panel .x-panel-header .x-panel-header-text{
+.bb-preview-grid .x-panel-header .x-panel-header-text,
+.bb-panel .x-panel-header .x-panel-header-text{
 	color: #6A6969;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 11px;
     font-weight: bold;
     text-transform: uppercase;
 }
-.ga-grid-preview .x-grid3,
-.ga-panel  .x-panel-body {
+.bb-preview-grid .x-grid3,
+.bb-panel  .x-panel-body {
     border: 1px solid #D0D0D0;
 }
-.ga-grid-preview .x-panel-body {
+.bb-preview-grid .x-panel-body {
     border-top: 0 none;
 }
-.ga-grid-preview .x-grid3-header{
+.bb-preview-grid .x-grid3-header{
 	background: none repeat scroll 0 0 #F4F3F3;
     background:-moz-linear-gradient(center bottom,#F4F3F3 0%,#FBFBFB 100%) repeat scroll 0 0 transparent;
     background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#FBFBFB),color-stop(100%,#F4F3F3));
@@ -191,13 +184,13 @@ td.x-grid3-hd-over .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner, td.sort-as
     background:linear-gradient(center bottom,#F4F3F3 0%,#FBFBFB 100%);
 	border-bottom-color: #D0D0D0;
 }
-.ga-grid-preview .x-grid3-hd-inner{
+.bb-preview-grid .x-grid3-hd-inner{
 	font-size: 9px;
 	font-family: Arial,Helvetica,sans-serif;
     padding: 8px 10px !important;
     text-transform: uppercase;	
 }
-.ga-grid-preview .x-grid3-cell-inner {
+.bb-preview-grid .x-grid3-cell-inner {
     padding: 8px 10px;
 	color: #666666;
 }

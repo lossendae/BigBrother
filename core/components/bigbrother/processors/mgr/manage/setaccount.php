@@ -6,16 +6,9 @@
  * @subpackage processors
  */
 $ga =& $modx->bigbrother;
-
-$response['message'] = 'Account set successfully!';
-$response['success'] = true;
-
-// if(!$ga->loadOAuth()){
-	// $response['message'] = 'Could not load the OAuth file';
-	// $response['success'] = false;
-	// return $modx->toJSON($response);
-// }
-
 $ga->updateOption('account', $_REQUEST['account']);
+
+$response['text'] = 'Account set successfully! Please wait...';
+$response['success'] = true;
 
 return $modx->toJSON($response);

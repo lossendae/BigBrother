@@ -221,7 +221,7 @@ class BigBrother {
      * @access protected
      * @return mixed The requested header or false if no url is provided
      */
-	protected function createAuthHeader($url = null, $method = null) {
+	public function createAuthHeader($url = null, $method = null) {
 		if($url == NULL) {	return false; }
 		$signatureMethod = new GADOAuthSignatureMethod_HMAC_SHA1();
 

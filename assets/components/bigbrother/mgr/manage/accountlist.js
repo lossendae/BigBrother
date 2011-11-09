@@ -1,16 +1,15 @@
 /**
  * The panel containing the analytics
  * 
- * @class MODx.panel.GAAccountList
+ * @class MODx.panel.BigBrotherAccountList
  * @extends MODx.Panel
  * @param {Object} config An object of options.
- * @xtype modx-panel-ga-oauth-complete
+ * @xtype bb-account-list
  */
-MODx.panel.GAAccountList = function(config) {
+MODx.panel.BigBrotherAccountList = function(config) {
     config = config || {};	
 	Ext.applyIf(config,{
-		cls: 'main-wrapper centered'
-		,id: 'account-panel'
+		id: 'account-panel'
 		,layout: 'form'
 		,items: [{
 			xtype: 'combo'
@@ -44,9 +43,9 @@ MODx.panel.GAAccountList = function(config) {
 			,scope: this
 		}]						
 	});
-	MODx.panel.GAAccountList.superclass.constructor.call(this,config);
+	MODx.panel.BigBrotherAccountList.superclass.constructor.call(this,config);
 };
-Ext.extend(MODx.panel.GAAccountList,MODx.Panel,{
+Ext.extend(MODx.panel.BigBrotherAccountList,MODx.Panel,{
 	activate: function(){
 		// console.log(Ext.getCmp('main').getLayout())
 		Ext.getCmp('main').getLayout().setActiveItem('account-panel');	
@@ -80,4 +79,4 @@ Ext.extend(MODx.panel.GAAccountList,MODx.Panel,{
 		});
 	}
 });
-Ext.reg('modx-panel-ga-account-list', MODx.panel.GAAccountList);
+Ext.reg('bb-account-list', MODx.panel.BigBrotherAccountList);

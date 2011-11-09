@@ -13,11 +13,12 @@ $page = $modx->getObject('modAction', array(
 	'controller' => 'index',
 ));
 
-$response['message'] = '';
+$response['text'] = '';
+$response['trail'][] = array('text' => '2. Authorize');
 $response['success'] = true;
 
 if(!$ga->loadOAuth()){
-	$response['message'] = 'Could not load the OAuth file';
+	$response['text'] = 'Could not load the OAuth file. Please reinstall the component or contact the webmaster.';
 	$response['success'] = false;
 	return $modx->toJSON($response);
 }
@@ -26,7 +27,7 @@ $signatureMethod = new GADOAuthSignatureMethod_HMAC_SHA1();
 $params = array();
 
 $params['oauth_callback'] = $modx->getOption('site_url') . 'manager?a='. $page->get('id') .'&oauth_return=true';
-$params['scope'] = 'https://www.google.com/analytics/feeds/'; // This is a space seperated list of applications we want access to
+$params['scope'] = 'https://www.google.com/analytics/feeds/'; 
 $params['xoauth_displayname'] = $modx->getOption('site_name').' - Analytics Dashboard';
 
 $consumer = new GADOAuthConsumer('anonymous', 'anonymous', NULL);
@@ -41,7 +42,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $oaResponse = curl_exec($ch);
 
 if (curl_errno($ch)) {
-	$response['message'] = curl_message($ch);
+	$response['text'] = curl_text($ch);
 	$response['success'] = false;
 	return $modx->toJSON($response);
 }
@@ -50,12 +51,12 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 if($httpCode == 200) {
 	$access_params = $ga->splitParams($oaResponse);
-	$response['message'] = 'Redirection vers le site de Google, veuillez patientez';
+	$response['text'] = 'Redirect to Google, please wait...';
 	$response['url'] = 'https://www.google.com/accounts/OAuthAuthorizeToken?oauth_token=' . urlencode($access_params['oauth_token']);
 	$ga->addOption('oa_anon_token', $access_params['oauth_token']);
 	$ga->addOption('oa_anon_secret', $access_params['oauth_token_secret']);
 } else {
-	$response['message'] = $oaResponse;
+	$response['text'] = $oaResponse;
 	$response['success'] = false;
 }
 

@@ -7,11 +7,19 @@
  */
 $ga =& $modx->bigbrother;
 
-$response['message'] = '';
+$response['text'] = '';
+$response['trail'][] = array('text' => '2. Authorize');
 $response['success'] = true;
 
+// $response['text'] = 'Authentification complete.</p><p>Select the account you wish to access to in the list below.<br/> You will be able to change the account at all times on the dashboard.';
+// $response['trail'][] = array(
+	// 'text' => '2. Authorize',
+	// 'text' => '3. Choose an account',
+// );
+// return $modx->toJSON($response);
+
 if(!$ga->loadOAuth()){
-	$response['message'] = 'Could not load the OAuth file';
+	$response['text'] = 'Could not load the OAuth file. Please reinstall the component or contact the webmaster.';
 	$response['success'] = false;
 	return $modx->toJSON($response);
 }
@@ -38,7 +46,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $oaResponse = curl_exec($ch);
 
 if(curl_errno($ch)) {	
-	$response['message'] =  '<strong>Message from cURL</strong> - '. curl_message($ch);
+	$response['text'] =  '<strong>Message from cURL</strong> - '. curl_text($ch);
 	$response['success'] = false;
 	return $modx->toJSON($response);
 }
@@ -54,9 +62,13 @@ if($http_code == 200) {
 	$ga->updateOption('oauth_token', $accessParams['oauth_token']);
 	$ga->updateOption('oauth_secret', $accessParams['oauth_token_secret']);
 	$ga->updateOption('is_authenticated', true);
-	$response['message'] = 'Authenticated!';
+	$response['text'] = 'Authentification complete.</p><p>Select the account you wish to access to in the list below.<br/> You will be able to change the account at all times on the dashboard.';
+	$response['trail'][] = array(
+		'text' => '2. Authorize',
+		'text' => '3. Choose an account',
+	);
 } else {
-	$response['message'] = '<strong>Bad HTTP code : '. $http_code .'</strong> - '. $oaResponse;
+	$response['text'] = '<strong>Bad HTTP code : '. $http_code .'</strong> - '. $oaResponse;
 	$response['success'] = false;
 }
 return $modx->toJSON($response);
