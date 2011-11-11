@@ -1,16 +1,3 @@
-#modx-header{
-	height: 78px !important;
-}
-#modx-leftbar .x-tab-panel-noborder {
-	margin: 16px 0 10px 10px;	
-}
-#modx-content{
-	top: 78px !important;
-}
-
-h2{
-	margin: 10px 0 5px;
-}
 h3{
 	font-size: 20px;
 	font-weight: normal;

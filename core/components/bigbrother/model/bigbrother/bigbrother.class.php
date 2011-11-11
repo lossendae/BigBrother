@@ -259,8 +259,10 @@ class BigBrother {
 		$url .= '&end-date=' . $dateEnd;
 		$url .= ($limit != null) ? '&max-results=' .$limit : '';
 		
-		$fromCache = $this->modx->cacheManager->get($url);
-		if( !empty($fromCache) )	{
+		$cacheKey = md5(urlencode($url));
+		
+		$fromCache = $this->modx->cacheManager->get($cacheKey);
+		if( !empty($fromCache) ){
 			$this->output = $fromCache;
 		} else {
 			$ch = curl_init();
@@ -310,8 +312,8 @@ class BigBrother {
 				}
 				
 				$this->output = $output;
-				//Cache the result 
-				$this->modx->cacheManager->set($url, $this->output, $this->getOption('cache_timeout')); 
+				// Cache the result 
+				$this->modx->cacheManager->set($cacheKey, $this->output, $this->getOption('cache_timeout')); 
 			}			
 		}	
 		return true;
@@ -341,8 +343,9 @@ class BigBrother {
 		$url .= '&end-date=' .$dateEnd;
 		$url .= ($limit != null) ? '&max-results=' .$limit : '';
 		
+		$cacheKey = md5(urlencode($url));
 		
-		$fromCache = $this->modx->cacheManager->get($url);
+		$fromCache = $this->modx->cacheManager->get($cacheKey);
 		if( !empty($fromCache) )	{
 			$this->output = $fromCache;
 		} else {
@@ -400,7 +403,7 @@ class BigBrother {
 				}
 				
 				$this->output = $output;//Cache the result 
-				$this->modx->cacheManager->set($url, $this->output, $this->getOption('cache_timeout'));
+				$this->modx->cacheManager->set($cacheKey, $this->output, $this->getOption('cache_timeout'));
 			}			
 		}
 		return true;
