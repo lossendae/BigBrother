@@ -67,7 +67,13 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		
 		//Main Panels
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/container.js');	
+		$page = $this->modx->getObject('modAction', array(
+			'namespace' => 'bigbrother',
+			'controller' => 'index',
+		));
+		$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
 		$this->addHtml('<script type="text/javascript">
+			MODx.BigBrotherRedirect = "'.$url.'";
 			MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'
 			Ext.onReady(function(){ MODx.add("bb-panel"); });
 		</script>');
