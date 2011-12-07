@@ -55,6 +55,7 @@ $_lang['bigbrother.metas.loading'] = 'Loading...';
 /* Reports - Overview */
 
 $_lang['bigbrother.overview.title'] = 'Overview';
+$_lang['bigbrother.overview.desc'] = 'Account name : www.example.com';
 $_lang['bigbrother.overview.visits_and_uniques'] = 'Visits and Uniques';
 $_lang['bigbrother.overview.traffic_sources_overview'] = 'Traffic Sources Overview';
 $_lang['bigbrother.overview.top_content'] = 'Top content';

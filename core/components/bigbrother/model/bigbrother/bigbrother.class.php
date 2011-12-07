@@ -176,10 +176,7 @@ class BigBrother {
 		$setting = $this->modx->getObject('modSystemSetting', array(
 			'key' => 'bigbrother.'. $key,
 		));	
-		if($setting){
-			$value = $setting->value;
-			return $value;
-		}		
+		if($setting){ return $setting->value; }		
 		return null;
 	}
 	
