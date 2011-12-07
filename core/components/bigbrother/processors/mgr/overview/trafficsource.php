@@ -31,7 +31,11 @@ if(!$response['success']){
 $source = array('(none)','organic','referral');
 $rows['type'] = "pie";
 $rows['name'] = "Organic";
-$replacements = array('Direct Traffic','Search Engines','Referring Sites');
+$replacements = array(
+	$modx->lexicon('bigbrother.overview.direct_traffic'),
+	$modx->lexicon('bigbrother.overview.search_engines'),
+	$modx->lexicon('bigbrother.overview.referring_sites'
+));
 
 $results = $ga->getOutput();
 foreach($results as $key => $value){

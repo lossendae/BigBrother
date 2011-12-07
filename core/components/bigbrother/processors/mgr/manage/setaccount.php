@@ -8,7 +8,7 @@
 $ga =& $modx->bigbrother;
 $ga->updateOption('account', $_REQUEST['account']);
 
-$response['text'] = 'Account set successfully! Please wait...';
+$response['text'] = $modx->lexicon('bigbrother.account_set_succesfully_wait');
 $response['success'] = true;
 
 return $modx->toJSON($response);

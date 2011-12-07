@@ -14,11 +14,11 @@ $page = $modx->getObject('modAction', array(
 ));
 
 $response['text'] = '';
-$response['trail'][] = array('text' => '2. Authorize');
+$response['trail'][] = array('text' => $modx->lexicon('bigbrother.bd_authorize'));
 $response['success'] = true;
 
 if(!$ga->loadOAuth()){
-	$response['text'] = 'Could not load the OAuth file. Please reinstall the component or contact the webmaster.';
+	$response['text'] = $modx->lexicon('bigbrother.err_load_oauth');
 	$response['success'] = false;
 	return $modx->toJSON($response);
 }
@@ -51,7 +51,7 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 if($httpCode == 200) {
 	$access_params = $ga->splitParams($oaResponse);
-	$response['text'] = 'Redirect to Google, please wait...';
+	$response['text'] = $modx->lexicon('bigbrother.redirect_to_google');
 	$response['url'] = 'https://www.google.com/accounts/OAuthAuthorizeToken?oauth_token=' . urlencode($access_params['oauth_token']);
 	$ga->addOption('oa_anon_token', $access_params['oauth_token']);
 	$ga->addOption('oa_anon_secret', $access_params['oauth_token_secret']);

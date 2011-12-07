@@ -11,7 +11,7 @@ $response['text'] = '';
 $response['success'] = true;
 
 if(!$ga->loadOAuth()){
-	$response['text'] = 'Could not load the OAuth file';
+	$response['text'] = $modx->lexicon('bigbrother.err_load_oauth');
 	$response['success'] = false;
 	return $modx->toJSON($response);
 }

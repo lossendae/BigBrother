@@ -1,3 +1,3 @@
-bigbrother 0.1a
-==============
+bigbrother 0.1b
+===============
 - Initial release

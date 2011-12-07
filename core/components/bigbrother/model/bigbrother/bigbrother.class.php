@@ -82,22 +82,6 @@ class BigBrother {
     }
 	
 	/**
-     * Initializes bigbrother into different contexts.
-     *  
-     * @access public
-     * @param string $ctx The context to load. Defaults to web.
-     */
-    public function initialize($ctx = 'web') {
-		if ($ctx == 'mgr'){
-			if (!$this->modx->loadClass('bigbrother.request.bigbrotherControllerRequest',$this->config['model_path'],true,true)) {
-				return 'Could not load controller request handler.';
-			}
-			$this->request = new BigBrotherControllerRequest($this);
-			return $this->request->handleRequest();
-        }
-    }
-	
-	/**
      * Load the OAuth file containing the OAuth classes
      *
      * @access public

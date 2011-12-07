@@ -8,22 +8,28 @@
 $ga =& $modx->bigbrother;
 
 $response['text'] = '';
-$response['trail'][] = array('text' => '2. Authorize');
+$response['trail'][] = array('text' => $modx->lexicon('bigbrother.bd_authorize'));
 $response['success'] = true;
 
-// $response['text'] = 'Authentification complete.</p><p>Select the account you wish to access to in the list below.<br/> You will be able to change the account at all times on the dashboard.';
-// $response['trail'][] = array(
-	// 'text' => '2. Authorize',
-	// 'text' => '3. Choose an account',
-// );
-// return $modx->toJSON($response);
-
 if(!$ga->loadOAuth()){
-	$response['text'] = 'Could not load the OAuth file. Please reinstall the component or contact the webmaster.';
+	$response['text'] = $modx->lexicon('bigbrother.err_load_oauth');
 	$response['success'] = false;
 	return $modx->toJSON($response);
 }
 
+//If we already have google's permissions
+$oauth_token = $ga->getOption('oauth_token');
+$oauth_secret = $ga->getOption('oauth_secret');
+if($oauth_token != null && $oauth_secret != null){
+	$response['text'] = $modx->lexicon('bigbrother.authentification_complete');
+	$response['trail'][] = array(
+		'text' => $modx->lexicon('bigbrother.bd_authorize'),
+		'text' => $modx->lexicon('bigbrother.bd_choose_an_account'),
+	);
+	return $modx->toJSON($response);
+}
+
+//Else we retreive oauth_token 
 $oauth_verifier = urldecode($_REQUEST['oauth_verifier']);
 $oauth_token = $ga->getOption('oa_anon_token');
 $oauth_token_secret = $ga->getOption('oa_anon_secret');
@@ -46,6 +52,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $oaResponse = curl_exec($ch);
 
 if(curl_errno($ch)) {	
+	//@TODO lexicon
 	$response['text'] =  '<strong>Message from cURL</strong> - '. curl_text($ch);
 	$response['success'] = false;
 	return $modx->toJSON($response);
@@ -61,13 +68,13 @@ if($http_code == 200) {
 	
 	$ga->updateOption('oauth_token', $accessParams['oauth_token']);
 	$ga->updateOption('oauth_secret', $accessParams['oauth_token_secret']);
-	$ga->updateOption('is_authenticated', true);
-	$response['text'] = 'Authentification complete.</p><p>Select the account you wish to access to in the list below.<br/> You will be able to change the account at all times on the dashboard.';
+	$response['text'] = $modx->lexicon('bigbrother.authentification_complete');
 	$response['trail'][] = array(
-		'text' => '2. Authorize',
-		'text' => '3. Choose an account',
+		'text' => $modx->lexicon('bigbrother.bd_authorize'),
+		'text' => $modx->lexicon('bigbrother.bd_choose_an_account'),
 	);
 } else {
+	//@TODO lexicon
 	$response['text'] = '<strong>Bad HTTP code : '. $http_code .'</strong> - '. $oaResponse;
 	$response['success'] = false;
 }
