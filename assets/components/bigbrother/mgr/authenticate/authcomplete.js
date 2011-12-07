@@ -142,7 +142,9 @@ MODx.panel.BigBrotherAccountList = function(config) {
 	MODx.panel.BigBrotherAccountList.superclass.constructor.call(this,config);
 };
 Ext.extend(MODx.panel.BigBrotherAccountList,Ext.Panel,{
-	selectAccount: function(){		
+	selectAccount: function(){	
+		Ext.getCmp('select-account-btn').disable();
+		Ext.getCmp('account-list').disable();
 		Ext.Ajax.request({
 			url : MODx.BigBrotherConnectorUrl
 			,params : { 

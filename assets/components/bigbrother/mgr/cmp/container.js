@@ -24,6 +24,10 @@ MODx.panel.BigBrotherPanel = function(config) {
 				border: false 
 			}
 			,items:[{
+				html: '<p>'+_('bigbrother.overview.desc')+'</p>'
+				,bodyCssClass: 'panel-desc'
+                ,border: false
+            },{
 				 layout: 'form'
 				,cls: 'main-wrapper'
 				,autoHeight: true
@@ -87,6 +91,8 @@ MODx.panel.BigBrotherPanel = function(config) {
 		}])]	
 	});
 	MODx.panel.BigBrotherPanel.superclass.constructor.call(this,config);
+	
+	this.admin();
 };
 Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 	test: function(){
@@ -105,6 +111,136 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 				Ext.MessageBox.alert('Failed', result.responseText); 
 			} 
 		});
+	}
+	,win: false
+	,admin: function(){
+		me = this;
+		this.actionToolbar = new Ext.Toolbar({
+			renderTo: "modAB"
+			,id: 'modx-action-buttons'
+			,defaults: { scope: me }
+			,items: [{
+				text: 'Change account'
+				,handler: this.loadAccountWindow
+			},{
+				text: 'Revoke authorization'
+				,handler: this.revokeAuthorizationWindow
+			}]
+		});
+	}
+	
+	,loadAccountWindow: function(btn){
+		me = this;
+		if(!this.win){
+			this.win = new Ext.Window({
+				cls: 'win'
+				,title: 'Select another account'
+				,closeAction: 'hide'
+				,border: false		
+				,width: 400
+				,items: [{
+					xtype: 'modx-template-panel'
+					,id: 'winca-desc'
+					,bodyCssClass: 'win-desc panel-desc'
+					,startingMarkup: '<tpl for="."><p>{text}</p></tpl>'
+					,startingText: 'Select the account you want to set as default for your report.<br/> Once validated, the page will reload to show the report for the choosen account'
+				},{
+					layout: 'form'
+					,border: false
+					,bodyCssClass: 'main-wrapper'
+					,items:[{
+						xtype: 'combo'
+						,displayField: 'name'
+						,valueField: 'id'
+						,triggerAction: 'all'
+						,anchor: '100%'
+						,editable: false
+						,forceSelection: true
+						,hideLabel: true
+						,emptyText: _('bigbrother.oauth_select_account')	
+						,id: 'account-list'
+						,store: new Ext.data.JsonStore({
+							url: MODx.BigBrotherConnectorUrl
+							,root: 'results'
+							,totalProperty: 'total'
+							,fields: ['id', 'name']
+							,errorReader: MODx.util.JSONReader
+							,baseParams: {
+								action : 'manage/accountlist'
+							}
+						})
+						,listeners : {
+							'select' : function(c){
+								Ext.getCmp('select-account-btn').enable();
+							}
+						}
+					}]		
+				}]			
+				,buttons: [{
+					text: _('cancel')
+					,scope: this
+					,handler: function() { this.win.hide(); }
+				},{
+					 xtype: 'button'
+					,id: 'select-account-btn'
+					,text: 'Change Account'	
+					,handler: this.selectAccount
+					,disabled: true
+					,scope: this
+				}]
+			});
+		}
+		this.win.show(btn.id);
+	}
+	
+	,selectAccount: function(btn){
+		Ext.Ajax.request({
+			url : MODx.BigBrotherConnectorUrl
+			,params : { 
+				action : 'manage/setAccount'
+				,account : Ext.getCmp('account-list').getValue()
+			}
+			,method: 'GET'
+			,scope: this
+			,success: function ( result, request ) { 
+				data = Ext.util.JSON.decode( result.responseText );
+				if(data.success){ window.location = MODx.BigBrotherRedirect; }
+			}
+			,failure: function ( result, request) { 
+				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
+			} 
+		});
+	}
+	
+	,revokeAuthorizationWindow: function(btn){
+		Ext.Msg.show({
+			title:'Revoke permission?',
+			msg: "By revoking permission, you'll have to go through the setup process again to authorize MODx to use Google Analytics's APIs. <br/> Are you sure you want to revoke permissions ?",
+			buttons: Ext.Msg.OKCANCEL,
+			fn: this.revoke,
+			animEl: btn.id,
+			icon: Ext.MessageBox.WARNING  
+		});
+	}
+	
+	,revoke: function(action){
+		if(action == 'ok'){
+			Ext.Ajax.request({
+				url : MODx.BigBrotherConnectorUrl
+				,params : { 
+					action : 'manage/revoke'
+				}
+				,method: 'GET'
+				,scope: this
+				,success: function ( result, request ) { 
+					data = Ext.util.JSON.decode( result.responseText );		
+					if(data.success){ window.location = MODx.BigBrotherRedirect; }
+				}
+				,failure: function ( result, request) { 
+					Ext.MessageBox.alert('Failed', result.responseText); 
+				} 
+			});
+		}
 	}
 });
 Ext.reg('bb-panel', MODx.panel.BigBrotherPanel);
