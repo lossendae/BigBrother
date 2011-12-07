@@ -14,12 +14,12 @@ MODx.panel.BigBrotherPanel = function(config) {
         ,bodyStyle: ''
 		,unstyled:true		
         ,items: [{
-            html: '<h2>'+_('bigbrother_main_title')+'</h2>'
+            html: '<h2>'+_('bigbrother.main_title')+'</h2>'
             ,border: false
             ,cls: 'modx-page-header'
             ,id: 'modx-workspace-header'
         },MODx.getPageStructure([{
-            title: 'Overview'	
+            title: _('bigbrother.overview.title')	
 			,defaults: { 
 				border: false 
 			}
@@ -34,7 +34,7 @@ MODx.panel.BigBrotherPanel = function(config) {
 				,id: 'report-panel'
 				,items:[{
 					xtype: 'bb-linechart-panel'
-					,title: 'Visits and Uniques'	
+					,title: _('bigbrother.overview.visits_and_uniques')	
 					,action: 'overview/pageviews'
 				},{
 					xtype:'bb-meta-panel'
@@ -48,7 +48,7 @@ MODx.panel.BigBrotherPanel = function(config) {
 					}
 					,items:[{
 						xtype: 'bb-pie-panel'
-						,title: 'Traffic Sources Overview'	
+						,title: _('bigbrother.overview.traffic_sources_overview')	
 						,action: 'overview/trafficsource'
 						,columnWidth: .5				
 					},{
@@ -61,15 +61,15 @@ MODx.panel.BigBrotherPanel = function(config) {
 						}
 						,items:[{
 							xtype: 'bb-preview-grid'
-							,title: 'Top Content'	
+							,title: _('bigbrother.overview.top_content')	
 							,baseParams: {
 								action: 'overview/topcontent'
 							}					
 							,fields: ['pagepath','pageviews','uniquepageviews']
 							,columns:[
-								 { header: 'Page' ,dataIndex: 'pagepath', id:'title', width: 150 }
-								,{ header: 'Pageviews' ,dataIndex: 'pageviews', id:'aright' }
-								,{ header: 'Unique Pageviews' ,dataIndex: 'uniquepageviews', id:'aright' }
+								 { header: _('bigbrother.page') ,dataIndex: 'pagepath', id:'title', width: 150 }
+								,{ header: _('bigbrother.pageviews') ,dataIndex: 'pageviews', id:'aright' }
+								,{ header: _('bigbrother.unique_pageviews') ,dataIndex: 'uniquepageviews', id:'aright' }
 							]
 						}]
 					}]

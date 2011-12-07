@@ -14,7 +14,7 @@ MODx.panel.BigBrotherAuthorizePanel = function(config) {
         ,unstyled: true
         ,defaults: { collapsible: false ,autoHeight: true }
         ,items: [{
-            html: '<h2>'+_('bigbrother_main_title')+'</h2>'
+            html: '<h2>'+_('bigbrother.main_title')+'</h2>'
             ,border: false
             ,cls: 'modx-page-header'
 		},{
@@ -24,11 +24,12 @@ MODx.panel.BigBrotherAuthorizePanel = function(config) {
 			,id: 'main-panel'
 			,items:[{
 				xtype: 'modx-breadcrumbs-panel'
-				,id: 'bb-breadcrumbs'
-				,desc: 'Verifying if SimpleXML and cURL PHP extensions are activated before proceeding to the login screen'
+				,id: 'bb-breadcrumbs'				
+				,desc: _('bigbrother.bd_root_desc')
 				,root : { 
-					text : '1. Verify Prerequisite'
+					text : _('bigbrother.bd_root_crumb_text')
 					,className: 'first'
+					,root: true
 				}
 			},{
 				xtype:'panel'
@@ -68,16 +69,16 @@ Ext.extend(MODx.panel.BigBrotherAuthorizePanel,MODx.Panel,{
 				if(!data.success){
 					data.className = 'highlight desc-error';
 					this.getToken = false;
-					btn.setText('Try again!');
+					btn.setText(_('bigbrother.verify_prerequisite_settings'));					
 				} else {					
 					this.getToken = true;
-					btn.setText('Start the login process');
+					btn.setText(_('bigbrother.start_the_login_process'));
 				}
 				Ext.getCmp('login-panel').show();
 				Ext.getCmp('bb-breadcrumbs').updateDetail(data);
 			}
 			,failure: function ( result, request) { 
-				Ext.MessageBox.alert('Failed', result.responseText); 
+				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
 			} 
 		});
 	}
@@ -105,7 +106,7 @@ Ext.extend(MODx.panel.BigBrotherAuthorizePanel,MODx.Panel,{
 					}					
 				}
 				,failure: function ( result, request) { 
-					Ext.MessageBox.alert('Failed', result.responseText); 
+					Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
 				} 
 			});
 		} else {

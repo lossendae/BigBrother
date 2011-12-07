@@ -53,7 +53,7 @@ MODx.panel.BigBrotherMetaPanel = function(config) {
 	
 	Ext.applyIf(config,{
 		 frame:false
-		,startingText: 'Loading...'
+		,startingText: _('bigbrother.metas.loading')
 		,plain:true
 		,border: false				
 	});
@@ -77,7 +77,7 @@ Ext.extend(MODx.panel.BigBrotherMetaPanel,Ext.Panel,{
 				this.updateDetail(data);
 			}
 			,failure: function ( result, request) { 
-				Ext.MessageBox.alert('Failed', result.responseText); 
+				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
 			} 
 		});
 	}
