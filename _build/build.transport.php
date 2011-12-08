@@ -12,10 +12,10 @@ $tstart = $mtime;
 set_time_limit(0);
 
 /* define package */
-define('PKG_NAME','Google Analytics for MODx Revolution');
+define('PKG_NAME','BigBrother');
 define('PKG_NAMESPACE','bigbrother');
-define('PKG_VERSION','0.1');
-define('PKG_RELEASE','alpha1');
+define('PKG_VERSION','1.0');
+define('PKG_RELEASE','beta1');
 
 function getSnippetContent($path, $name, $debug = false) {
 	$name = ($debug) ? 'debug.'. $name .'.php' : $name .'.php';
@@ -120,21 +120,14 @@ $vehicle->resolve('file',array(
     'target' => "return MODX_ASSETS_PATH . 'components/';",
 ));
 
-// $vehicle->resolve('php',array(
-    // 'source' => $sources['resolvers'].'resolve.options.php',
-// ));
-
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in resolvers.'); flush();
 $builder->putVehicle($vehicle);
 
 /* Pack in the license file, readme and setup options */
 $builder->setPackageAttributes(array(
-    // 'license' => file_get_contents($sources['docs'] . 'license.txt'),
-    // 'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
-    // 'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
-    // 'setup-options' => array(
-        // 'source' => $sources['build'].'setup.options.php',
-    // ),
+    'license' => file_get_contents($sources['docs'] . 'license.txt'),
+    'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
+    'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
 ));
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in package attributes.'); flush();
 
