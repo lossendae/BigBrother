@@ -9,7 +9,7 @@
 MODx.panel.BigBrotherPanel = function(config) {
     config = config || {};	
 	Ext.applyIf(config,{
-		id: 'modx-panel-workspace'
+		id: 'bb-panel'
         ,cls: 'container'
         ,bodyStyle: ''
 		,unstyled:true		
@@ -17,16 +17,28 @@ MODx.panel.BigBrotherPanel = function(config) {
             html: '<h2>'+_('bigbrother.main_title')+'</h2>'
             ,border: false
             ,cls: 'modx-page-header'
-            ,id: 'modx-workspace-header'
         },MODx.getPageStructure([{
             title: _('bigbrother.overview.title')	
 			,defaults: { 
 				border: false 
 			}
 			,items:[{
-				html: '<p>'+_('bigbrother.overview.desc')+'</p>'
+				xtype: 'modx-template-panel'
+				,id: 'bb-desc'
 				,bodyCssClass: 'panel-desc'
-                ,border: false
+				,startingMarkup: '<tpl for=".">'+_('bigbrother.overview.desc_markup')+'</tpl>'
+				,reset: function(){	
+					this.body.hide();
+					//Override default text
+					this.defaultMarkup.overwrite(this.body, {
+						id: MODx.config['bigbrother.account']
+						,name: MODx.config['bigbrother.account_name']
+					});
+					this.body.slideIn('r', {stopFx:true, duration:.2});
+					setTimeout(function(){
+						Ext.getCmp('modx-content').doLayout();
+					}, 500);
+				}
             },{
 				 layout: 'form'
 				,cls: 'main-wrapper'
@@ -77,56 +89,35 @@ MODx.panel.BigBrotherPanel = function(config) {
 							]
 						}]
 					}]
-				// },{
-					// xtype: 'modx-grid-topcontent'
 				}]
-				// ,buttonAlign: 'center'			
-				// ,tbar: [{
-					 // xtype: 'button'
-					// ,text: 'Select this account'		
-					// ,handler: this.test
-					// ,scope: this
-				// }]
 			}]
 		}])]	
 	});
 	MODx.panel.BigBrotherPanel.superclass.constructor.call(this,config);
 	
-	this.admin();
+	this.init();
 };
 Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
-	test: function(){
-		Ext.Ajax.request({
-			url : MODx.BigBrotherConnectorUrl
-			,params : { 
-				action : 'request/referral'
-			}
-			,method: 'GET'
-			,scope: this
-			,success: function ( result, request ) { 
-				data = Ext.util.JSON.decode( result.responseText );
-				console.log(data)			
-			}
-			,failure: function ( result, request) { 
-				Ext.MessageBox.alert('Failed', result.responseText); 
-			} 
-		});
-	}
-	,win: false
-	,admin: function(){
+	init: function(){
 		me = this;
 		this.actionToolbar = new Ext.Toolbar({
 			renderTo: "modAB"
 			,id: 'modx-action-buttons'
 			,defaults: { scope: me }
-			,items: [{
-				text: 'Change account'
+			,items: []
+		});		
+		if(MODx.config['bigbrother.total_account'] > 1){
+			this.win = false;
+			this.actionToolbar.add({
+				text: _('bigbrother.change_account')
 				,handler: this.loadAccountWindow
-			},{
-				text: 'Revoke authorization'
-				,handler: this.revokeAuthorizationWindow
-			}]
-		});
+			});
+		}		
+		this.actionToolbar.add({
+			text: _('bigbrother.revoke_authorization')
+			,handler: this.revokeAuthorizationPromptWindow
+		});		
+		this.actionToolbar.doLayout();
 	}
 	
 	,loadAccountWindow: function(btn){
@@ -134,7 +125,7 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 		if(!this.win){
 			this.win = new Ext.Window({
 				cls: 'win'
-				,title: 'Select another account'
+				,title: _('bigbrother.select_another_account')
 				,closeAction: 'hide'
 				,border: false		
 				,width: 400
@@ -143,7 +134,7 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 					,id: 'winca-desc'
 					,bodyCssClass: 'win-desc panel-desc'
 					,startingMarkup: '<tpl for="."><p>{text}</p></tpl>'
-					,startingText: 'Select the account you want to set as default for your report.<br/> Once validated, the page will reload to show the report for the choosen account'
+					,startingText: _('bigbrother.select_another_account_desc')
 				},{
 					layout: 'form'
 					,border: false
@@ -159,6 +150,8 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 						,hideLabel: true
 						,emptyText: _('bigbrother.oauth_select_account')	
 						,id: 'account-list'
+						,listClass: 'account-list'
+						,ctCls: 'cb-account-list'
 						,store: new Ext.data.JsonStore({
 							url: MODx.BigBrotherConnectorUrl
 							,root: 'results'
@@ -183,7 +176,7 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 				},{
 					 xtype: 'button'
 					,id: 'select-account-btn'
-					,text: 'Change Account'	
+					,text: _('bigbrother.change_account')
 					,handler: this.selectAccount
 					,disabled: true
 					,scope: this
@@ -194,54 +187,63 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 	}
 	
 	,selectAccount: function(btn){
+		this.disable();
 		Ext.Ajax.request({
 			url : MODx.BigBrotherConnectorUrl
 			,params : { 
 				action : 'manage/setAccount'
 				,account : Ext.getCmp('account-list').getValue()
+				,accountName : Ext.getCmp('account-list').getRawValue()
 			}
 			,method: 'GET'
 			,scope: this
 			,success: function ( result, request ) { 
-				data = Ext.util.JSON.decode( result.responseText );
-				if(data.success){ window.location = MODx.BigBrotherRedirect; }
+				var data = Ext.util.JSON.decode( result.responseText );
+				this.win.hide();				
+				if(data.success){ this.redirect() }
 			}
 			,failure: function ( result, request) { 
 				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
+				this.enable();
 			} 
 		});
 	}
 	
-	,revokeAuthorizationWindow: function(btn){
+	,revokeAuthorizationPromptWindow: function(btn){
 		Ext.Msg.show({
-			title:'Revoke permission?',
-			msg: "By revoking permission, you'll have to go through the setup process again to authorize MODx to use Google Analytics's APIs. <br/> Are you sure you want to revoke permissions ?",
+			title: _('bigbrother.revoke_permission'),
+			msg: _('bigbrother.revoke_permission_msg'),
 			buttons: Ext.Msg.OKCANCEL,
-			fn: this.revoke,
+			fn: this.revokeAuthorization,
 			animEl: btn.id,
 			icon: Ext.MessageBox.WARNING  
 		});
 	}
 	
-	,revoke: function(action){
+	,revokeAuthorization: function(action){
+		var pnl = Ext.getCmp('bb-panel');		
 		if(action == 'ok'){
+			pnl.disable();
 			Ext.Ajax.request({
 				url : MODx.BigBrotherConnectorUrl
 				,params : { 
 					action : 'manage/revoke'
 				}
 				,method: 'GET'
-				,scope: this
+				,scope: pnl
 				,success: function ( result, request ) { 
-					data = Ext.util.JSON.decode( result.responseText );		
-					if(data.success){ window.location = MODx.BigBrotherRedirect; }
+					var data = Ext.util.JSON.decode( result.responseText );						
+					if(data.success){ this.redirect() }
 				}
 				,failure: function ( result, request) { 
-					Ext.MessageBox.alert('Failed', result.responseText); 
+					Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
+					pnl.enable();
 				} 
 			});
 		}
 	}
+	
+	,redirect: function(){ location.href = MODx.BigBrotherRedirect; }
 });
 Ext.reg('bb-panel', MODx.panel.BigBrotherPanel);
 
@@ -253,31 +255,31 @@ Ext.reg('bb-panel', MODx.panel.BigBrotherPanel);
  * @param {Object} config An object of options.
  * @xtype modx-grid-package
  */
-MODx.grid.TopContent = function(config) {
-    config = config || {};
-	Ext.applyIf(config,{
-		title: 'Content Performance'
-		,url : MODx.BigBrotherConnectorUrl
-		,baseParams: { 
-			action : 'request/topcontent'
-		}
-		,fields: ['pagepath','pageviews','uniquepageviews','avgtimeonpage','exitpage','bouncerate']
-		,columns:[
-			 { header: 'Page' ,dataIndex: 'pagepath', id:'title', width: 320 }
-			,{ header: 'Pageviews' ,dataIndex: 'pageviews', id:'highlight' }
-			,{ header: 'Unique Pageviews' ,dataIndex: 'uniquepageviews', id:'aright' }
-			,{ header: 'Avg. Time on Page' ,dataIndex: 'avgtimeonpage', id:'aright' }			
-			,{ header: 'Bounce Rate' ,dataIndex: 'bouncerate', id:'aright' }
-			,{ header: '% Exit' ,dataIndex: 'exitpage', id:'aright' }
-		]
-		,pageSize: 10
-		,primaryKey: 'signature'
-		,autoExpandColumn: 'pagepath'
-		,enableHdMenu: false
-		,remoteSort: false
-		,paging: true
-	});
-    MODx.grid.TopContent.superclass.constructor.call(this,config);
-};
-Ext.extend(MODx.grid.TopContent,MODx.grid.Grid,{});
-Ext.reg('modx-grid-topcontent',MODx.grid.TopContent);
+// MODx.grid.TopContent = function(config) {
+    // config = config || {};
+	// Ext.applyIf(config,{
+		// title: 'Content Performance'
+		// ,url : MODx.BigBrotherConnectorUrl
+		// ,baseParams: { 
+			// action : 'request/topcontent'
+		// }
+		// ,fields: ['pagepath','pageviews','uniquepageviews','avgtimeonpage','exitpage','bouncerate']
+		// ,columns:[
+			 // { header: 'Page' ,dataIndex: 'pagepath', id:'title', width: 320 }
+			// ,{ header: 'Pageviews' ,dataIndex: 'pageviews', id:'highlight' }
+			// ,{ header: 'Unique Pageviews' ,dataIndex: 'uniquepageviews', id:'aright' }
+			// ,{ header: 'Avg. Time on Page' ,dataIndex: 'avgtimeonpage', id:'aright' }			
+			// ,{ header: 'Bounce Rate' ,dataIndex: 'bouncerate', id:'aright' }
+			// ,{ header: '% Exit' ,dataIndex: 'exitpage', id:'aright' }
+		// ]
+		// ,pageSize: 10
+		// ,primaryKey: 'signature'
+		// ,autoExpandColumn: 'pagepath'
+		// ,enableHdMenu: false
+		// ,remoteSort: false
+		// ,paging: true
+	// });
+    // MODx.grid.TopContent.superclass.constructor.call(this,config);
+// };
+// Ext.extend(MODx.grid.TopContent,MODx.grid.Grid,{});
+// Ext.reg('modx-grid-topcontent',MODx.grid.TopContent);

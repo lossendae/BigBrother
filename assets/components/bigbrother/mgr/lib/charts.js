@@ -33,7 +33,7 @@ Ext.extend(MODx.panel.BigBrotherPiePanel,MODx.Panel,{
 				this.loadChart(data.results);			
 			}
 			,failure: function ( result, request) { 
-				Ext.MessageBox.alert('Failed', result.responseText); 
+				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
 			} 
 		});
 	}
@@ -142,7 +142,7 @@ Ext.extend(MODx.panel.BigBrotherLineChartPanel,MODx.Panel,{
 				this.loadChart(data.series, data.pointStart);			
 			}
 			,failure: function ( result, request) { 
-				Ext.MessageBox.alert('Failed', result.responseText); 
+				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
 			} 
 		});
 	}

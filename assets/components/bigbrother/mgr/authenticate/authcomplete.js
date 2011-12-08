@@ -65,7 +65,7 @@ Ext.extend(MODx.panel.BigBrotherAuthComplete,MODx.Panel,{
 			,method: 'GET'
 			,scope: this
 			,success: function ( result, request ) { 
-				data = Ext.util.JSON.decode( result.responseText );
+				var data = Ext.util.JSON.decode( result.responseText );
 				if(!data.success){
 					data.className = 'highlight desc-error';
 				} else {
@@ -150,11 +150,12 @@ Ext.extend(MODx.panel.BigBrotherAccountList,Ext.Panel,{
 			,params : { 
 				action : 'manage/setAccount'
 				,account : Ext.getCmp('account-list').getValue()
+				,accountName : Ext.getCmp('account-list').getRawValue()
 			}
 			,method: 'GET'
 			,scope: this
 			,success: function ( result, request ) { 
-				data = Ext.util.JSON.decode( result.responseText );
+				var data = Ext.util.JSON.decode( result.responseText );
 				if(!data.success){
 					data.className = 'highlight desc-error';
 					Ext.getCmp('bb-breadcrumbs').updateDetail(data);
@@ -162,7 +163,7 @@ Ext.extend(MODx.panel.BigBrotherAccountList,Ext.Panel,{
 					data.className = 'highlight loading';
 					Ext.getCmp('bb-breadcrumbs').updateDetail(data);
 					setTimeout(function(){
-						window.location = MODx.BigBrotherRedirect;
+						location.href = MODx.BigBrotherRedirect;
 					}, 800);					
 				}				
 			}

@@ -35,6 +35,19 @@ h3{
     padding: 15px 25px !important;
 }
 .panel-title p{	font-size: 20px; }
+.account-name{
+	color: #636F4C;
+    font-size: 16px;
+    letter-spacing: 0;
+}
+.account-name span{
+	color: #888888;
+    display: block;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
 .loading{
 	background: url("../images/loading.gif") no-repeat scroll 15px center #F7F7F7;
     color: #7F8F62;
