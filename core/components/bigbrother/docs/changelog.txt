@@ -1,3 +1,6 @@
-bigbrother 0.1b
-===============
+<span class="warning">Reload the page after installation to access the menu item under "Components"</span>
+
+Big Brother 1.0 beta1
+*********************
+
 - Initial release

@@ -41,16 +41,27 @@ if($this->http_code != 200)	{
 	$xml = new SimpleXMLElement($return);
 
 	curl_close($ch);
-
-	$vhash = array();
+	
+	$current = $ga->getOption('account');
+	$total = 0;
+	$results = array();
 	foreach($xml->entry as $entry) {
 		$value = (string)$entry->id;
 		list($part1, $part2) = explode('accounts/', $value);
 		
 		$account['name'] = (string)$entry->title;
-		$account['id'] = $part2;		
-		$vhash[] = $account;
+		$account['id'] = $part2;
+		
+		if($current != null){
+			if($current != $account['id']){
+				$results[] = $account;
+			}			
+		} else {
+			$results[] = $account;
+		}		
+		$total++;
 	}
-	$response['results'] = $vhash;
+	$ga->updateOption('total_account', $total);
+	$response['results'] = $results;
 }
 return $modx->toJSON($response);

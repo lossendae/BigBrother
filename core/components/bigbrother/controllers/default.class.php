@@ -58,7 +58,7 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 	
 	public function loadReportPanel(){
 		//jQuery + charts class
-		$this->addJavascript('http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js');	
+		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/jquery.min.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/highcharts.js');	
 		
 		//Basic reusable panels

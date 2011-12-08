@@ -21,12 +21,12 @@ $dateStart = date('Y-m-d', time() - (60 * 60 * 24 * 30)); // 30 days in the past
 $metrics = array('ga:pageviews','ga:uniquePageviews','ga:visitBounceRate','ga:visitors', 'ga:newVisits', 'ga:percentNewVisits');
 /* @TODO : lexiconify the following */
 $replacements = array(
-	$modx->lexicon('bigbrother.metas.pageviews'),
-	$modx->lexicon('bigbrother.metas.unique_pageviews'),
-	$modx->lexicon('bigbrother.metas.bounce_rate'),
-	$modx->lexicon('bigbrother.metas.visitors'),
-	$modx->lexicon('bigbrother.metas.new_visits'),
-	$modx->lexicon('bigbrother.metas.new_visits_in_percent'
+	$modx->lexicon('bigbrother.pageviews'),
+	$modx->lexicon('bigbrother.unique_pageviews'),
+	$modx->lexicon('bigbrother.bounce_rate'),
+	$modx->lexicon('bigbrother.visitors'),
+	$modx->lexicon('bigbrother.new_visits'),
+	$modx->lexicon('bigbrother.new_visits_in_percent'
 ));
 
 $response['success'] = $ga->simpleReportRequest($dateStart, $dateEnd, null, join($metrics, ','));

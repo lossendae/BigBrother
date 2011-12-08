@@ -32,9 +32,9 @@ $source = array('(none)','organic','referral');
 $rows['type'] = "pie";
 $rows['name'] = "Organic";
 $replacements = array(
-	$modx->lexicon('bigbrother.overview.direct_traffic'),
-	$modx->lexicon('bigbrother.overview.search_engines'),
-	$modx->lexicon('bigbrother.overview.referring_sites'
+	$modx->lexicon('bigbrother.direct_traffic'),
+	$modx->lexicon('bigbrother.search_engines'),
+	$modx->lexicon('bigbrother.referring_sites'
 ));
 
 $results = $ga->getOutput();

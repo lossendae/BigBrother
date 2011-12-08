@@ -1,10 +1,28 @@
-----------
-bigbrother
-----------
+Big Brother
+-----------
 
-A Google Analytics CMP for MODx Revolution.
+A Google Analytics CMP for MODx Revolution 2.2
 
-Notes:
+INSTALL INSTRUCTIONS:
 
-- The Package comes bundled with a plugin sample to allow Google Analytics on all page on the specified context. It is given as an example, use with caution. 
-- The CMP uses Highcharts (www.highcharts.com) for the charts which require a license if you plan to use the plugin ona commercial website (CC3 license - www.highcharts.com/licence)
+- Download & Install via MODx Package Manager
+- Reload the page
+- Go to the menu "Components" and select "Google Analytics"
+- Follow the instructions to allow Google Analytics API via OAuth.
+
+ROADMAP:
+
+- More reports & options
+- Ability to load some panels on the main dashboard page
+- Custom TV for single resource report
+- Sample plugin for Google Analytics front end tracking
+- Snippets for front end infos
+
+NOTES & CREDITS:
+
+- The CMP uses Highcharts (www.highcharts.com) for the charts which require a license if you plan to use the plugin in a commercial website (CC3 license - <a href="www.highcharts.com/licence">www.highcharts.com/licence</a>)
+- Inspired by the WP plugin by Carson McDonald : <a href="http://www.ioncannon.net/projects/google-analytics-dashboard-wordpress-widget/">http://www.ioncannon.net/projects/google-analytics-dashboard-wordpress-widget/</a>
+
+BUGS AND DEVELOPMENT
+
+<a href="https://github.com/lossendae/BigBrother">https://github.com/lossendae/BigBrother</a>

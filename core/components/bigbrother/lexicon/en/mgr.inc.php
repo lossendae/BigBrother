@@ -10,6 +10,16 @@ $_lang['bigbrother.main_title'] = 'Google Analytics';
 /* Alert */
 $_lang['bigbrother.alert_failed'] = 'Failed';
 
+/* Action buttons - modAB */
+$_lang['bigbrother.change_account'] = 'Change account';
+$_lang['bigbrother.select_another_account'] = 'Select another account';
+$_lang['bigbrother.select_another_account_desc'] = 'Select the account you want to set as default for your report.<br/> Once validated, the page will reload to show the report for the choosen account';
+$_lang['bigbrother.revoke_authorization'] = 'Revoke authorization';
+
+$_lang['bigbrother.revoke_permission'] = 'Revoke permission ?';
+$_lang['bigbrother.revoke_permission_msg'] = "By revoking permission, you'll have to go through the setup process again to authorize MODx to use Google Analytics's APIs. <br/> Are you sure you want to revoke permissions ?";
+
+
 /* Authenticate */
 $_lang['bigbrother.bd_root_desc'] = 'Verifying if SimpleXML and cURL PHP extensions are activated before proceeding to the login screen';
 $_lang['bigbrother.bd_root_crumb_text'] = 'Verify Prerequisite';
@@ -38,24 +48,14 @@ $_lang['bigbrother.authentification_complete'] = 'Authentification complete.</p>
 $_lang['bigbrother.account_set_succesfully_wait'] = 'Account set successfully! Please wait...';
 
 /* Reports - metas replacements */
-$_lang['bigbrother.metas.pageviews'] = 'Pageviews';
-$_lang['bigbrother.metas.unique_pageviews'] = 'Unique Pageviews';
-$_lang['bigbrother.metas.bounce_rate'] = 'Bounce Rate';
-$_lang['bigbrother.metas.visitors'] = 'Visitors';
-$_lang['bigbrother.metas.new_visits'] = 'New Visits';
-$_lang['bigbrother.metas.new_visits_in_percent'] = 'New Visits in percent';
-$_lang['bigbrother.overview.direct_traffic'] = 'Direct Traffic';
-$_lang['bigbrother.overview.search_engines'] = 'Search Engines';
-$_lang['bigbrother.overview.referring_sites'] = 'Referring Sites';
 
-/* Reports - metas */
-
-$_lang['bigbrother.metas.loading'] = 'Loading...';
+$_lang['bigbrother.loading'] = 'Loading...';
 
 /* Reports - Overview */
 
 $_lang['bigbrother.overview.title'] = 'Overview';
-$_lang['bigbrother.overview.desc'] = 'Account name : www.example.com';
+$_lang['bigbrother.overview.desc'] = 'Loading...';
+$_lang['bigbrother.overview.desc_markup'] = '<p class="account-name">{name}<span>{id}</span></p>';
 $_lang['bigbrother.overview.visits_and_uniques'] = 'Visits and Uniques';
 $_lang['bigbrother.overview.traffic_sources_overview'] = 'Traffic Sources Overview';
 $_lang['bigbrother.overview.top_content'] = 'Top content';
@@ -67,3 +67,6 @@ $_lang['bigbrother.bounce_rate'] = 'Bounce Rate';
 $_lang['bigbrother.visitors'] = 'Visitors';
 $_lang['bigbrother.new_visits'] = 'New Visits';
 $_lang['bigbrother.new_visits_in_percent'] = 'New Visits in percent';
+$_lang['bigbrother.direct_traffic'] = 'Direct Traffic';
+$_lang['bigbrother.search_engines'] = 'Search Engines';
+$_lang['bigbrother.referring_sites'] = 'Referring Sites';

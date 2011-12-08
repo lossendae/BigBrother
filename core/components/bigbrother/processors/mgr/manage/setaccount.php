@@ -6,7 +6,8 @@
  * @subpackage processors
  */
 $ga =& $modx->bigbrother;
-$ga->updateOption('account', $_REQUEST['account']);
+$ga->updateOption('account', $scriptProperties['account']);
+$ga->updateOption('account_name', $scriptProperties['accountName']);
 
 $response['text'] = $modx->lexicon('bigbrother.account_set_succesfully_wait');
 $response['success'] = true;
