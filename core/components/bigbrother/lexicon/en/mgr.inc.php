@@ -47,26 +47,61 @@ $_lang['bigbrother.redirect_to_google'] = 'Redirect to Google, please wait...';
 $_lang['bigbrother.authentification_complete'] = 'Authentification complete.</p><p>Select the account you wish to use by default in the list below.<br/> At any time, you will be able to select another account in the dashboard.';
 $_lang['bigbrother.account_set_succesfully_wait'] = 'Account set successfully! Please wait...';
 
-/* Reports - metas replacements */
-
+/* Reports */
+$_lang['bigbrother.desc_markup'] = '<p>{title}<span class="account-name">{name}<span>{id}</span></span></p>';
 $_lang['bigbrother.loading'] = 'Loading...';
 
-/* Reports - Overview */
+/* Content Overview */
 
-$_lang['bigbrother.overview.title'] = 'Overview';
-$_lang['bigbrother.overview.desc'] = 'Loading...';
-$_lang['bigbrother.overview.desc_markup'] = '<p class="account-name">{name}<span>{id}</span></p>';
-$_lang['bigbrother.overview.visits_and_uniques'] = 'Visits and Uniques';
-$_lang['bigbrother.overview.traffic_sources_overview'] = 'Traffic Sources Overview';
-$_lang['bigbrother.overview.top_content'] = 'Top content';
+$_lang['bigbrother.content'] = 'Content';
+$_lang['bigbrother.content_overview'] = 'Content Overview';
+$_lang['bigbrother.site_content'] = 'Site Content';
 
+/* Audience Overview */
+$_lang['bigbrother.audience'] = 'Audience';
+$_lang['bigbrother.audience_overview'] = 'Audience Overview';
+$_lang['bigbrother.audience_visits'] = 'Visits';
+
+$_lang['bigbrother.demographics'] = 'Demographics';
+$_lang['bigbrother.language'] = 'Language';
+$_lang['bigbrother.country'] = 'Country / Territory';
+
+$_lang['bigbrother.system'] = 'System';
+$_lang['bigbrother.browser'] = 'Browser';
+$_lang['bigbrother.operating_system'] = 'Operating System';
+$_lang['bigbrother.service_provider'] = 'Service Provider';
+
+$_lang['bigbrother.mobile'] = 'Mobile';
+$_lang['bigbrother.screen_resolution'] = 'Screen Resolution';
+
+/* Traffic sources Overview */
+$_lang['bigbrother.traffic_sources'] = 'Traffic Sources';
+$_lang['bigbrother.traffic_sources_overview'] = 'Traffic Sources Overview';
+$_lang['bigbrother.traffic_sources_visits'] = 'Visits';
+
+$_lang['bigbrother.search_traffic'] = 'Search Traffic';
+$_lang['bigbrother.keyword'] = 'Keyword';
+
+$_lang['bigbrother.referral_traffic'] = 'Referral Traffic';
+$_lang['bigbrother.source'] = 'Source';
+
+$_lang['bigbrother.direct_traffic'] = 'Direct Traffic';
+$_lang['bigbrother.landing_page'] = 'Landing Page';
+
+/* Misc */
+$_lang['bigbrother.visits_and_uniques'] = 'Visits and Uniques';
+$_lang['bigbrother.avg_time_on_site'] = 'Avg. Time on Site';
 $_lang['bigbrother.page'] = 'Page';
+$_lang['bigbrother.pagetitle'] = 'Page Title';
 $_lang['bigbrother.pageviews'] = 'Pageviews';
+$_lang['bigbrother.pageviews_per_visit'] = 'Pages / Visit';
 $_lang['bigbrother.unique_pageviews'] = 'Unique Pageviews';
 $_lang['bigbrother.bounce_rate'] = 'Bounce Rate';
+$_lang['bigbrother.visits'] = 'Visits';
 $_lang['bigbrother.visitors'] = 'Visitors';
+$_lang['bigbrother.percent_visits'] = '% Visits';
 $_lang['bigbrother.new_visits'] = 'New Visits';
-$_lang['bigbrother.new_visits_in_percent'] = 'New Visits in percent';
+$_lang['bigbrother.new_visits_in_percent'] = '% New Visits';
 $_lang['bigbrother.direct_traffic'] = 'Direct Traffic';
 $_lang['bigbrother.search_engines'] = 'Search Engines';
 $_lang['bigbrother.referring_sites'] = 'Referring Sites';
