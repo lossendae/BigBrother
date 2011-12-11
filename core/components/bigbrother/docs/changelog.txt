@@ -1,5 +1,14 @@
 <span class="warning">Reload the page after installation to access the menu item under "Components"</span>
 
+Big Brother 1.0 beta2
+*********************
+
+- Added more reports following Google Analytics website display
+- Added date range information
+- Added custom vtabs class definitions
+- Streamlined grids and panel description
+- Updated grid processor to use a single file
+
 Big Brother 1.0 beta1
 *********************
 
