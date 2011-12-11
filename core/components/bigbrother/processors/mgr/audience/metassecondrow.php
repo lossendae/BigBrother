@@ -1,6 +1,6 @@
 <?php
 /**
- * Most Viewed
+ * OAuth login sequence - login process
  *
  * @package bigbrother
  * @subpackage processors
@@ -15,13 +15,10 @@ if(!$ga->loadOAuth()){
 	return $modx->toJSON($response);
 }
 
-/* @TODO - Make this dynamic */
 $dateEnd = date('Y-m-d', time()); // 30 days in the past
 $dateStart = date('Y-m-d', time() - (60 * 60 * 24 * 30)); // 30 days in the past
 
-$metrics = array('ga:pageviews','ga:uniquePageviews','ga:visitBounceRate','ga:visitors', 'ga:newVisits', 'ga:percentNewVisits');
-/* @TODO : lexiconify the following */
-$replacements = array('Pageviews','Unique Pageviews','Bounce Rate','Visitors', 'New Visits', 'New Visits in percent');
+$metrics = array('ga:avgTimeOnSite','ga:visitBounceRate','ga:percentNewVisits');
 
 $response['success'] = $ga->simpleReportRequest($dateStart, $dateEnd, null, join($metrics, ','));
 
@@ -33,16 +30,19 @@ if(!$response['success']){
 $results = $ga->getOutput();
 
 foreach($results as $k => $v){
+	$total = 6;
+	$i = 1;
 	foreach($v as $key => $value){
-		$name = str_replace($metrics, $replacements, $key);
-		
+		$name = $ga->getName($key);
+				
 		$metas['name'] = $name;
-		if($key == 'ga:percentNewVisits' || $key == 'ga:visitBounceRate'){
-			$metas['value'] = round($value,2) .' %';
-		} else {
-			$metas['value'] = $value;
-		}
-		$r[] = $metas;
+		$metas['key'] = strtolower(str_replace('ga:', '', $key));
+		$metas['value'] = ($key == 'ga:percentNewVisits' || $key == 'ga:visitBounceRate') ? round($value,2) .' %' : $value;
+		$metas['value'] = ($key == 'ga:pageviewsPerVisit') ? round($metas['value'],2) : $metas['value'];
+		$metas['value'] = ($key == 'ga:avgTimeOnSite') ? $ga->formatTime($metas['value']) : $metas['value'];
+		
+		$r[] = $metas;	
+		$i++;
 	}
 }
 
