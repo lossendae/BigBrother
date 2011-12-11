@@ -105,8 +105,8 @@ class BigBrother {
 	/**
      * Extract the cURL response params and create an associative array with the paired values
      *
-     * @param string $response The cURL string response
      * @access public
+     * @param string $response The cURL string response
      * @return array The params associative array
      */
 	public function splitParams($response) {
@@ -118,6 +118,61 @@ class BigBrother {
 			$params[$key] = urldecode($value);
 		}
 		return $params;
+	}
+	
+	/**
+     * Wrapper method to get total visits for specified period
+     * 
+     * @access public
+     * @param string $dateStart The starting date
+     * @param string $dateEnd The End date
+     * @return string The total vistis for specified period
+     */
+	public function getTotalVisits($dateStart, $dateEnd){
+		$this->simpleReportRequest($dateStart, $dateEnd, null, 'ga:visits');
+		$data = $this->getOutput();
+		return $data['value'];
+	}
+	
+	/**
+     * Get a translated name for the specified metric
+     * 
+     * @access public
+     * @param string $key The metric to translate
+     * @return string The translated metric
+     */
+	public function getName($key) {
+		$metrics = array(
+			'ga:pageviewsPerVisit',
+			'ga:pageviews',			
+			'ga:visits',
+			'ga:visitors',			
+			'ga:avgTimeOnSite',
+			'ga:visitBounceRate',
+			'ga:percentNewVisits',
+		);
+		$replacements = array(
+			$this->modx->lexicon('bigbrother.pageviews_per_visit'),
+			$this->modx->lexicon('bigbrother.pageviews'),			
+			$this->modx->lexicon('bigbrother.visits'),
+			$this->modx->lexicon('bigbrother.visitors'),			
+			$this->modx->lexicon('bigbrother.avg_time_on_site'),
+			$this->modx->lexicon('bigbrother.bounce_rate'),
+			$this->modx->lexicon('bigbrother.new_visits_in_percent'),
+		);
+		$name = str_replace($metrics, $replacements, $key);
+		return $name;
+	}
+	
+	/**
+     * Format time for front end display
+     * 
+     * @access public
+     * @param string $secs The time in seconds
+     * @return string The nicely formatted time
+     */
+	public function formatTime($secs) {
+		return sprintf("%02u:%02u:%02u", $secs/3600, $secs%3600/60, $secs%60);
 	}
 	
 	/**
@@ -168,8 +223,8 @@ class BigBrother {
 	/**
      * Helper method to retreive a bigbrother related system setting
      *
-     * @param string $key The setting name
      * @access public
+     * @param string $key The setting name
      * @return mixed The system requested setting
      */
 	public function getOption($key) {
@@ -240,9 +295,9 @@ class BigBrother {
 		$url .= '&end-date=' . $dateEnd;
 		$url .= ($limit != null) ? '&max-results=' .$limit : '';
 		
-		$cacheKey = md5(urlencode($url));
-		
+		$cacheKey = md5(urlencode($url));		
 		$fromCache = $this->modx->cacheManager->get($cacheKey);
+		
 		if( !empty($fromCache) ){
 			$this->output = $fromCache;
 		} else {
@@ -279,6 +334,8 @@ class BigBrother {
 						$dimensionAttributes = $dimension[0]->attributes();
 						$dim_name = (string)$dimensionAttributes['value'];
 					}
+					
+					// $output[$dim_name]['dim_name'] = $this->getName($dim_name);
 
 					$metric = $entry->xpath('dxp:metric');
 					if(sizeof($metric) > 1) {
@@ -291,7 +348,6 @@ class BigBrother {
 						$output[$dim_name] = (string)$metricAttributes['value'];
 					}
 				}
-				
 				$this->output = $output;
 				// Cache the result 
 				$this->modx->cacheManager->set($cacheKey, $this->output, $this->getOption('cache_timeout')); 
@@ -324,9 +380,9 @@ class BigBrother {
 		$url .= '&end-date=' .$dateEnd;
 		$url .= ($limit != null) ? '&max-results=' .$limit : '';
 		
-		$cacheKey = md5(urlencode($url));
-		
+		$cacheKey = md5(urlencode($url));		
 		$fromCache = $this->modx->cacheManager->get($cacheKey);
+		
 		if( !empty($fromCache) )	{
 			$this->output = $fromCache;
 		} else {
