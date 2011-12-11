@@ -18,79 +18,11 @@ MODx.panel.BigBrotherPanel = function(config) {
             ,border: false
             ,cls: 'modx-page-header'
         },MODx.getPageStructure([{
-            title: _('bigbrother.overview.title')	
-			,defaults: { 
-				border: false 
-			}
-			,items:[{
-				xtype: 'modx-template-panel'
-				,id: 'bb-desc'
-				,bodyCssClass: 'panel-desc'
-				,startingMarkup: '<tpl for=".">'+_('bigbrother.overview.desc_markup')+'</tpl>'
-				,reset: function(){	
-					this.body.hide();
-					//Override default text
-					this.defaultMarkup.overwrite(this.body, {
-						id: MODx.config['bigbrother.account']
-						,name: MODx.config['bigbrother.account_name']
-					});
-					this.body.slideIn('r', {stopFx:true, duration:.2});
-					setTimeout(function(){
-						Ext.getCmp('modx-content').doLayout();
-					}, 500);
-				}
-            },{
-				 layout: 'form'
-				,cls: 'main-wrapper'
-				,autoHeight: true
-				,defaults: { 
-					border: false 
-					,autoHeight: true
-				}
-				,id: 'report-panel'
-				,items:[{
-					xtype: 'bb-linechart-panel'
-					,title: _('bigbrother.overview.visits_and_uniques')	
-					,action: 'overview/pageviews'
-				},{
-					xtype:'bb-meta-panel'
-					,id:'report-metas'
-					,action: 'overview/metas'
-				},{
-					layout: 'column'
-					,defaults: { 
-						border: false 
-						,autoHeight: true
-					}
-					,items:[{
-						xtype: 'bb-pie-panel'
-						,title: _('bigbrother.overview.traffic_sources_overview')	
-						,action: 'overview/trafficsource'
-						,columnWidth: .5				
-					},{
-						xtype: 'panel'
-						,layout: 'form'
-						,columnWidth: .5
-						,defaults: { 
-							border: false 
-							,autoHeight: true
-						}
-						,items:[{
-							xtype: 'bb-preview-grid'
-							,title: _('bigbrother.overview.top_content')	
-							,baseParams: {
-								action: 'overview/topcontent'
-							}					
-							,fields: ['pagepath','pageviews','uniquepageviews']
-							,columns:[
-								 { header: _('bigbrother.page') ,dataIndex: 'pagepath', id:'title', width: 150 }
-								,{ header: _('bigbrother.pageviews') ,dataIndex: 'pageviews', id:'aright' }
-								,{ header: _('bigbrother.unique_pageviews') ,dataIndex: 'uniquepageviews', id:'aright' }
-							]
-						}]
-					}]
-				}]
-			}]
+			xtype: 'bb-panel-content-overview'
+		},{
+			xtype: 'bb-panel-audience-overview'
+		},{
+			xtype: 'bb-panel-traffic-sources-overview'
 		}])]	
 	});
 	MODx.panel.BigBrotherPanel.superclass.constructor.call(this,config);
@@ -106,6 +38,14 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 			,defaults: { scope: me }
 			,items: []
 		});		
+		this.actionToolbar.add({
+			xtype: 'modx-template-panel'
+			,id: 'report-dates'
+			,bodyCssClass: 'report-dates'
+			,markup: '<tpl for=".">'
+				+'Reports from <span>{begin}</span> to <span>{end}</span>'
+			+'</tpl>'
+		});
 		if(MODx.config['bigbrother.total_account'] > 1){
 			this.win = false;
 			this.actionToolbar.add({
@@ -118,6 +58,28 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 			,handler: this.revokeAuthorizationPromptWindow
 		});		
 		this.actionToolbar.doLayout();
+		this.getDates();
+	}
+	
+	,getDates: function(){
+		var data = {};
+		data.text = 'Testing';
+		Ext.Ajax.request({
+			url : MODx.BigBrotherConnectorUrl
+			,params : { 
+				action : 'report/getDates'
+			}
+			,method: 'GET'
+			,scope: this
+			,success: function ( result, request ) { 
+				var data = Ext.util.JSON.decode( result.responseText );			
+				if(data.success){ Ext.getCmp('report-dates').updateDetail(data.results); }
+			}
+			,failure: function ( result, request) { 
+				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
+			} 
+		});
+		
 	}
 	
 	,loadAccountWindow: function(btn){
@@ -246,40 +208,3 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 	,redirect: function(){ location.href = MODx.BigBrotherRedirect; }
 });
 Ext.reg('bb-panel', MODx.panel.BigBrotherPanel);
-
-/**
- * Loads a grid of TopContents.
- * 
- * @class MODx.grid.TopContent
- * @extends MODx.grid.Grid
- * @param {Object} config An object of options.
- * @xtype modx-grid-package
- */
-// MODx.grid.TopContent = function(config) {
-    // config = config || {};
-	// Ext.applyIf(config,{
-		// title: 'Content Performance'
-		// ,url : MODx.BigBrotherConnectorUrl
-		// ,baseParams: { 
-			// action : 'request/topcontent'
-		// }
-		// ,fields: ['pagepath','pageviews','uniquepageviews','avgtimeonpage','exitpage','bouncerate']
-		// ,columns:[
-			 // { header: 'Page' ,dataIndex: 'pagepath', id:'title', width: 320 }
-			// ,{ header: 'Pageviews' ,dataIndex: 'pageviews', id:'highlight' }
-			// ,{ header: 'Unique Pageviews' ,dataIndex: 'uniquepageviews', id:'aright' }
-			// ,{ header: 'Avg. Time on Page' ,dataIndex: 'avgtimeonpage', id:'aright' }			
-			// ,{ header: 'Bounce Rate' ,dataIndex: 'bouncerate', id:'aright' }
-			// ,{ header: '% Exit' ,dataIndex: 'exitpage', id:'aright' }
-		// ]
-		// ,pageSize: 10
-		// ,primaryKey: 'signature'
-		// ,autoExpandColumn: 'pagepath'
-		// ,enableHdMenu: false
-		// ,remoteSort: false
-		// ,paging: true
-	// });
-    // MODx.grid.TopContent.superclass.constructor.call(this,config);
-// };
-// Ext.extend(MODx.grid.TopContent,MODx.grid.Grid,{});
-// Ext.reg('modx-grid-topcontent',MODx.grid.TopContent);

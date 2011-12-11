@@ -10,7 +10,7 @@ MODx.panel.BigBrotherPiePanel = function(config) {
     config = config || {};	
 	this.panelId = Ext.id();
 	Ext.applyIf(config,{
-		html: '<div id="charts-'+this.panelId+'" style="height: 195px; margin: 0 auto"></div>'
+		html: '<div id="charts-'+this.panelId+'" style="height: 150px; margin: 0 auto"></div>'
 		,cls: 'bb-panel charts-wrapper'
 		,listeners:{
 			afterrender: this.getData
