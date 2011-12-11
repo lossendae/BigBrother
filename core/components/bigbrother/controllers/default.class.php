@@ -66,6 +66,9 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/charts.js');				
 		
 		//Main Panels
+		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/content.js');	
+		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/audience.js');	
+		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/traffic-sources.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/container.js');	
 		$page = $this->modx->getObject('modAction', array(
 			'namespace' => 'bigbrother',
