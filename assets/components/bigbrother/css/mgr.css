@@ -1,4 +1,3 @@
-h2 { font-weight: bold; }
 h3{
 	font-size: 20px;
 	font-weight: normal;
@@ -24,7 +23,7 @@ h3{
 }
 .panel-desc strong{ font-weight: bold}
 .panel-desc p{ 
-	font-size: 18px;
+	font-size: 13px;
 	margin-bottom: 8px; 
 }
 .win .panel-desc p{ font-size: 13px; }
@@ -101,23 +100,11 @@ h3{
 	-moz-border-radius: 1px;
 	-webkit-border-radius: 1px;
 	-o-border-radius: 1px;
-	border: 1px solid #D0D0D0;
 }
 .ext-strict .x-grid3-hd-inner {
 	white-space: normal;
 }	
-.x-panel-body-noheader .x-grid3-header{
-    background: url("/manager/templates/default/images/modx-theme/form/button-bg.png") repeat-x scroll 0 bottom #DADADA;
-    background:-moz-linear-gradient(center bottom,#DADADA 0%,#F3F3F3 100%) repeat scroll 0 0 transparent;
-    background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#F3F3F3),color-stop(100%,#DADADA));
-    background:-webkit-linear-gradient(center bottom,#DADADA 0%,#F3F3F3 100%);
-    background:-o-linear-gradient(center bottom,#DADADA 0%,#F3F3F3 100%);
-    background:-ms-linear-gradient(center bottom,#DADADA 0%,#F3F3F3 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#F3F3F3,endColorstr=#DADADA,GradientType=0);
-    background:linear-gradient(center bottom,#DADADA 0%,#F3F3F3 100%);
-	border-bottom:1px solid #D0D0D0;
-	padding:0;
-}
+.x-panel-body-noheader .x-grid3-header{}
 td.x-grid3-hd-over .x-grid3-hd-inner, 
 td.sort-desc .x-grid3-hd-inner, 
 td.sort-asc .x-grid3-hd-inner, 
