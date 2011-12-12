@@ -32,11 +32,24 @@ MODx.panel.BigBrotherAuthorizePanel = function(config) {
 					,root: true
 				}
 			},{
-				xtype:'panel'
-				,cls: 'main-wrapper centered'
+				xtype:'form'
+				,cls: 'main-wrapper form-with-labels'
 				,id: 'login-panel'
 				,unstyled : true	
 				,hidden: true
+				,labelAlign: 'top'
+				,items: [{
+					xtype: 'textfield'
+					,fieldLabel: _('bigbrother.callback_label')
+					,name: 'callback_url'
+					,id: 'callback_url'
+					,anchor: '100%'
+				},{
+					xtype: 'label'
+					,forId: 'callback_url'
+					,text: _('bigbrother.callback_label_under')
+					,cls: 'desc-under'
+				}]
 				,buttonAlign: 'center'			
 				,buttons: [{
 					 xtype: 'button'
@@ -74,7 +87,9 @@ Ext.extend(MODx.panel.BigBrotherAuthorizePanel,MODx.Panel,{
 					this.getToken = true;
 					btn.setText(_('bigbrother.start_the_login_process'));
 				}
-				Ext.getCmp('login-panel').show();
+				var form = Ext.getCmp('login-panel');
+				form.show();
+				form.getForm().setValues(data);
 				Ext.getCmp('bb-breadcrumbs').updateDetail(data);
 			}
 			,failure: function ( result, request) { 
@@ -89,6 +104,7 @@ Ext.extend(MODx.panel.BigBrotherAuthorizePanel,MODx.Panel,{
 				url : MODx.BigBrotherConnectorUrl
 				,params : { 
 					action : 'authenticate/getAnonymousToken'
+					,callback_url : Ext.getCmp('callback_url').getValue()
 				}
 				,method: 'GET'
 				,scope: this

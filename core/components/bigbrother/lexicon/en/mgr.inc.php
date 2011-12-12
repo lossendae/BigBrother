@@ -26,6 +26,8 @@ $_lang['bigbrother.bd_root_crumb_text'] = 'Verify Prerequisite';
 
 $_lang['bigbrother.verify_prerequisite_settings'] = 'Verify Prerequisite Settings';
 $_lang['bigbrother.start_the_login_process'] = 'Start the login process';
+$_lang['bigbrother.callback_label'] = 'Callback URL';
+$_lang['bigbrother.callback_label_under'] = 'If the URL specified in this field does not match to the page where you are, copy and paste the current URL in the field.';
 
 /* Oauth complete */
 $_lang['bigbrother.bd_oauth_complete_in_progress'] = 'Authentification in progress...';

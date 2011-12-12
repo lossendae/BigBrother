@@ -6,12 +6,7 @@
  * @subpackage processors
  */
 $ga =& $modx->bigbrother;
-
-//The Google Analytics manager page
-$page = $modx->getObject('modAction', array(
-	'namespace' => 'bigbrother',
-	'controller' => 'index',
-));
+$callbackUrl = $scriptProperties['callback_url'];
 
 $response['text'] = '';
 $response['trail'][] = array('text' => $modx->lexicon('bigbrother.bd_authorize'));
@@ -26,7 +21,7 @@ if(!$ga->loadOAuth()){
 $signatureMethod = new GADOAuthSignatureMethod_HMAC_SHA1();
 $params = array();
 
-$params['oauth_callback'] = $modx->getOption('site_url') . 'manager?a='. $page->get('id') .'&oauth_return=true';
+$params['oauth_callback'] = $callbackUrl . '&oauth_return=true';
 $params['scope'] = 'https://www.google.com/analytics/feeds/'; 
 $params['xoauth_displayname'] = $modx->getOption('site_name').' - Analytics Dashboard';
 
@@ -55,6 +50,7 @@ if($httpCode == 200) {
 	$response['url'] = 'https://www.google.com/accounts/OAuthAuthorizeToken?oauth_token=' . urlencode($access_params['oauth_token']);
 	$ga->addOption('oa_anon_token', $access_params['oauth_token']);
 	$ga->addOption('oa_anon_secret', $access_params['oauth_token_secret']);
+	$ga->addOption('callback_url', $callbackUrl);
 } else {
 	$response['text'] = $oaResponse;
 	$response['success'] = false;
