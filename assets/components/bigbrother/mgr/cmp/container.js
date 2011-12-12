@@ -45,25 +45,20 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 			,markup: '<tpl for=".">'
 				+'Reports from <span>{begin}</span> to <span>{end}</span>'
 			+'</tpl>'
-		});
-		if(MODx.config['bigbrother.total_account'] > 1){
-			this.win = false;
-			this.actionToolbar.add({
-				text: _('bigbrother.change_account')
-				,handler: this.loadAccountWindow
-			});
-		}		
-		this.actionToolbar.add({
-			text: _('bigbrother.revoke_authorization')
-			,handler: this.revokeAuthorizationPromptWindow
-		});		
+		});			
 		this.actionToolbar.doLayout();
 		this.getDates();
 	}
 	
+	//For future usage
+	/* ,showOptionsPanel: function(){
+		// var tabs = this.getComponent('tabs');
+		// tabs.add({ xtype: 'bb-panel-options' });
+		// tabs.setActiveTab('options-panel');		
+		// this.doLayout();
+	} */
+	
 	,getDates: function(){
-		var data = {};
-		data.text = 'Testing';
 		Ext.Ajax.request({
 			url : MODx.BigBrotherConnectorUrl
 			,params : { 
@@ -83,7 +78,6 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 	}
 	
 	,loadAccountWindow: function(btn){
-		me = this;
 		if(!this.win){
 			this.win = new Ext.Window({
 				cls: 'win'

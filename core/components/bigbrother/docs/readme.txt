@@ -12,12 +12,13 @@ INSTALL INSTRUCTIONS:
 
 ROADMAP:
 
-- More reports & options
-- Use MODx permissions for admin options
 - Ability to load some panels on the main dashboard page
 - Custom TV for single resource report
 - Sample plugin for Google Analytics front end tracking
 - Snippets for front end infos
+- More reports & options
+- Use an option panel for administrators
+- Let the user choose which report to show or not
 - Allow changing date for reports (Only the last 30 days are tracked for now)
 
 NOTES & CREDITS:

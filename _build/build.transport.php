@@ -34,7 +34,7 @@ $sources= array (
     'files' => $root .'files/',
     'build' => $root .'_build/',
 	'data' => $root .'_build/data/',
-    'resolvers' => $root . '_build/resolvers/',
+    'resolvers' => $root .'_build/resolvers/',
     'core' => $root.'core/components/'.PKG_NAMESPACE,
     'snippets' => $root.'core/components/'.PKG_NAMESPACE.'/elements/snippets/',
     'assets' => $root.'assets/components/'.PKG_NAMESPACE,
@@ -120,6 +120,10 @@ $vehicle->resolve('file',array(
     'target' => "return MODX_ASSETS_PATH . 'components/';",
 ));
 
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'setupoptions.resolver.php',
+));
+
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in resolvers.'); flush();
 $builder->putVehicle($vehicle);
 
@@ -128,6 +132,9 @@ $builder->setPackageAttributes(array(
     'license' => file_get_contents($sources['docs'] . 'license.txt'),
     'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
     'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
+	'setup-options' => array(
+        'source' => $sources['build'].'setup.options.php',
+    ),
 ));
 $modx->log(modX::LOG_LEVEL_INFO,'Packaged in package attributes.'); flush();
 

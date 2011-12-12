@@ -17,4 +17,13 @@ $settings['bigbrother.cache_timeout']->fromArray(array(
     'area' => 'Google Analytics for MODx Revolution',
 ),'',true,true);
 
+$settings['bigbrother.admin_groups']= $modx->newObject('modSystemSetting');
+$settings['bigbrother.admin_groups']->fromArray(array(
+    'key' => 'bigbrother.admin_groups',
+    'value' => 'Administrator',
+    'xtype' => 'textfield',
+    'namespace' => 'bigbrother',
+    'area' => 'Google Analytics for MODx Revolution',
+),'',true,true);
+
 return $settings;

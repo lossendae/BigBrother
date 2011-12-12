@@ -105,3 +105,6 @@ $_lang['bigbrother.new_visits_in_percent'] = '% New Visits';
 $_lang['bigbrother.direct_traffic'] = 'Direct Traffic';
 $_lang['bigbrother.search_engines'] = 'Search Engines';
 $_lang['bigbrother.referring_sites'] = 'Referring Sites';
+
+/* Options panel */
+$_lang['bigbrother.options'] = 'Options';

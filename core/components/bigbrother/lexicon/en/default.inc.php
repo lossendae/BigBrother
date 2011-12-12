@@ -17,3 +17,6 @@ $_lang['setting_bigbrother.is_authenticated_desc'] = 'This setting indicate if t
 
 $_lang['setting_bigbrother.cache_timeout'] = 'Cache Timeout';
 $_lang['setting_bigbrother.cache_timeout_desc'] = 'How long result sets from Google Analytics should be cached locally (in second)';
+
+$_lang['setting_bigbrother.admin_groups'] = 'Administrator Groups';
+$_lang['setting_bigbrother.admin_groups_desc'] = 'Comma separated list of MODx user groups who have access to the CMP options';
