@@ -15,7 +15,7 @@ set_time_limit(0);
 define('PKG_NAME','BigBrother');
 define('PKG_NAMESPACE','bigbrother');
 define('PKG_VERSION','1.0');
-define('PKG_RELEASE','beta2');
+define('PKG_RELEASE','beta5');
 
 function getSnippetContent($path, $name, $debug = false) {
 	$name = ($debug) ? 'debug.'. $name .'.php' : $name .'.php';
@@ -94,6 +94,23 @@ $vehicle= $builder->createVehicle($menu,array (
 $builder->putVehicle($vehicle);
 unset($vehicle,$action);
 $modx->log(modX::LOG_LEVEL_INFO,'<strong>Packaged in '.count($menus).' menus.</strong>'); flush();
+
+/* Load Dashboard Widgets */
+$modx->log(modX::LOG_LEVEL_INFO,'Packaging in Dashboard Widgets...');
+$widgets = include $sources['data'].'transport.dashboard_widgets.php';
+if (empty($widgets)) $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in widgets.');
+$attributes = array(
+    xPDOTransport::PRESERVE_KEYS => false,
+	xPDOTransport::UPDATE_OBJECT => true,
+	xPDOTransport::UNIQUE_KEY => array ('name'),
+);
+
+foreach ($widgets as $widget) {
+    $vehicle = $builder->createVehicle($widget,$attributes);
+    $builder->putVehicle($vehicle);
+}
+$modx->log(modX::LOG_LEVEL_INFO,'<strong>Packaged in '.count($widgets).' widgets.</strong>'); flush();
+unset($widgets,$widget,$attributes);
 
 /* create category */
 $category= $modx->newObject('modCategory');
