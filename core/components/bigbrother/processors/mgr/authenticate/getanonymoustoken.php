@@ -48,9 +48,9 @@ if($httpCode == 200) {
 	$access_params = $ga->splitParams($oaResponse);
 	$response['text'] = $modx->lexicon('bigbrother.redirect_to_google');
 	$response['url'] = 'https://www.google.com/accounts/OAuthAuthorizeToken?oauth_token=' . urlencode($access_params['oauth_token']);
-	$ga->addOption('oa_anon_token', $access_params['oauth_token']);
-	$ga->addOption('oa_anon_secret', $access_params['oauth_token_secret']);
-	$ga->addOption('callback_url', $callbackUrl);
+	$ga->updateOption('oa_anon_token', $access_params['oauth_token']);
+	$ga->updateOption('oa_anon_secret', $access_params['oauth_token_secret']);
+	$ga->updateOption('callback_url', $callbackUrl);
 } else {
 	$response['text'] = $oaResponse;
 	$response['success'] = false;

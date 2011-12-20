@@ -71,28 +71,22 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		
 		//Load the option menu only for specified user group
 		if($this->modx->user->isMember($groups)){			
-			//This will come in handy for choosing which report to show, changing options, etc...
-			/*$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/options.js');	
+			$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/options.js');	
 			$admin .= 'var pnl = Ext.getCmp("bb-panel");
 				Ext.getCmp("bb-panel").actionToolbar.add({
 					text: "Options"
-					,handler: function(){ this.showOptionsPanel(); }
-				});*/
-			
-			//For now, just use existing functions
-			$admin .= 'var pnl = Ext.getCmp("bb-panel");';
-			if($this->modx->getOption('bigbrother.total_account') > 1){
-				$admin .= 'pnl.win = false;';
-				$admin .= 'pnl.actionToolbar.add({
-					text: _("bigbrother.change_account")
-					,handler: function(me){ this.loadAccountWindow(me) }
+					,id: "options-btn"
+					,iconCls: "icon-options"
+					,handler: function(b){ this.showOptionsPanel(); b.disable(); }
 				});';
-			}
+		
 			$admin .= 'pnl.actionToolbar.add({
 				text: _("bigbrother.revoke_authorization")
+				,iconCls: "icon-delete"
 				,handler: function(me){ this.revokeAuthorizationPromptWindow(me) }
-			});';
-			$admin .= 'pnl.actionToolbar.doLayout();';
+			});
+			pnl.actionToolbar.doLayout();';
+			$admin .= '';
 		}
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/content.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/audience.js');	
@@ -102,11 +96,14 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 			'namespace' => 'bigbrother',
 			'controller' => 'index',
 		));	
+		$date = $this->bigbrother->getDates('d M Y');
 		
 		$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
 		$this->addHtml('<script type="text/javascript">
 			MODx.BigBrotherRedirect = "'.$url.'";
 			MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'
+			MODx.BigBrotherConnectorDateBegin = "'.$date['begin'].'";
+			MODx.BigBrotherConnectorDateEnd = "'.$date['end'].'";
 			Ext.onReady(function(){ MODx.add("bb-panel"); '. $admin .' });			
 		</script>');
 	}

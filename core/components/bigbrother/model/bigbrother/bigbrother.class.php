@@ -27,8 +27,11 @@ class BigBrother {
      * @var array A collection of properties to adjust bigbrother behaviour.
      */
     public $config = array();
-    private $output = null;
+    public $report = null;
+    public $sideReport = null;
+    public $cacheKey = null;
 	public $baseUrl = 'https://www.google.com/analytics/feeds/';
+    private $output = null;	
 
     /**
      * The bigbrother Constructor.
@@ -92,13 +95,11 @@ class BigBrother {
 		if (!file_exists($file)) {
 			return false;		
 		} 
-		require_once $file;	
-		
+		require_once $file;			
 		$oauthToken = $this->getOption('oauth_token');
         $oauthSecret = $this->getOption('oauth_secret');		
 		if($oauthToken != null && $oauthToken != ''){ $this->oauthToken = $oauthToken; }
-		if($oauthSecret != null && $oauthSecret != ''){ $this->oauthSecret = $oauthSecret; }
-		
+		if($oauthSecret != null && $oauthSecret != ''){ $this->oauthSecret = $oauthSecret; }		
 		return true;
 	}
 	
@@ -121,6 +122,30 @@ class BigBrother {
 	}
 	
 	/**
+     * Get dates for the requested report
+     *
+     * @access public
+     * @param string $format The date format to return
+     * @param boolean $delay Wheter to calculate date delayed for comparison
+     * @return array The begin and end dates for the requested period
+     */
+	public function getDates($format = 'Y-m-d', $delay = false){		
+		$end = $this->getOption('date_end');
+		$begin = $end .' - '. $this->getOption('date_begin') .' days';
+		if(!$delay){			
+			$date['begin'] = date($format, strtotime($begin));
+			$date['end'] = date($format, strtotime($end));
+		} else {	
+			$dateBegin = $this->getOption('date_begin') + 1;
+			$end = $end - $dateBegin .' days';
+			$begin = $end .' - '. $this->getOption('date_begin') .' days';
+			$date['begin'] = date($format, strtotime($begin));
+			$date['end'] = date($format, strtotime($end));
+		}		
+		return $date;
+	}
+	
+	/**
      * Wrapper method to get total visits for specified period
      * 
      * @access public
@@ -129,9 +154,15 @@ class BigBrother {
      * @return string The total vistis for specified period
      */
 	public function getTotalVisits($dateStart, $dateEnd){
-		$this->simpleReportRequest($dateStart, $dateEnd, null, 'ga:visits');
-		$data = $this->getOutput();
-		return $data['value'];
+		$url = $this->buildUrl($dateStart, $dateEnd, null, array('ga:visits'));
+		$report = $this->getReport($url, true);
+		foreach($report->entry as $entry){		
+			foreach($entry->xpath('dxp:metric') as $metric){
+				$metricAttributes = $metric->attributes();
+				$value = intval($metricAttributes['value']); 
+			}
+		}
+		return $value;
 	}
 	
 	/**
@@ -150,6 +181,9 @@ class BigBrother {
 			'ga:avgTimeOnSite',
 			'ga:visitBounceRate',
 			'ga:percentNewVisits',
+			'ga:newVisits',
+			'ga:uniquePageviews',
+			'ga:exitRate',
 		);
 		$replacements = array(
 			$this->modx->lexicon('bigbrother.pageviews_per_visit'),
@@ -159,20 +193,59 @@ class BigBrother {
 			$this->modx->lexicon('bigbrother.avg_time_on_site'),
 			$this->modx->lexicon('bigbrother.bounce_rate'),
 			$this->modx->lexicon('bigbrother.new_visits_in_percent'),
+			$this->modx->lexicon('bigbrother.new_visits'),
+			$this->modx->lexicon('bigbrother.unique_pageviews'),
+			$this->modx->lexicon('bigbrother.exit_rate'),
 		);
 		$name = str_replace($metrics, $replacements, $key);
 		return $name;
 	}
 	
 	/**
-     * Format time for front end display
+     * Get a translated name for the specified dimension
      * 
      * @access public
-     * @param string $secs The time in seconds
-     * @return string The nicely formatted time
+     * @param string $key The dimension to translate
+     * @return string The translated dimension
      */
-	public function formatTime($secs) {
-		return sprintf("%02u:%02u:%02u", $secs/3600, $secs%3600/60, $secs%60);
+	public function getDimensionName($key){
+		$dimensions = array(
+			$this->modx->lexicon('bigbrother.search_traffic'),
+			$this->modx->lexicon('bigbrother.referral_traffic'),
+		);
+		$replacements = array(
+			$this->modx->lexicon('bigbrother.search_traffic_replace_with'),
+			$this->modx->lexicon('bigbrother.referral_traffic_replace_with'),
+		);
+		$name = str_replace($dimensions, $replacements, $key);
+		return $name;
+	}
+	
+	/**
+     * Format metric value for front end display
+     * 
+     * @access public
+     * @param string $name The metric name
+     * @param string $value The metric value
+     * @return string The formatted metric value
+     */
+	public function formatValue($name, $value){
+		switch($name){
+			case 'ga:avgTimeOnSite':
+				$value = sprintf("%02u:%02u:%02u", $value/3600, $value%3600/60, $value%60);
+				break;
+			case 'ga:percentNewVisits':
+			case 'ga:visitBounceRate':
+			case 'ga:exitRate':
+				$value = round($value, 2) .' %';
+				break;
+			case 'ga:pageviewsPerVisit':
+				$value = round($value, 2);
+				break;
+			default:
+				break;
+		}
+		return $value;
 	}
 	
 	/**
@@ -244,9 +317,7 @@ class BigBrother {
      */
 	public function deleteOption($key) {
 		$setting = $this->modx->getObject('modSystemSetting', array('key' => 'bigbrother.'. $key));
-		if($setting){
-			return $setting->remove();
-		}
+		if($setting){ return $setting->remove(); }
 	}
 	
 	/**
@@ -271,93 +342,7 @@ class BigBrother {
 	}
 	
 	/**
-     * Get a simple report from Google or cache if exist
-     *
-     * @param string $dateStart The beginning date
-     * @param string $dateEnd The end date
-     * @param mixed $dimensions
-     * @param mixed $metrics
-     * @param mixed $sort
-     * @param mixed $filters
-     * @param mixed $limit
-     * @access public
-     * @return boolean true if the report is successfully fetched, false if any error
-     */
-	public function simpleReportRequest($dateStart, $dateEnd, $dimensions = '', $metrics = '', $sort = '', $filters = '', $limit = null) {
-		//Build the url
-		$url  = $this->baseUrl . 'data';
-		$url .= '?ids=' . $this->getOption('account');
-		$url .= $dimensions != '' ? ('&dimensions=' . $dimensions) : '';
-		$url .= $metrics != '' ? ('&metrics=' . $metrics) : '';
-		$url .= $sort != '' ? ('&sort=' . $sort) : '';
-		$url .= $filters != '' ? ('&filters=' . urlencode($filters)) : '';
-		$url .= '&start-date=' . $dateStart;
-		$url .= '&end-date=' . $dateEnd;
-		$url .= ($limit != null) ? '&max-results=' .$limit : '';
-		
-		$cacheKey = md5(urlencode($url));		
-		$fromCache = $this->modx->cacheManager->get($cacheKey);
-		
-		if( !empty($fromCache) ){
-			$this->output = $fromCache;
-		} else {
-			$ch = curl_init();
-
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array($this->createAuthHeader($url, 'GET')));
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-			$return = curl_exec($ch);
-
-			if(curl_errno($ch)){
-				$this->output = curl_error($ch);
-				return false;
-			}
-
-			$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-			if($this->http_code != 200) {
-				$this->output = $return;
-				return false;
-			} else {
-				$xml = simplexml_load_string($return);
-
-				curl_close($ch);
-
-				$output = array();
-				foreach($xml->entry as $entry) {
-					if($dimensions == '') {
-						$dim_name = 'value';
-					} else {
-						$dimension = $entry->xpath('dxp:dimension');
-						$dimensionAttributes = $dimension[0]->attributes();
-						$dim_name = (string)$dimensionAttributes['value'];
-					}
-					
-					// $output[$dim_name]['dim_name'] = $this->getName($dim_name);
-
-					$metric = $entry->xpath('dxp:metric');
-					if(sizeof($metric) > 1) {
-						foreach($metric as $single_metric) { 
-							$metricAttributes = $single_metric->attributes();
-							$output[$dim_name][(string)$metricAttributes['name']] = (string)$metricAttributes['value'];
-						}
-					} else {
-						$metricAttributes = $metric[0]->attributes();
-						$output[$dim_name] = (string)$metricAttributes['value'];
-					}
-				}
-				$this->output = $output;
-				// Cache the result 
-				$this->modx->cacheManager->set($cacheKey, $this->output, $this->getOption('cache_timeout')); 
-			}			
-		}	
-		return true;
-	}
-	
-	/**
-     * Get a complex report from Google or cache if exist
+     * Build the report url
      *
      * @param string $dateStart The beginning date
      * @param string $dateEnd The end date
@@ -367,9 +352,9 @@ class BigBrother {
      * @param array $filters
      * @param array $limit
      * @access public
-     * @return boolean true if the report is successfully fetched, false if any error
+     * @return string $url The url to retreive reports from or to build the cached result set
      */
-	public function complexReportRequest($dateStart, $dateEnd, $dimensions = array(), $metrics = array(), $sort = array(), $filters = array(), $limit = null) {
+	public function buildUrl($dateStart, $dateEnd, $dimensions = array(), $metrics = array(), $sort = array(), $filters = array(), $limit = null){
 		$url  = $this->baseUrl . 'data';
 		$url .= '?ids=' . $this->getOption('account');
 		$url .= sizeof($dimensions) > 0 ? ('&dimensions=' . join(array_reverse($dimensions), ',')) : '';
@@ -380,72 +365,45 @@ class BigBrother {
 		$url .= '&end-date=' .$dateEnd;
 		$url .= ($limit != null) ? '&max-results=' .$limit : '';
 		
-		$cacheKey = md5(urlencode($url));		
-		$fromCache = $this->modx->cacheManager->get($cacheKey);
-		
-		if( !empty($fromCache) )	{
-			$this->output = $fromCache;
-		} else {
-			$ch = curl_init();
-
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array($this->createAuthHeader($url, 'GET')));
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-			$return = curl_exec($ch);
-
-			if(curl_errno($ch)){
-				$this->output = curl_error($ch);
-				return false;
-			}
-
-			$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-			if($this->http_code != 200){
-				$this->output = $return;
-				return false;
-			} else {
-				$xml = simplexml_load_string($return);
-
-				curl_close($ch);
-
-				$output = array();
-				foreach($xml->entry as $entry){
-					$metrics = array();					
-					foreach($entry->xpath('dxp:metric') as $metric){
-						$metricAttributes = $metric->attributes();
-						$metrics[(string)$metricAttributes['name']] = (string)$metricAttributes['value']; 
-					}
-
-					$lastDimensionVarName = null;
-					foreach($entry->xpath('dxp:dimension') as $dimension){
-						$dimensionAttributes = $dimension->attributes();
-
-						$dimensionVarName = 'dimensions_' . strtr((string)$dimensionAttributes['name'], ':', '_');
-						$dimensionVarName = array();
-
-						if($lastDimensionVarName == null){
-							$dimensionVarName = array('name' => (string)$dimensionAttributes['name'],
-								'value' => (string)$dimensionAttributes['value'],
-								'metrics' => $metrics); 
-						} else {
-							$dimensionVarName = array('name' => (string)$dimensionAttributes['name'],
-								'value' => (string)$dimensionAttributes['value'],
-								'children' => $lastDimensionVarName); 
-						}
-						$lastDimensionVarName = $dimensionVarName;
-					}
-					array_push($output, $lastDimensionVarName);
-				}
-				
-				$this->output = $output;//Cache the result 
-				$this->modx->cacheManager->set($cacheKey, $this->output, $this->getOption('cache_timeout'));
-			}			
-		}
-		return true;
+		$this->cacheKey = md5(urlencode($url));	
+		return $url;
 	}
 	
+	/**
+     * Get a report from Google
+     *
+     * @param string $url The google url to retreive reports from
+     * @param boolean $returnXml Wether the xml should be returned directly
+     * @return boolean true if the report is successfully fetched, false if any error
+     */
+	public function getReport($url, $returnXml = false){
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array($this->createAuthHeader($url, 'GET')));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+		$return = curl_exec($ch);
+
+		if(curl_errno($ch)){
+			$this->output = curl_error($ch);
+			return false;
+		}
+
+		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		if($this->http_code != 200){
+			$this->output = $return;
+			return false;
+		} else {
+			$xml = simplexml_load_string($return);
+			curl_close($ch);
+			if($returnXml){
+				return $xml;
+			}
+			$this->report = $xml;		
+		}			
+		return true;
+	}
 	
 	/**
      * Get the report result or any error message if any

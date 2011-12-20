@@ -41,8 +41,7 @@ if($this->http_code != 200)	{
 	$xml = new SimpleXMLElement($return);
 
 	curl_close($ch);
-	
-	$current = $ga->getOption('account');
+
 	$total = 0;
 	$results = array();
 	foreach($xml->entry as $entry) {
@@ -51,14 +50,7 @@ if($this->http_code != 200)	{
 		
 		$account['name'] = (string)$entry->title;
 		$account['id'] = $part2;
-		
-		if($current != null){
-			if($current != $account['id']){
-				$results[] = $account;
-			}			
-		} else {
-			$results[] = $account;
-		}		
+		$results[] = $account;		
 		$total++;
 	}
 	$ga->updateOption('total_account', $total);
