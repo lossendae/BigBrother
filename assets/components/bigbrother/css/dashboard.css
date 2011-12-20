@@ -1,0 +1,82 @@
+.bigbrother .body {
+	max-height: inherit;
+	padding: 0;
+	position: relative;
+}
+.bigbrother .main-wrapper {
+    padding: 15px 15px 0;
+}
+.bigbrother .charts-wrapper,
+.bigbrother .metas-wrapper{ margin: 0 0 15px; }
+.bigbrother .bb-panel .x-panel-header{
+	background: none repeat scroll 0 0 #DADADA;
+    background:-moz-linear-gradient(center bottom,#DADADA 0%,#EAEAEA 100%) repeat scroll 0 0 transparent;
+    background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#EAEAEA),color-stop(100%,#DADADA));
+    background:-webkit-linear-gradient(center bottom,#DADADA 0%,#EAEAEA 100%);
+    background:-o-linear-gradient(center bottom,#DADADA 0%,#EAEAEA 100%);
+    background:-ms-linear-gradient(center bottom,#DADADA 0%,#EAEAEA 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#EAEAEA,endColorstr=#DADADA,GradientType=0);
+    background:linear-gradient(center bottom,#DADADA 0%,#EAEAEA 100%);
+	border-color: #D0D0D0 #D0D0D0 #E5E5E5;
+	border-style: solid;
+    border-width: 1px;
+	padding: 6px 10px;
+}
+.bigbrother .bb-panel  .x-panel-body {
+    border: 1px solid #D0D0D0;
+}
+.bigbrother .charts-line .x-panel-body {
+    padding: 15px 30px 15px 5px;
+}
+.bigbrother .metas-wrapper table{
+	font-family: Arial,Helvetica,sans-serif;
+	width: 100%;
+	border-collapse: collapse;
+	float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+	border:1px solid #D0D0D0;
+	border-bottom: 0 none;
+}
+.bigbrother .metas-wrapper tr{
+	border-bottom:1px solid #D0D0D0;
+}
+.bigbrother .metas-wrapper td{
+    border-right: 1px solid  #D0D0D0;
+    color: #888888;
+    font-size: 9px;
+    font-weight: bold;
+    margin: 0;
+    min-width: 115px;
+    padding: 10px;
+    text-transform: uppercase;
+}
+.bigbrother .metas-wrapper td.last{ border-right:0 none; }
+.bigbrother .metas-wrapper td .highlight{
+	color: #666666;
+    font-size: 35px;
+    line-height: 1;
+	position: relative;
+}
+.bigbrother .metas-wrapper td .compare{
+	background: url("../images/equal.png") no-repeat scroll top center transparent;
+	color: #A0A0A0;
+    font-size: 10px;
+    min-width: 15px;
+    padding-top: 15px;
+    position: absolute;
+    right: 13px;
+	text-align: center;
+    top: 12px;
+}
+.bigbrother .metas-wrapper td .compare.up{ 
+	background: url("../images/arrow-up.png") no-repeat scroll top center transparent; 
+	right: 5px;
+}
+.bigbrother .metas-wrapper td .compare.down{ 
+	background: url("../images/arrow-down.png") no-repeat scroll top center transparent; 
+	right: 5px;
+}
+.bigbrother .x-column-inner .x-column{ margin: 0 0 15px 15px; }
+.bigbrother .x-column-inner .x-column:first-child { margin-left: 0; }

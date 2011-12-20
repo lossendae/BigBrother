@@ -105,10 +105,9 @@ MODx.panel.BigBrotherAccountList = function(config) {
 			,triggerAction: 'all'
 			,width: 350
 			,editable: false
-			,typeAhead: true
+			,typeAhead: false
 			,forceSelection: true
 			,hideLabel: true
-			,minChars: 3
 			,listClass: 'account-list'
 			,ctCls: 'cb-account-list'
 			,emptyText: _('bigbrother.oauth_select_account')	

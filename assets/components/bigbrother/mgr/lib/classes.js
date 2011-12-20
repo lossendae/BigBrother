@@ -9,8 +9,9 @@
 MODx.DescPanel = function(config) {
     config = config || {}; 
 	Ext.applyIf(config,{
-		bodyCssClass: 'panel-desc'
-		,startingMarkup: '<tpl for=".">'+_('bigbrother.desc_markup')+'</tpl>'
+		startingMarkup: '<tpl for=".">'+_('bigbrother.desc_markup')+'</tpl>'
+		,cls: 'styled-desc'
+		,unstyled: true
 	});
 	MODx.DescPanel.superclass.constructor.call(this,config);
 }
@@ -19,9 +20,11 @@ Ext.extend(MODx.DescPanel,MODx.TemplatePanel,{
 		this.body.hide();
 		//Override default text
 		this.defaultMarkup.overwrite(this.body, {
-			id: MODx.config['bigbrother.account']
-			,name: MODx.config['bigbrother.account_name']
-			,title: _('bigbrother.' + this.lexicon)
+			title: this.startingText
+			,date_begin: MODx.BigBrotherConnectorDateBegin
+			,date_end: MODx.BigBrotherConnectorDateEnd
+			,id: MODx.config['bigbrother.account']
+			,name: MODx.config['bigbrother.account_name']			
 		});
 		this.body.slideIn('r', {stopFx:true, duration:.2});
 		setTimeout(function(){
@@ -115,7 +118,7 @@ Ext.extend(MODx.grid.BigBrotherReportGrid,Ext.grid.GridPanel,{
 Ext.reg('bb-report-grid',MODx.grid.BigBrotherReportGrid);
 
 /**
- * The panel containing the report for single meta values
+ * The panel containing the report for report metas
  * 
  * @class MODx.panel.BigBrotherMetaPanel
  * @extends MODx.Panel
@@ -125,14 +128,18 @@ Ext.reg('bb-report-grid',MODx.grid.BigBrotherReportGrid);
 MODx.panel.BigBrotherMetaPanel = function(config) {
 	config = config || {};	
 	this.tpl = new Ext.XTemplate('<tpl if="typeof(metas) != &quot;undefined&quot;">'
-		+'<div class="metas-wrapper"><table><tbody><tr>'
+		+'<div class="metas-wrapper"><table><tbody>'
 			+'<tpl for="metas">'
-				+'<td class="{cls}">'
-					+'<span class="highlight {key}">{value}</span>'  
-					+'{name}'  
-				+'</td>'
+				+'<tr>'
+					+'<tpl for=".">'
+						+'<td class="{cls}">'
+							+'<div class="highlight {key}">{value}<span class="compare {progressionCls}">{progression} %</span></div>'  
+							+'{name}'  
+						+'</td>'
+					+'</tpl>'
+				+'</tr>'
 			+'</tpl>'
-		+'</tr></tbody></table><br class="clear"/></div>'
+		+'</tbody></table><br class="clear"/></div>'
 	+'</tpl>'
 	+'<tpl if="typeof(start) != &quot;undefined&quot;">'
 		+'<div class="metas-wrapper"><table><tbody><tr><td class="{cls}">{start}</td></tr></tbody></table><br class="clear"/></div>'
@@ -142,7 +149,7 @@ MODx.panel.BigBrotherMetaPanel = function(config) {
 	
 	Ext.applyIf(config,{
 		 frame:false
-		,startingText: _('bigbrother.metas.loading')
+		,startingText: _('bigbrother.loading')
 		,plain:true
 		,border: false				
 	});
@@ -157,7 +164,9 @@ Ext.extend(MODx.panel.BigBrotherMetaPanel,Ext.Panel,{
 		Ext.Ajax.request({
 			url : MODx.BigBrotherConnectorUrl
 			,params : { 
-				action : this.action
+				action : 'report/metas'
+				,metrics : this.metrics
+				,cols : this.cols || 4
 			}
 			,method: 'GET'
 			,scope: this
@@ -204,17 +213,16 @@ MODx.VerticalTabs.BigBrother = function(config) {
 			bodyCssClass: 'vertical-tabs-body'
             ,autoScroll: true
             ,autoHeight: true
-            ,autoWidth: true
             ,border: false
 			,layout: 'form'
 		}
 		,listeners:{	//Dirty fix
 			tabchange: function(tb, pnl){ 				
-				this.fixPanelWidth(pnl);				
+				this.fixPanelWidth();	
 			}
 			,resize: function(){
 				var pnl = this.getActiveTab();
-				if(pnl != null){ this.fixPanelWidth(pnl); }				
+				if(pnl != null){ this.fixPanelWidth(); }	
 			}
 			,scope: this
 		}		
@@ -222,16 +230,10 @@ MODx.VerticalTabs.BigBrother = function(config) {
 	MODx.VerticalTabs.BigBrother.superclass.constructor.call(this,config);
 };
 Ext.extend(MODx.VerticalTabs.BigBrother, MODx.VerticalTabs,{
-	fixPanelWidth: function(pnl){			
+	fixPanelWidth: function(){	
+		var pnl = this;
 		var w = this.bwrap.getWidth();
 		pnl.body.setWidth(w);
-		// console.log(w);
-		setTimeout(function(){
-			if(pnl.body.getWidth() != w){ 
-				pnl.body.setWidth(w) ;
-				pnl.doLayout();
-			}							
-		}, 500);
 		pnl.doLayout();
 	}
 });

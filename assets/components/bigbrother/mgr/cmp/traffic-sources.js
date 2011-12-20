@@ -1,5 +1,5 @@
 /**
- * The panel containing the audience overview
+ * The panel containing the traffic sources overview
  * 
  * @class MODx.panel.BigBrotherTrafficSourcesOverview
  * @extends MODx.Panel
@@ -14,9 +14,8 @@ MODx.panel.BigBrotherTrafficSourcesOverview = function(config) {
 			border: false 
 		}
 		,items:[{
-			xtype: 'modx-desc-panel'
-			,lexicon: 'traffic_sources_overview'
-			,id: 'bb-traffic-sources-desc'
+			xtype: 'modx-desc-panel'				
+			,startingText: _('bigbrother.traffic_sources_overview')
 		},{
 			 layout: 'form'
 			,cls: 'main-wrapper'
@@ -27,18 +26,28 @@ MODx.panel.BigBrotherTrafficSourcesOverview = function(config) {
 			}
 			,id: 'report-traffic-sources-panel'
 			,items:[{
-				xtype: 'bb-linechart-panel'
-				,title: _('bigbrother.traffic_sources_visits')	
-				,action: 'audience/visitsCharts'
+				xtype: 'bb-areachart-panel'
+				,title: _('bigbrother.audience_visits')	
+				,metrics: 'ga:visits,ga:pageViews'
 			},{
-				// xtype:'bb-meta-panel'
-				// ,id:'report-audience-metas-first'
-				// ,action: 'audience/metasFirstRow'
-			// },{
-				// xtype:'bb-meta-panel'
-				// ,id:'report-audience-metas-second'
-				// ,action: 'audience/metasSecondRow'
-			// },{
+				layout: 'column'
+				,items:[{
+					xtype:'bb-meta-panel'
+					,id:'report-tf-metas'
+					,metrics: 'ga:visits,ga:visitors,ga:pageviews,ga:uniquePageviews,ga:percentNewVisits,ga:pageviewsPerVisit,ga:avgTimeOnSite,ga:visitBounceRate'
+					,cols: 2
+					,columnWidth: 0.5
+				},{
+					xtype: 'bb-pie-panel'
+					,title: _('bigbrother.traffic_sources')
+					,dimensions: 'ga:medium'
+					,metrics: 'ga:visits'
+					,sort: 'ga:visits'
+					,chartHeight: 250
+					,replace: 'direct_traffic'
+					,columnWidth: 0.5
+				}]		
+			},{
 				xtype: 'panel'
 				,cls: 'report-panel'
 				,title: _('bigbrother.search_traffic')
@@ -49,52 +58,34 @@ MODx.panel.BigBrotherTrafficSourcesOverview = function(config) {
 						title: _('bigbrother.keyword')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'keyword'
+							,dimension: 'ga:keyword'
 							,fieldName: 'keyword'
 						}]
 					},{
-						title: _('bigbrother.source')	
+						title: _('bigbrother.organic_source')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'source'
+							,dimension: 'ga:source'
 							,fieldName: 'source'
 							,filters: 'ga:organicSearches>0'
 						}]
-					}]					
-				}]
-			},{
-				xtype: 'panel'
-				,cls: 'report-panel'
-				,title: _('bigbrother.referral_traffic')
-				,border: true 
-				,items: [{
-					xtype: 'bb-vtabs'
-					,items:[{
-						title: _('bigbrother.source')	
+					},{
+						title: _('bigbrother.referral_source')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'source'
+							,dimension: 'ga:source'
 							,fieldName: 'source'
 							,filters: 'ga:organicSearches==0'
 						}]
-					}]
-				}]
-			},{
-				xtype: 'panel'
-				,cls: 'report-panel'
-				,title: _('bigbrother.direct_traffic')
-				,border: true 
-				,items: [{
-					xtype: 'bb-vtabs'
-					,items:[{
+					},{
 						title: _('bigbrother.landing_page')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'landingPagePath'
+							,dimension: 'ga:landingPagePath'
 							,fieldName: 'landing_page'
 							,filters: 'ga:medium==(none)'
 						}]
-					}]
+					}]					
 				}]
 			}]
 		}]	

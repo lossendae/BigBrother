@@ -5,10 +5,21 @@
 	right: 8px;
 	top: 11px;
 }
+.x-btn-text-icon .x-btn-icon-small-left .x-btn-text{	padding-left: 26px !important; }
 /* The real story begin here */
 h3{
-	font-size: 20px;
-	font-weight: normal;
+	color: #808080;
+    font-size: 20px;
+    font-weight: bold;
+	padding: 20px 0 15px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+h3 span{
+	color: #A0A0A0;
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    text-transform: uppercase;
 }
 .crumb_wrapper {
     border-top: 0 none;
@@ -25,35 +36,10 @@ h3{
     font-size: 13px;
     margin: -5px 0 0 1px;
 }
-.panel-desc{
-	margin-top: 15px;
-    padding: 15px 20px 7px !important;
-}
-.panel-desc strong{ font-weight: bold}
-.panel-desc p{ 
-	font-size: 13px;
-	margin-bottom: 8px; 
-}
 .win .panel-desc p{ font-size: 13px; }
 .win .panel-desc{
 	margin-top: 0;
 	padding: 10px 0 0 !important;
-}
-.account-name{
-	color: #636F4C;
-    float: right;
-    font-size: 14px;
-    letter-spacing: 0;
-	margin-top: -6px;
-    text-align: right;
-}
-.account-name span{
-	color: #888888;
-    display: block;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 0;
-    text-transform: uppercase;
 }
 .loading{
 	background: url("../images/loading.gif") no-repeat scroll 15px center #F7F7F7;
@@ -78,6 +64,10 @@ h3{
     padding: 0;
     width: 100%;
 	border:1px solid #D0D0D0;
+	border-bottom: 0 none;
+}
+.metas-wrapper tr{
+	border-bottom:1px solid #D0D0D0;
 }
 .metas-wrapper td{
     border-right: 1px solid  #D0D0D0;
@@ -92,12 +82,29 @@ h3{
 .metas-wrapper td.last{ border-right:0 none; }
 .metas-wrapper td .highlight{
 	color: #666666;
-    display: block;
-    font-size: 25px;
+    font-size: 35px;
     line-height: 1;
+	position: relative;
 }
-.metas-wrapper td .pageviews{ color: #4F6C84; }
-.metas-wrapper td .uniquepageviews{ color: #8BAF4C; }
+.metas-wrapper td .compare{
+	background: url("../images/equal.png") no-repeat scroll top center transparent;
+	color: #A0A0A0;
+    font-size: 10px;
+    min-width: 20px;
+    padding-top: 20px;
+    position: absolute;
+    right: 13px;
+	text-align: center;
+    top: 12px;
+}
+.metas-wrapper td .compare.up{ 
+	background: url("../images/arrow-up.png") no-repeat scroll top center transparent; 
+	right: 5px;
+}
+.metas-wrapper td .compare.down{ 
+	background: url("../images/arrow-down.png") no-repeat scroll top center transparent; 
+	right: 5px;
+}
 .full .x-grid3-cell{ border-right: 1px solid #DDDDDD; }
 .x-grid3-cell-first{}
 .x-grid3-cell-last{}
@@ -230,6 +237,8 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
 }
 .main-wrapper .x-panel-body,
 .main-wrapper .x-panel-header{ border-color: #D0D0D0; }
+.icon-options { background:url("../images/options.png") no-repeat scroll 5px 4px transparent !important; }
+.icon-delete { background:url("../images/delete.png") no-repeat scroll 5px 4px transparent !important; }
 .report-panel{
 	margin-bottom: 20px;
 }
@@ -239,6 +248,51 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
 .main-wrapper .x-panel-header{ 
 	border-bottom-color: #E5E5E5; 
 	padding: 6px 10px;
+}
+.wrapped.main-wrapper{
+	margin: 20px;
+	padding: 0;
+}
+.styled-desc{
+	background: none repeat scroll 0 0 #F5F5F5;
+    background:-moz-linear-gradient(center bottom,#EAEAEA 0%,#F5F5F5 100%) repeat scroll 0 0 transparent;
+    background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#F5F5F5),color-stop(100%,#EAEAEA));
+    background:-webkit-linear-gradient(center bottom,#EAEAEA 0%,#F5F5F5 100%);
+    background:-o-linear-gradient(center bottom,#EAEAEA 0%,#F5F5F5 100%);
+    background:-ms-linear-gradient(center bottom,#EAEAEA 0%,#F5F5F5 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#F5F5F5,endColorstr=#EAEAEA,GradientType=0);
+    background:linear-gradient(center bottom,#EAEAEA 0%,#F5F5F5 100%);
+	border-bottom: 1px solid #E0E0E0;
+    border-top: 1px solid #E0E0E0;
+    margin: 15px 0 0;
+	padding: 0 0 0 20px;
+	position: relative;
+}
+.styled-desc .account-infos{
+	background-color: #FFFFFF;
+    background-image: none;
+	border-left: 1px solid #E0E0E0;
+    color: #808080;
+    font-style: italic;
+    min-height: 60px;
+    padding: 25px 22px 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+}
+.styled-desc .account-infos span{
+	color: #AEAEAE;
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.action-button{
+	background-color: #FFFFFF;
+    background-image: none;
+    border-left: 1px solid #E0E0E0;
+    min-height: 60px;
+    padding: 8px 22px 0;
 }
 /* CHARTS */
 .charts-line .x-panel-body{ padding: 20px 30px 15px 5px; }

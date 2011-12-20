@@ -37,132 +37,15 @@ Ext.extend(MODx.panel.BigBrotherPanel,MODx.Panel, {
 			,id: 'modx-action-buttons'
 			,defaults: { scope: me }
 			,items: []
-		});		
-		this.actionToolbar.add({
-			xtype: 'modx-template-panel'
-			,id: 'report-dates'
-			,bodyCssClass: 'report-dates'
-			,markup: '<tpl for=".">'
-				+'Reports from <span>{begin}</span> to <span>{end}</span>'
-			+'</tpl>'
-		});			
+		});				
 		this.actionToolbar.doLayout();
-		this.getDates();
 	}
 	
-	//For future usage
-	/* ,showOptionsPanel: function(){
-		// var tabs = this.getComponent('tabs');
-		// tabs.add({ xtype: 'bb-panel-options' });
-		// tabs.setActiveTab('options-panel');		
-		// this.doLayout();
-	} */
-	
-	,getDates: function(){
-		Ext.Ajax.request({
-			url : MODx.BigBrotherConnectorUrl
-			,params : { 
-				action : 'report/getDates'
-			}
-			,method: 'GET'
-			,scope: this
-			,success: function ( result, request ) { 
-				var data = Ext.util.JSON.decode( result.responseText );			
-				if(data.success){ Ext.getCmp('report-dates').updateDetail(data.results); }
-			}
-			,failure: function ( result, request) { 
-				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
-			} 
-		});
-		
-	}
-	
-	,loadAccountWindow: function(btn){
-		if(!this.win){
-			this.win = new Ext.Window({
-				cls: 'win'
-				,title: _('bigbrother.select_another_account')
-				,closeAction: 'hide'
-				,border: false		
-				,width: 400
-				,items: [{
-					xtype: 'modx-template-panel'
-					,id: 'winca-desc'
-					,bodyCssClass: 'win-desc panel-desc'
-					,startingMarkup: '<tpl for="."><p>{text}</p></tpl>'
-					,startingText: _('bigbrother.select_another_account_desc')
-				},{
-					layout: 'form'
-					,border: false
-					,bodyCssClass: 'main-wrapper'
-					,items:[{
-						xtype: 'combo'
-						,displayField: 'name'
-						,valueField: 'id'
-						,triggerAction: 'all'
-						,anchor: '100%'
-						,editable: false
-						,forceSelection: true
-						,hideLabel: true
-						,emptyText: _('bigbrother.oauth_select_account')	
-						,id: 'account-list'
-						,listClass: 'account-list'
-						,ctCls: 'cb-account-list'
-						,store: new Ext.data.JsonStore({
-							url: MODx.BigBrotherConnectorUrl
-							,root: 'results'
-							,totalProperty: 'total'
-							,fields: ['id', 'name']
-							,errorReader: MODx.util.JSONReader
-							,baseParams: {
-								action : 'manage/accountlist'
-							}
-						})
-						,listeners : {
-							'select' : function(c){
-								Ext.getCmp('select-account-btn').enable();
-							}
-						}
-					}]		
-				}]			
-				,buttons: [{
-					text: _('cancel')
-					,scope: this
-					,handler: function() { this.win.hide(); }
-				},{
-					 xtype: 'button'
-					,id: 'select-account-btn'
-					,text: _('bigbrother.change_account')
-					,handler: this.selectAccount
-					,disabled: true
-					,scope: this
-				}]
-			});
-		}
-		this.win.show(btn.id);
-	}
-	
-	,selectAccount: function(btn){
-		this.disable();
-		Ext.Ajax.request({
-			url : MODx.BigBrotherConnectorUrl
-			,params : { 
-				action : 'manage/setAccount'
-				,account : Ext.getCmp('account-list').getValue()
-				,accountName : Ext.getCmp('account-list').getRawValue()
-			}
-			,method: 'GET'
-			,scope: this
-			,success: function ( result, request ) { 
-				var data = Ext.util.JSON.decode( result.responseText );
-				this.win.hide();				
-				if(data.success){ this.redirect() }
-			}
-			,failure: function ( result, request) { 
-				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
-				this.enable();
-			} 
-		});
+	,showOptionsPanel: function(){
+		var tabs = this.getComponent('tabs');
+		tabs.add({ xtype: 'bb-panel-options' });
+		tabs.setActiveTab('options-panel');		
+		this.doLayout();
 	}
 	
 	,revokeAuthorizationPromptWindow: function(btn){

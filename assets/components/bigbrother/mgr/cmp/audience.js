@@ -14,9 +14,8 @@ MODx.panel.BigBrotherAudienceOverview = function(config) {
 			border: false 
 		}
 		,items:[{
-			xtype: 'modx-desc-panel'
-			,lexicon: 'audience_overview'
-			,id: 'bb-audience-desc'
+			xtype: 'modx-desc-panel'				
+			,startingText: _('bigbrother.audience_overview')
 		},{
 			 layout: 'form'
 			,cls: 'main-wrapper'
@@ -27,17 +26,26 @@ MODx.panel.BigBrotherAudienceOverview = function(config) {
 			}
 			,id: 'report-audience-panel'
 			,items:[{
-				xtype: 'bb-linechart-panel'
+				xtype: 'bb-areachart-panel'
 				,title: _('bigbrother.audience_visits')	
-				,action: 'audience/visitsCharts'
-			},{
-				xtype:'bb-meta-panel'
-				,id:'report-audience-metas-first'
-				,action: 'audience/metasFirstRow'
-			},{
-				xtype:'bb-meta-panel'
-				,id:'report-audience-metas-second'
-				,action: 'audience/metasSecondRow'
+				,metrics: 'ga:visits,ga:pageViews'
+			},{	
+				layout: 'column'
+				,items:[{
+					xtype:'bb-meta-panel'
+					,id:'report-audience-metas'
+					,metrics: 'ga:visits,ga:visitors,ga:pageviews,ga:uniquePageviews,ga:percentNewVisits,ga:pageviewsPerVisit,ga:avgTimeOnSite,ga:visitBounceRate'
+					,cols: 2
+					,columnWidth: 0.5
+				},{
+					xtype: 'bb-pie-panel'
+					,title: _('bigbrother.visitors')
+					,dimensions: 'ga:visitorType'
+					,metrics: 'ga:visits'
+					,sort: 'ga:visits'
+					,chartHeight: 250
+					,columnWidth: 0.5
+				}]				
 			},{
 				xtype: 'panel'
 				,cls: 'report-panel'
@@ -49,14 +57,14 @@ MODx.panel.BigBrotherAudienceOverview = function(config) {
 						title: _('bigbrother.language')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'language'
+							,dimension: 'ga:language'
 							,fieldName: 'language'
 						}]
 					},{
 						title: _('bigbrother.country')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'country'
+							,dimension: 'ga:country'
 							,fieldName: 'country'
 						}]
 					}]
@@ -72,21 +80,21 @@ MODx.panel.BigBrotherAudienceOverview = function(config) {
 						title: _('bigbrother.browser')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'browser'
+							,dimension: 'ga:browser'
 							,fieldName: 'browser'
 						}]
 					},{
 						title: _('bigbrother.operating_system')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'operatingSystem'
+							,dimension: 'ga:operatingSystem'
 							,fieldName: 'operating_system'
 						}]
 					},{
 						title: _('bigbrother.service_provider')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'networkLocation'
+							,dimension: 'ga:networkLocation'
 							,fieldName: 'service_provider'
 						}]
 					}]
@@ -102,7 +110,7 @@ MODx.panel.BigBrotherAudienceOverview = function(config) {
 						title: _('bigbrother.operating_system')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'operatingSystem'
+							,dimension: 'ga:operatingSystem'
 							,fieldName: 'operating_system'
 							,filters: 'ga:isMobile==Yes'
 						}]
@@ -110,7 +118,7 @@ MODx.panel.BigBrotherAudienceOverview = function(config) {
 						title: _('bigbrother.service_provider')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'networkLocation'
+							,dimension: 'ga:networkLocation'
 							,fieldName: 'service_provider'
 							,filters: 'ga:isMobile==Yes'
 						}]
@@ -118,7 +126,7 @@ MODx.panel.BigBrotherAudienceOverview = function(config) {
 						title: _('bigbrother.screen_resolution')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'screenResolution'
+							,dimension: 'ga:screenResolution'
 							,fieldName: 'screen_resolution'
 							,filters: 'ga:isMobile==Yes'
 						}]						

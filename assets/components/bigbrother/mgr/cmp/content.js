@@ -14,9 +14,8 @@ MODx.panel.BigBrotherContentOverview = function(config) {
 			border: false 
 		}
 		,items:[{
-			xtype: 'modx-desc-panel'
-			,lexicon: 'content_overview'
-			,id: 'bb-content-desc'
+			xtype: 'modx-desc-panel'				
+			,startingText: _('bigbrother.content_overview')
 		},{
 			 layout: 'form'
 			,cls: 'main-wrapper'
@@ -27,13 +26,14 @@ MODx.panel.BigBrotherContentOverview = function(config) {
 			}
 			,id: 'report_content-panel'
 			,items:[{
-				xtype: 'bb-linechart-panel'
-				,title: _('bigbrother.visits_and_uniques')	
-				,action: 'content/pageviews'
+				xtype: 'bb-chart-area-compare'
+				,title: _('bigbrother.visits_comparisons')	
+				,metrics: 'ga:visits'
 			},{
 				xtype:'bb-meta-panel'
 				,id:'report_content-metas'
-				,action: 'content/metas'
+				,metrics: 'ga:visits,ga:visitors,ga:pageviews,ga:uniquePageviews,ga:percentNewVisits,ga:exitRate,ga:avgTimeOnSite,ga:visitBounceRate'
+				,cols: 4
 			},{	
 				xtype: 'panel'
 				,cls: 'report-panel'
@@ -45,14 +45,14 @@ MODx.panel.BigBrotherContentOverview = function(config) {
 						title: _('bigbrother.page')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'pagePath'
+							,dimension: 'ga:pagePath'
 							,fieldName: 'page'
 						}]
 					},{
 						title: _('bigbrother.pagetitle')	
 						,items:[{
 							xtype: 'bb-report-grid'						
-							,dimension: 'pageTitle'
+							,dimension: 'ga:pageTitle'
 							,fieldName: 'pagetitle'
 						}]
 					}]
