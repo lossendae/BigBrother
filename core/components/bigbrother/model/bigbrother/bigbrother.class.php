@@ -137,7 +137,7 @@ class BigBrother {
 			$date['end'] = date($format, strtotime($end));
 		} else {	
 			$dateBegin = $this->getOption('date_begin') + 1;
-			$end = $end - $dateBegin .' days';
+			$end = $end  .' - 35 days';
 			$begin = $end .' - '. $this->getOption('date_begin') .' days';
 			$date['begin'] = date($format, strtotime($begin));
 			$date['end'] = date($format, strtotime($end));
