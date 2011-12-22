@@ -21,8 +21,8 @@ Ext.extend(MODx.DescPanel,MODx.TemplatePanel,{
 		//Override default text
 		this.defaultMarkup.overwrite(this.body, {
 			title: this.startingText
-			,date_begin: MODx.BigBrotherConnectorDateBegin
-			,date_end: MODx.BigBrotherConnectorDateEnd
+			,date_begin: MODx.BigBrotherDateBegin
+			,date_end: MODx.BigBrotherDateEnd
 			,id: MODx.config['bigbrother.account']
 			,name: MODx.config['bigbrother.account_name']			
 		});
