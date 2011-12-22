@@ -13,6 +13,10 @@ MODx.panel.BigBrotherDashboard = function(config) {
         ,unstyled: true
         ,defaults: { collapsible: false ,autoHeight: true, unstyled: true }
         ,items: [{
+			xtype: 'modx-desc-panel'
+			,startingMarkup: '<tpl for=".">[[+bigbrother.desc_markup]]</tpl>'				
+			,startingText: '[[+bigbrother.desc_title]]'
+		},{
 			layout: 'form'
 			,cls: 'main-wrapper'
 			,id: 'bb-container'
@@ -98,6 +102,10 @@ Ext.extend(MODx.panel.BigBrotherDashboard,MODx.Panel,{
 	
 	,fixWidth: function(){
 		Ext.getCmp('bb-container').doLayout();
+	}
+	
+	,redirect: function(){
+		location.href = MODx.BigBrotherRedirect;
 	}
 });
 Ext.reg('bb-panel', MODx.panel.BigBrotherDashboard);
