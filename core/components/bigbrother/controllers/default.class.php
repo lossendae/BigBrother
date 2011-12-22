@@ -65,7 +65,6 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/classes.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/charts.js');				
 		
-		//Main Panels
 		$admin = "";		
 		$groups = explode(',', 'Administrator');
 		
@@ -88,6 +87,8 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 			pnl.actionToolbar.doLayout();';
 			$admin .= '';
 		}
+		
+		//Tabs & container
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/content.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/audience.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/traffic-sources.js');	
@@ -102,8 +103,8 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		$this->addHtml('<script type="text/javascript">
 			MODx.BigBrotherRedirect = "'.$url.'";
 			MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'
-			MODx.BigBrotherConnectorDateBegin = "'.$date['begin'].'";
-			MODx.BigBrotherConnectorDateEnd = "'.$date['end'].'";
+			MODx.BigBrotherDateBegin = "'.$date['begin'].'";
+			MODx.BigBrotherDateEnd = "'.$date['end'].'";
 			Ext.onReady(function(){ MODx.add("bb-panel"); '. $admin .' });			
 		</script>');
 	}

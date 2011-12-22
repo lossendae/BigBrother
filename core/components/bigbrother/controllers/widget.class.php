@@ -39,6 +39,8 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
 			$class = $this->getFileChunk($this->bigbrother->config['chunks_path'] . 'dashboard.tpl', $placeholders);
 		}
 		
+		$date = $this->bigbrother->getDates('d M Y');
+		
 		$page = $this->modx->getObject('modAction', array(
 			'namespace' => 'bigbrother',
 			'controller' => 'index',
@@ -48,6 +50,8 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
         $this->modx->controller->addHtml('<script type="text/javascript">
 	MODx.BigBrotherRedirect = "'.$url.'";
 	MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; 
+	MODx.BigBrotherDateBegin = "'.$date['begin'].'";
+	MODx.BigBrotherDateEnd = "'.$date['end'].'";
 	'. $class .'
 	Ext.onReady(function() {
 		MODx.load({
