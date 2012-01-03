@@ -15,7 +15,7 @@ set_time_limit(0);
 define('PKG_NAME','BigBrother');
 define('PKG_NAMESPACE','bigbrother');
 define('PKG_VERSION','1.0');
-define('PKG_RELEASE','beta5');
+define('PKG_RELEASE','pl');
 
 function getSnippetContent($path, $name, $debug = false) {
 	$name = ($debug) ? 'debug.'. $name .'.php' : $name .'.php';
@@ -60,7 +60,7 @@ $builder->registerNamespace(PKG_NAMESPACE,false,true,'{core_path}components/'.PK
 $modx->getService('lexicon','modLexicon');
 $modx->lexicon->load('myjournal:default');
 
-/* load system settings */
+/* Load system settings */
 $modx->log(modX::LOG_LEVEL_INFO,'Packaging in System Settings...');
 $settings = include $sources['data'].'transport.settings.php';
 if (empty($settings)) $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in settings.');
@@ -76,7 +76,7 @@ foreach ($settings as $setting) {
 $modx->log(modX::LOG_LEVEL_INFO,'<strong>Packaged in '.count($settings).' system settings.</strong>'); flush();
 unset($settings,$setting,$attributes);
 
-/* load action/menu */
+/* Load action/menu */
 $menus = include $sources['data'].'transport.menu.php';
 $vehicle= $builder->createVehicle($menu,array (
     xPDOTransport::PRESERVE_KEYS => true,
@@ -112,7 +112,7 @@ foreach ($widgets as $widget) {
 $modx->log(modX::LOG_LEVEL_INFO,'<strong>Packaged in '.count($widgets).' widgets.</strong>'); flush();
 unset($widgets,$widget,$attributes);
 
-/* create category */
+/* Create category */
 $category= $modx->newObject('modCategory');
 $category->set('id',1);
 $category->set('category',PKG_NAME);
