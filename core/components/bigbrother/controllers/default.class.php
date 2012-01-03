@@ -65,6 +65,7 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/classes.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/charts.js');				
 		
+		//Main Panels
 		$admin = "";		
 		$groups = explode(',', 'Administrator');
 		
@@ -87,8 +88,6 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 			pnl.actionToolbar.doLayout();';
 			$admin .= '';
 		}
-		
-		//Tabs & container
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/content.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/audience.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/traffic-sources.js');	

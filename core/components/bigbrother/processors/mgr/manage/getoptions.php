@@ -1,6 +1,6 @@
 <?php
 /**
- * Set the account in use for the CMP
+ * Get the options for CMP and dashboard widget
  *
  * @package bigbrother
  * @subpackage processors

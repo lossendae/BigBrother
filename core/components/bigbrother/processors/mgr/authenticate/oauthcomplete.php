@@ -52,7 +52,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $oaResponse = curl_exec($ch);
 
 if(curl_errno($ch)) {	
-	//@TODO lexicon
+	//@TODO lexicon ?
 	$response['text'] =  '<strong>Message from cURL</strong> - '. curl_text($ch);
 	$response['success'] = false;
 	return $modx->toJSON($response);
@@ -74,7 +74,7 @@ if($http_code == 200) {
 		'text' => $modx->lexicon('bigbrother.bd_choose_an_account'),
 	);
 } else {
-	//@TODO lexicon
+	//@TODO lexicon ?
 	$response['text'] = '<strong>Bad HTTP code : '. $http_code .'</strong> - '. $oaResponse;
 	$response['success'] = false;
 }

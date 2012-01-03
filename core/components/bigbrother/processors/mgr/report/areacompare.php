@@ -12,9 +12,10 @@ if($metrics != null){
 }
 
 $date = $ga->getDates();
+$beforeDate = $ga->getDates('Y-m-d', true);
 $url = $ga->buildUrl($date['begin'], $date['end'], array('ga:date'), $metrics);
-$cacheKey = $ga->cacheKey;
-$fromCache = $modx->cacheManager->get($ga->cacheKey);
+$cacheKey = md5($ga->cacheKey . $beforeDate);
+$fromCache = $modx->cacheManager->get($cacheKey);
 
 if(!empty($fromCache)){
 	$response['fromCache'] = true;
@@ -66,8 +67,7 @@ foreach($results as $metric){
 	$series[] = $metric;
 }
 
-$date = $ga->getDates('Y-m-d', true);
-$url = $ga->buildUrl($date['begin'], $date['end'], array('ga:date'), $metrics);
+$url = $ga->buildUrl($beforeDate['begin'], $beforeDate['end'], array('ga:date'), $metrics);
 $response['success'] = $ga->getReport($url);
 
 if(!$response['success']){

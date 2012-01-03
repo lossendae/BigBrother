@@ -10,14 +10,14 @@ MODx.panel.BigBrotherDashboard = function(config) {
     config = config || {};	
 	Ext.applyIf(config,{
 		id: 'modx-panel-bigbrother'
-        ,unstyled: true
-        ,defaults: { collapsible: false ,autoHeight: true, unstyled: true }
+        ,unstyled: true		
+        ,defaults: { collapsible: false, autoHeight: true, unstyled: true }	
         ,items: [{
 			xtype: 'modx-desc-panel'
 			,startingMarkup: '<tpl for=".">[[+bigbrother.desc_markup]]</tpl>'				
 			,startingText: '[[+bigbrother.desc_title]]'
 		},{
-			layout: 'form'
+			xtype: 'panel'
 			,cls: 'main-wrapper'
 			,id: 'bb-container'
 			,items:[]
@@ -54,19 +54,12 @@ Ext.extend(MODx.panel.BigBrotherDashboard,MODx.Panel,{
 					,id: 'visits-panel'
 					,cls: 'bb-panel charts-wrapper charts-line visits'
 					,height: 225
-					,listeners:{
-						chartsloaded:function(){
-							this.fixWidth();
-							Ext.getCmp('visits-panel').setHeight(290);
-						}
-						,scope: this
-					}
 				};
 				break;
 			case 'metas':
 				return { 
 					xtype:'bb-meta-panel'
-					,id:'report_content-metas'
+					,id:'report-content-metas'
 					,metrics: 'ga:visits,ga:visitors,ga:pageviews,ga:uniquePageviews,ga:percentNewVisits,ga:exitRate,ga:avgTimeOnSite,ga:visitBounceRate'
 					,cols: 4
 				};
@@ -74,6 +67,7 @@ Ext.extend(MODx.panel.BigBrotherDashboard,MODx.Panel,{
 			case 'pies':
 				return { 
 					layout: 'column'
+					,id: 'widget-pies'
 					,border: false
 					,items:[{
 						xtype: 'bb-pie-panel'
@@ -84,6 +78,11 @@ Ext.extend(MODx.panel.BigBrotherDashboard,MODx.Panel,{
 						,chartHeight: 250
 						,replace: 'direct_traffic'
 						,columnWidth: 0.5
+						,listeners:{
+							chartsloaded: function(p){
+								Ext.getCmp('widget-pies').doLayout();
+							}
+						}
 					},{
 						xtype: 'bb-pie-panel'
 						,title: '[[+bigbrother.visitors]]'
@@ -92,6 +91,11 @@ Ext.extend(MODx.panel.BigBrotherDashboard,MODx.Panel,{
 						,sort: 'ga:visits'
 						,chartHeight: 250
 						,columnWidth: 0.5
+						,listeners:{
+							chartsloaded: function(p){
+								Ext.getCmp('widget-pies').doLayout();
+							}
+						}
 					}]
 				}
 				break;

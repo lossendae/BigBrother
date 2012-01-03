@@ -1,6 +1,6 @@
 <?php
 /**
- * Set the account in use for the CMP
+ * Save options for boath CMP and Dashboard widget
  *
  * @package bigbrother
  * @subpackage processors
@@ -36,14 +36,17 @@ if($old != $scriptProperties['date_end']){
 
 $ga->updateOption('cache_timeout', $scriptProperties['cache_timeout']);
 
-$value = ($scriptProperties['show_visits_on_dashboard'] === "true") ? 1 : 0;
-$ga->updateOption('show_visits_on_dashboard', $value , 'combo-boolean');
+// Check for dashboard options since fields are not rendered by default
+if(isset($scriptProperties['show_visits_on_dashboard'])){
+	$value = ($scriptProperties['show_visits_on_dashboard'] === "true" || $scriptProperties['show_visits_on_dashboard'] == 1) ? 1 : 0;
+	$ga->updateOption('show_visits_on_dashboard', $value , 'combo-boolean');
 
-$value = ($scriptProperties['show_metas_on_dashboard'] === "true") ? 1 : 0;
-$ga->updateOption('show_metas_on_dashboard', $value , 'combo-boolean');
+	$value = ($scriptProperties['show_metas_on_dashboard'] === "true" || $scriptProperties['show_metas_on_dashboard'] == 1) ? 1 : 0;
+	$ga->updateOption('show_metas_on_dashboard', $value , 'combo-boolean');
 
-$value = ($scriptProperties['show_pies_on_dashboard'] === "true") ? 1 : 0;
-$ga->updateOption('show_pies_on_dashboard', $value , 'combo-boolean');
+	$value = ($scriptProperties['show_pies_on_dashboard'] === "true" || $scriptProperties['show_pies_on_dashboard'] == 1) ? 1 : 0;
+	$ga->updateOption('show_pies_on_dashboard', $value , 'combo-boolean');
+}
 
 $response['redirect'] = $redirect;
 $response['success'] = true;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Set the account in use for the CMP
+ * Revoke all google's authorization and reset the app
  *
  * @package bigbrother
  * @subpackage processors

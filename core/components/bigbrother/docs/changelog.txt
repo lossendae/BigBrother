@@ -1,5 +1,12 @@
 Reload the page after installation to access the menu item under "Components"
 
+Big Brother 1.0 pl
+******************
+
+- Fix charts resize in cmp
+- Syncronize Days of the week for area charts
+- Added button on dashboard to access full reports on the cmp
+
 Big Brother 1.0 beta5
 *********************
 

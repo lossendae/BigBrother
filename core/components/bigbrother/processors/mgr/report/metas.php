@@ -24,7 +24,6 @@ if(!empty($fromCache)){
 	return $modx->toJSON($response);
 }
 
-// This should be loaded only if data report are not cached
 if(!$ga->loadOAuth()){
 	$response['message'] = 'Could not load the OAuth file';
 	$response['success'] = false;
