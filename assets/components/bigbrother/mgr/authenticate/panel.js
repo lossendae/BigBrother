@@ -100,6 +100,10 @@ Ext.extend(MODx.panel.BigBrotherAuthorizePanel,MODx.Panel,{
 	
 	,doAction: function(){
 		if( this.getToken ){
+			var d = {};
+			d.className = 'highlight loading';
+			d.text = _('bigbrother.loading');
+			Ext.getCmp('bb-breadcrumbs').updateDetail(d);
 			Ext.Ajax.request({
 				url : MODx.BigBrotherConnectorUrl
 				,params : { 

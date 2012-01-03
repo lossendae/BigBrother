@@ -2,7 +2,7 @@
  * Pie Panel base class
  * 
  * @class MODx.panel.BigBrotherPiePanel
- * @extends MODx.Panel
+ * @extends MODx.TemplatePanel
  * @param {Object} config An object of options.
  * @xtype bb-pie-panel
  */
@@ -10,16 +10,26 @@ MODx.panel.BigBrotherPiePanel = function(config) {
     config = config || {};	
 	this.panelId = Ext.id();
 	Ext.applyIf(config,{
-		html: '<div id="charts-'+this.panelId+'" style="height: 260px; margin: 0 auto"></div>'
+		startingMarkup: '<tpl for="."><div id="charts-{id}"style="height: {height}px; margin: 0 auto"></div></tpl>'
+		,height: 260
 		,cls: 'bb-panel charts-wrapper'
 		,listeners:{
-			afterrender: this.getData
+			resize: function(p){ 
+				if(p.chart !== undefined){
+					this.adjustWidth(p);					
+				}									
+			}
+			,chartsloaded:function(p){
+				this.adjustWidth(p);
+			}
 			,scope: this
 		}
 	});
-	MODx.panel.BigBrotherPiePanel.superclass.constructor.call(this,config);	
+	MODx.panel.BigBrotherPiePanel.superclass.constructor.call(this,config);		
+	this.addEvents('chartsloaded');
+	this.on('afterrender',this.getData, this);
 };
-Ext.extend(MODx.panel.BigBrotherPiePanel,MODx.Panel,{
+Ext.extend(MODx.panel.BigBrotherPiePanel,MODx.TemplatePanel,{
 	getData: function(){
 		Ext.Ajax.request({
 			url : MODx.BigBrotherConnectorUrl
@@ -41,7 +51,25 @@ Ext.extend(MODx.panel.BigBrotherPiePanel,MODx.Panel,{
 			} 
 		});
 	}
-	
+		
+	,reset: function(){	
+		this.body.hide();
+		this.defaultMarkup.overwrite(this.body, {
+			id: this.panelId
+			,height: this.height	
+		});
+		this.body.slideIn('r', {stopFx:true, duration:.2});
+		setTimeout(function(){
+			Ext.getCmp('modx-content').doLayout();
+		}, 500);
+	}
+		
+	,adjustWidth: function(p){
+		var w = p.body.getWidth() - 15;
+		var h = p.body.getHeight() - 30;
+		p.chart.setSize(w,h);
+	}
+		
 	,loadChart: function(series){		
 		var chart;
 		var container = 'charts-'+this.panelId;
@@ -108,6 +136,7 @@ Ext.extend(MODx.panel.BigBrotherPiePanel,MODx.Panel,{
 				}
 			}
 		});
+		this.fireEvent('chartsloaded', this);
 	}
 });	
 Ext.reg('bb-pie-panel', MODx.panel.BigBrotherPiePanel);
@@ -116,7 +145,7 @@ Ext.reg('bb-pie-panel', MODx.panel.BigBrotherPiePanel);
  * Line Charts Panel base class
  * 
  * @class MODx.panel.BigBrotherAreaChartPanel
- * @extends MODx.Panel
+ * @extends MODx.panel.BigBrotherPiePanel
  * @param {Object} config An object of options.
  * @xtype bb-linechart-panel
  */
@@ -124,16 +153,12 @@ MODx.panel.BigBrotherAreaChartPanel = function(config) {
     config = config || {};	
 	this.panelId = Ext.id();
 	Ext.applyIf(config,{
-		// html: '<div id="charts-'+this.panelId+'" style="height: 310px; margin: 0 auto"></div>'
-		startingMarkup: '<tpl for="."><div id="charts-{id}"style="height: {height}px; margin: 0 auto"></div></tpl>'
-		,height: 310
+		height: 310
 		,cls: 'bb-panel charts-wrapper charts-line'
 	});
 	MODx.panel.BigBrotherAreaChartPanel.superclass.constructor.call(this,config);	
-	this.addEvents('chartsloaded');
-	this.on('afterrender',this.getData, this);
 };
-Ext.extend(MODx.panel.BigBrotherAreaChartPanel,MODx.TemplatePanel,{
+Ext.extend(MODx.panel.BigBrotherAreaChartPanel,MODx.panel.BigBrotherPiePanel,{
 	getData: function(){		
 		Ext.Ajax.request({
 			url : MODx.BigBrotherConnectorUrl
@@ -151,18 +176,6 @@ Ext.extend(MODx.panel.BigBrotherAreaChartPanel,MODx.TemplatePanel,{
 				Ext.MessageBox.alert(_('bigbrother.alert_failed'), result.responseText); 
 			} 
 		});
-	}
-	
-	,reset: function(){	
-		this.body.hide();
-		this.defaultMarkup.overwrite(this.body, {
-			id: this.panelId
-			,height: this.height	
-		});
-		this.body.slideIn('r', {stopFx:true, duration:.2});
-		setTimeout(function(){
-			Ext.getCmp('modx-content').doLayout();
-		}, 500);
 	}
 	
 	,loadChart: function(series, dateStart){				
@@ -281,22 +294,7 @@ Ext.extend(MODx.panel.BigBrotherAreaChartPanel,MODx.TemplatePanel,{
 				} 
 			});    			
 		});
-		this.fireEvent('chartsloaded');
-		// console.log(container)
-		// console.log(this.id)
-		// Ext.select('#'+container).resizable({
-			// On resize, set the chart size to that of the
-			// resizer minus padding. If your chart has a lot of data or other
-			// content, the redrawing might be slow. In that case, we recommend
-			// that you use the 'stop' event instead of 'resize'.
-			// resize: function() {
-				// chart.setSize(
-					// this.offsetWidth - 20,
-					// this.offsetHeight - 20,
-					// false
-				// );
-			// }
-		// });
+		this.fireEvent('chartsloaded', this);
 	}
 });	
 Ext.reg('bb-areachart-panel', MODx.panel.BigBrotherAreaChartPanel);
@@ -305,7 +303,7 @@ Ext.reg('bb-areachart-panel', MODx.panel.BigBrotherAreaChartPanel);
  * Line Charts Panel base class
  * 
  * @class MODx.panel.BigBrotherAreaChartComparePanel
- * @extends MODx.Panel
+ * @extends MODx.panel.BigBrotherAreaChartPanel
  * @param {Object} config An object of options.
  * @xtype bb-linechart-panel
  */
@@ -313,16 +311,11 @@ MODx.panel.BigBrotherAreaChartComparePanel = function(config) {
     config = config || {};	
 	this.panelId = Ext.id();
 	Ext.applyIf(config,{
-		html: '<div id="charts-'+this.panelId+'" style="height: 360px; margin: 0 auto"></div>'
-		,cls: 'bb-panel charts-wrapper charts-line'
-		,listeners:{
-			afterrender: this.getData
-			,scope: this
-		}
+		height: 360
 	});
 	MODx.panel.BigBrotherAreaChartComparePanel.superclass.constructor.call(this,config);	
 };
-Ext.extend(MODx.panel.BigBrotherAreaChartComparePanel,MODx.Panel,{
+Ext.extend(MODx.panel.BigBrotherAreaChartComparePanel,MODx.panel.BigBrotherAreaChartPanel,{
 	getData: function(){		
 		Ext.Ajax.request({
 			url : MODx.BigBrotherConnectorUrl
@@ -415,7 +408,7 @@ Ext.extend(MODx.panel.BigBrotherAreaChartComparePanel,MODx.Panel,{
 				formatter: function() {					
 					var s = ''; // Will cause undefined message if left empty
 					$.each(this.points, function(i, point) {
-						s += '<span style="color:'+ point.series.color +';">'+  Highcharts.dateFormat('%d %b %Y', point.x) 
+						s += '<span style="color:'+ point.series.color +';">'+  Highcharts.dateFormat('%A, %d %b %Y', point.x) 
 							+'</span><br/><b>'+ point.y 
 							+'</b><span style="font-weight:bold;color:'+ point.series.color +';">'+ point.series.name
 							+'</span>';
@@ -465,7 +458,7 @@ Ext.extend(MODx.panel.BigBrotherAreaChartComparePanel,MODx.Panel,{
 				} 
 			});   			
 		});
+		this.fireEvent('chartsloaded', this);
 	}
 });	
-Ext.reg('bb-chart-area-compare', MODx.panel.BigBrotherAreaChartComparePanel);
-	
+Ext.reg('bb-chart-area-compare', MODx.panel.BigBrotherAreaChartComparePanel);	

@@ -270,6 +270,11 @@ MODx.panel.BigBrotherDashboardOptions = function(config) {
 			,anchor: '100%'	
 		}
 		,items: [{
+			xtype: 'hidden'
+			,name: 'dashboard_options'
+			,id: 'dashboard_options'
+			,value: true
+		},{
 			fieldLabel: _('bigbrother.show_visits_on_dashboard')
 			,xtype: 'combo-boolean'
 			,name: 'show_visits_on_dashboard'
