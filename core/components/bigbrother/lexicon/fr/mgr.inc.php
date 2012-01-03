@@ -112,7 +112,7 @@ $_lang['bigbrother.search_engines'] = 'Moteurs de recherches';
 
 /* Options panel */
 $_lang['bigbrother.options'] = 'Options';
-$_lang['bigbrother.save_settings'] = 'Sauvegarder les préférences';
+$_lang['bigbrother.save_settings'] = 'Sauvegarder';
 $_lang['bigbrother.general_options'] = 'Options Générale';
 $_lang['bigbrother.dashboard_options'] = 'Options du Dashboard';
 
