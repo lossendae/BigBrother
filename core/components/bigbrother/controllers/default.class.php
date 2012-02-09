@@ -44,11 +44,16 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		$oauth .= ( isset($_REQUEST['oauth_token'])) ? ' MODx.OAuthToken = "'. $_REQUEST['oauth_token'] .'";' : null;
 		
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/authenticate/authcomplete.js');
+        /** @var $page modAction */
 		$page = $this->modx->getObject('modAction', array(
 			'namespace' => 'bigbrother',
 			'controller' => 'index',
 		));
-		$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
+        $site_url = $this->modx->getOption('site_url');
+        $base_url = $this->modx->getOption('base_url');
+        $manager_url = $this->modx->getOption('manager_url');
+        $url = rtrim($site_url, $base_url) . $manager_url .'?a='. $page->get('id');
+		//$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
 		$this->addHtml('<script type="text/javascript">
 			MODx.BigBrotherRedirect = "'.$url.'";
 			MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'
@@ -91,14 +96,19 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/content.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/audience.js');	
 		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/traffic-sources.js');	
-		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/container.js');	
+		$this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/container.js');
+        /** @var $page modAction */
 		$page = $this->modx->getObject('modAction', array(
 			'namespace' => 'bigbrother',
 			'controller' => 'index',
 		));	
 		$date = $this->bigbrother->getDates('d M Y');
-		
-		$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
+
+        $site_url = $this->modx->getOption('site_url');
+        $base_url = $this->modx->getOption('base_url');
+        $manager_url = $this->modx->getOption('manager_url');
+        $url = rtrim($site_url, $base_url) . $manager_url .'?a='. $page->get('id');
+		//$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
 		$this->addHtml('<script type="text/javascript">
 			MODx.BigBrotherRedirect = "'.$url.'";
 			MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'

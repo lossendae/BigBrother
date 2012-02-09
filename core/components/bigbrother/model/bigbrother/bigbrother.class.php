@@ -59,7 +59,7 @@ class BigBrother {
 			'assets_url' => $assets_url,
 			'css_url' => $assets_url.'css/',
 			'connector_url' => $assets_url.'connector.php',
-
+            'debugUser' => $this->modx->user->get('username'),
 			'debug' => true,
         ),$config);
 
@@ -73,7 +73,7 @@ class BigBrother {
             $this->modx->setLogTarget('HTML');
             $this->modx->setLogLevel(MODX_LOG_LEVEL_ERROR);
 
-            $debugUser = $this->config['debugUser'] == '' ? $this->modx->user->get('username') : 'anonymous';
+            $debugUser = ($this->config['debugUser'] != '') ? $this->config['debugUser'] : 'anonymous';
             $user = $this->modx->getObject('modUser',array('username' => $debugUser));
             if ($user == null) {
                 $this->modx->user->set('id',$this->modx->getOption('debugUserId',$this->config,1));

@@ -1,5 +1,10 @@
 Reload the page after installation to access the menu item under "Components"
 
+Big Brother 1.0xxx
+******************
+
+- Removed hard coded manager URL
+
 Big Brother 1.0 pl
 ******************
 
