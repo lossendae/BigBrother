@@ -40,12 +40,17 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
 		}
 		
 		$date = $this->bigbrother->getDates('d M Y');
-		
+		/** @var $page modAction */
 		$page = $this->modx->getObject('modAction', array(
 			'namespace' => 'bigbrother',
 			'controller' => 'index',
-		));			
-		$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
+		));
+
+        $site_url = $this->modx->getOption('site_url');
+        $base_url = $this->modx->getOption('base_url');
+        $manager_url = $this->modx->getOption('manager_url');
+        $url = rtrim($site_url, $base_url) . $manager_url .'?a='. $page->get('id');
+		//$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
 		
         $this->modx->controller->addHtml('<script type="text/javascript">
 	MODx.BigBrotherRedirect = "'.$url.'";
