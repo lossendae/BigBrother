@@ -414,4 +414,17 @@ class BigBrother {
 	public function getOutput(){
 		return $this->output;
 	}
+
+    /**
+     * Returns the full URL or the manager
+     *
+     * @return string The full URL of the manager
+     */
+    public function getManagerLink() {
+        $site_url = $this->modx->getOption('site_url');
+        $base_url = $this->modx->getOption('base_url');
+        $manager_url = $this->modx->getOption('manager_url');
+        $url = rtrim($site_url, $base_url) . $manager_url;
+        return $url;
+    }
 }
