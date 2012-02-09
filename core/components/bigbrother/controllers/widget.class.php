@@ -46,10 +46,7 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
 			'controller' => 'index',
 		));
 
-        $site_url = $this->modx->getOption('site_url');
-        $base_url = $this->modx->getOption('base_url');
-        $manager_url = $this->modx->getOption('manager_url');
-        $url = rtrim($site_url, $base_url) . $manager_url .'?a='. $page->get('id');
+        $url = $this->bigbrother->getManagerLink() . '?a='. $page->get('id');
 		//$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
 		
         $this->modx->controller->addHtml('<script type="text/javascript">
