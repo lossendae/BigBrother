@@ -49,11 +49,8 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 			'namespace' => 'bigbrother',
 			'controller' => 'index',
 		));
-        $site_url = $this->modx->getOption('site_url');
-        $base_url = $this->modx->getOption('base_url');
-        $manager_url = $this->modx->getOption('manager_url');
-        $url = rtrim($site_url, $base_url) . $manager_url .'?a='. $page->get('id');
-		//$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
+
+		$url = $this->bigbrother->getManagerLink() . '?a='. $page->get('id');
 		$this->addHtml('<script type="text/javascript">
 			MODx.BigBrotherRedirect = "'.$url.'";
 			MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'
@@ -104,11 +101,7 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
 		));	
 		$date = $this->bigbrother->getDates('d M Y');
 
-        $site_url = $this->modx->getOption('site_url');
-        $base_url = $this->modx->getOption('base_url');
-        $manager_url = $this->modx->getOption('manager_url');
-        $url = rtrim($site_url, $base_url) . $manager_url .'?a='. $page->get('id');
-		//$url = $this->modx->getOption('site_url') . 'manager?a='. $page->get('id');
+        $url = $this->bigbrother->getManagerLink() . '?a='. $page->get('id');
 		$this->addHtml('<script type="text/javascript">
 			MODx.BigBrotherRedirect = "'.$url.'";
 			MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'
