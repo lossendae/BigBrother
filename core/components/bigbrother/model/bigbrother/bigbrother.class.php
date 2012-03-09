@@ -422,9 +422,9 @@ class BigBrother {
      */
     public function getManagerLink() {
         $site_url = $this->modx->getOption('site_url');
-        $base_url = $this->modx->getOption('base_url');
+        $base_url =  $this->modx->getOption('base_url');
         $manager_url = $this->modx->getOption('manager_url');
-        $url = rtrim($site_url, $base_url) . $manager_url;
+        $url = str_replace( $base_url, '' , $site_url ) . $manager_url;
         return $url;
     }
 }
