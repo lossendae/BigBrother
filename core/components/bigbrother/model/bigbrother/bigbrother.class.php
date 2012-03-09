@@ -59,21 +59,25 @@ class BigBrother {
 			'assets_url' => $assets_url,
 			'css_url' => $assets_url.'css/',
 			'connector_url' => $assets_url.'connector.php',
-            'debugUser' => $this->modx->user->get('username'),
-			'debug' => true,
+			'debug' => false,
         ),$config);
 
         if ($this->modx->lexicon) {
             $this->modx->lexicon->load('bigbrother:default');
         }
-
-        /* load debugging settings */
+		$this->initDebug();
+    }
+	
+	/**
+	* Load debugging settings
+	*/
+    public function initDebug() {
         if ($this->modx->getOption('debug',$this->config,false)) {
             error_reporting(E_ALL); ini_set('display_errors',true);
             $this->modx->setLogTarget('HTML');
-            $this->modx->setLogLevel(MODX_LOG_LEVEL_ERROR);
+            $this->modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 
-            $debugUser = ($this->config['debugUser'] != '') ? $this->config['debugUser'] : 'anonymous';
+            $debugUser = $this->config['debugUser'] == '' ? $this->modx->user->get('username') : 'anonymous';
             $user = $this->modx->getObject('modUser',array('username' => $debugUser));
             if ($user == null) {
                 $this->modx->user->set('id',$this->modx->getOption('debugUserId',$this->config,1));
