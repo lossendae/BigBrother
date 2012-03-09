@@ -14,7 +14,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','BigBrother');
 define('PKG_NAMESPACE','bigbrother');
-define('PKG_VERSION','1.0');
+define('PKG_VERSION','1.0.1');
 define('PKG_RELEASE','pl');
 
 function getSnippetContent($path, $name, $debug = false) {
