@@ -301,11 +301,14 @@ class BigBrother {
      * @return mixed The system requested setting
      */
 	public function getOption($key) {
-		$setting = $this->modx->getObject('modSystemSetting', array(
-			'key' => 'bigbrother.'. $key,
-		));	
+        // Allow for user Settings to override sys settings
+        $setting = $this->modx->getObject('modUserSetting', array('key' => 'bigbrother.'. $key));
+        if($setting){ return $setting->value; }
+
+		$setting = $this->modx->getObject('modSystemSetting', array('key' => 'bigbrother.'. $key));
 		if($setting){ return $setting->value; }		
-		return null;
+
+        return null;
 	}
 	
 	/**
@@ -355,8 +358,12 @@ class BigBrother {
      * @return string $url The url to retreive reports from or to build the cached result set
      */
 	public function buildUrl($dateStart, $dateEnd, $dimensions = array(), $metrics = array(), $sort = array(), $filters = array(), $limit = null){
+
+        $account = $this->getOption('account');
+
 		$url  = $this->baseUrl . 'data';
-		$url .= '?ids=' . $this->getOption('account');
+		//$url .= '?ids=' . $this->getOption('account'); // removed by aesmith(enminc)
+		$url .= '?ids=' . $account; // added by aesmith(enminc)
 		$url .= sizeof($dimensions) > 0 ? ('&dimensions=' . join(array_reverse($dimensions), ',')) : '';
 		$url .= sizeof($metrics) > 0 ? ('&metrics=' . join($metrics, ',')) : '';
 		$url .= sizeof($sort) > 0 ? '&sort=' . join($sort, ',') : '';
@@ -364,8 +371,9 @@ class BigBrother {
 		$url .= '&start-date=' . $dateStart;
 		$url .= '&end-date=' .$dateEnd;
 		$url .= ($limit != null) ? '&max-results=' .$limit : '';
-		
-		$this->cacheKey = md5(urlencode($url));	
+
+        //$this->cacheKey = md5(urlencode($url)); // removed by aesmith(enminc)
+		$this->cacheKey = 'bigbrother-' . str_replace(':','',$account) . '-' . md5(urlencode($url)); // added by aesmith(enminc)
 		return $url;
 	}
 	
