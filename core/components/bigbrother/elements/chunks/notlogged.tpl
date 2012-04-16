@@ -7,35 +7,35 @@
  * @xtype bb-panel
  */
 MODx.panel.BigBrotherNotLogged = function(config) {
-    config = config || {};	
-	Ext.applyIf(config,{
-		id: 'modx-panel-bigbrother'
+    config = config || {};    
+    Ext.applyIf(config,{
+        id: 'modx-panel-bigbrother'
         ,unstyled: true
         ,defaults: { collapsible: false ,autoHeight: true, unstyled: true }
         ,items: [{
-			layout: 'form'
-			,cls: 'main-wrapper'
-			,defaults: { border: false }
-			,items:[{
-				xtype: 'modx-template-panel'
-				,bodyCssClass: 'centered'
-				,startingMarkup: '<tpl for=".">'
-					+'<p>{text}</p>'
-				+'</tpl>'
-				,startingText: '[[+bigbrother.notlogged_desc]]'
-				,buttonAlign: 'center'			
-				,buttons: [{
-					 xtype: 'button'
-					,id: 'action-btn'
-					,text: '[[+bigbrother.notlogged_btn]]'	
-					,handler: function(){ location.href = MODx.BigBrotherRedirect; }
-					,scope: this
-				}]
-			}]
-		}]
-		,renderTo: 'bb-panel'
-	});
-	MODx.panel.BigBrotherNotLogged.superclass.constructor.call(this,config);
+            layout: 'form'
+            ,cls: 'main-wrapper'
+            ,defaults: { border: false }
+            ,items:[{
+                xtype: 'modx-template-panel'
+                ,bodyCssClass: 'centered'
+                ,startingMarkup: '<tpl for=".">'
+                    +'<p>{text}</p>'
+                +'</tpl>'
+                ,startingText: '[[+bigbrother.notlogged_desc]]'
+                ,buttonAlign: 'center'            
+                ,buttons: [{
+                     xtype: 'button'
+                    ,id: 'action-btn'
+                    ,text: '[[+bigbrother.notlogged_btn]]'    
+                    ,handler: function(){ location.href = BigBrother.RedirectUrl; }
+                    ,scope: this
+                }]
+            }]
+        }]
+        ,renderTo: 'bb-panel'
+    });
+    MODx.panel.BigBrotherNotLogged.superclass.constructor.call(this,config);
 };
 Ext.extend(MODx.panel.BigBrotherNotLogged,MODx.Panel);
 Ext.reg('bb-panel', MODx.panel.BigBrotherNotLogged);
