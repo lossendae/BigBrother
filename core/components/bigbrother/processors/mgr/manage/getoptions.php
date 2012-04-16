@@ -8,7 +8,7 @@
 $ga =& $modx->bigbrother;
 
 $results['cache_timeout'] = $ga->getOption('cache_timeout');
-$results['account'] = $ga->getOption('account');
+$results['account'] = $ga->getOption('account', false);
 $results['admin_groups'] = $ga->getOption('admin_groups');
 $results['date_begin'] = $ga->getOption('date_begin');
 $results['date_end'] = $ga->getOption('date_end');
