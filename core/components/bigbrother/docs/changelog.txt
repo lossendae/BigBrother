@@ -1,5 +1,13 @@
 Reload the page after installation to access the menu item under "Components"
 
+Big Brother 1.0.2 RC1
+********************
+
+- Added BigBrother namaespace in cmp and dashboard
+- Added ability to set specific account to user for reports
+- Fixed notices
+- Set debug to false by default
+
 Big Brother 1.0.1 pl
 ********************
 
