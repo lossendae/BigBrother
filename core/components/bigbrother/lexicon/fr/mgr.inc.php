@@ -115,6 +115,7 @@ $_lang['bigbrother.options'] = 'Options';
 $_lang['bigbrother.save_settings'] = 'Sauvegarder';
 $_lang['bigbrother.general_options'] = 'Options Générales';
 $_lang['bigbrother.dashboard_options'] = 'Options du Dashboard';
+$_lang['bigbrother.account_options'] = 'Options de comptes';
 
 /* Options panel - cmp options */
 $_lang['bigbrother.accounts_list'] = 'Liste des comptes disponibles';
@@ -146,3 +147,12 @@ $_lang['bigbrother.show_metas_on_dashboard_desc'] = 'Montrer les metas informati
 
 $_lang['bigbrother.show_pies_on_dashboard'] = 'Dashboard Widget - Aperçu des visiteurs et des sources de trafic';
 $_lang['bigbrother.show_pies_on_dashboard_desc'] = 'Afficher les visiteurs et les sources de trafic sur le tableau de bord';
+
+/* Account Options */
+$_lang['bigbrother.account_options_desc'] = "<p>Bigbrother par défaut utilise un compte pré-selectionné pour les rapports d'analyse.</p>
+<p>Toutefois, il est possible de selectionner un compte specifique par utilisateur qui aura la priorité sur le compte par défaut.</p>
+<p>Le compte séléectionné sera alors utilisé pour le CMP et le dashboard pour les rapports d'analyse</p>
+<p>Utilisez la grille ci-dessous pour selectionner un compte sur la gauche en cliquant sur la colonne \"compte\", une liste des compte disponibles apparaîtra.</p>
+<div class=\"warning\">
+    <p><strong>Note : </strong>La liste des utilisateurs montre tous les utilisateurs indépendemment du fait qu'il aient accès au manager.</p>
+</div>";
