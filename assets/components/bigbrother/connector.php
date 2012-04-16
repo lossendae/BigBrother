@@ -11,6 +11,6 @@ $modx->bigbrother = new BigBrother($modx);
 $modx->lexicon->load('bigbrother:mgr');
 
 $modx->request->handleRequest(array(
-	'processors_path'   => $modx->getOption('processors_path',$modx->bigbrother->config,$mpCorePath.'processors/'),
-	'location' => 'mgr'
+    'processors_path'   => $modx->getOption('processors_path',$modx->bigbrother->config,$mpCorePath.'processors/'),
+    'location' => 'mgr'
 ));
