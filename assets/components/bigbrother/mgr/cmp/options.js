@@ -469,6 +469,7 @@ Ext.extend(BigBrother.Grid.AssignAccountToUser, Ext.grid.EditorGridPanel,{
                     action : 'manage/assignAccount'
                     ,account : e.value
                     ,accountName : accountName
+                    ,user : e.record.data.id
                 }
                 ,method: 'GET'
                 ,scope: this
