@@ -36,7 +36,6 @@ MODx.panel.BigBrotherAuthorizePanel = function(config) {
                 ,cls: 'main-wrapper form-with-labels'
                 ,id: 'login-panel'
                 ,unstyled : true    
-                ,hidden: true
                 ,labelAlign: 'top'
                 ,items: [{
                     xtype: 'textfield'
@@ -44,18 +43,22 @@ MODx.panel.BigBrotherAuthorizePanel = function(config) {
                     ,name: 'callback_url'
                     ,id: 'callback_url'
                     ,anchor: '100%'
+                    ,hidden: true
                 },{
                     xtype: 'label'
                     ,forId: 'callback_url'
                     ,text: _('bigbrother.callback_label_under')
                     ,cls: 'desc-under'
+                    ,id: 'callback_url_label'
+                    ,hidden: true
                 }]
                 ,buttonAlign: 'center'            
                 ,buttons: [{
                      xtype: 'button'
                     ,id: 'action-btn'
-                    ,text: ''        
+                    ,text: _('bigbrother.verify_prerequisite_settings') 
                     ,handler: this.doAction
+                    ,disabled: true
                     ,scope: this
                 }]
             }]
@@ -65,15 +68,18 @@ MODx.panel.BigBrotherAuthorizePanel = function(config) {
     
     this.init();
 };
-Ext.extend(MODx.panel.BigBrotherAuthorizePanel,MODx.Panel,{
+Ext.extend(MODx.panel.BigBrotherAuthorizePanel,Ext.Panel,{
     getToken: false
     ,init: function(){    
+        var form = Ext.getCmp('login-panel');
         var btn = Ext.getCmp('action-btn');
+        var field = Ext.getCmp('callback_url');
+        var fieldLabel = Ext.getCmp('callback_url_label');
         
         Ext.Ajax.request({
             url : MODx.BigBrotherConnectorUrl
             ,params : { 
-                action : 'authenticate/checkRequiredExtensions'
+                action : 'authenticate/verifyPrerequisite'
             }
             ,method: 'GET'
             ,scope: this
@@ -81,15 +87,15 @@ Ext.extend(MODx.panel.BigBrotherAuthorizePanel,MODx.Panel,{
                 data = Ext.util.JSON.decode( result.responseText );
                 if(!data.success){
                     data.className = 'highlight desc-error';
-                    this.getToken = false;
-                    btn.setText(_('bigbrother.verify_prerequisite_settings'));                    
+                    this.getToken = false;          
                 } else {                    
                     this.getToken = true;
                     btn.setText(_('bigbrother.start_the_login_process'));
-                }
-                var form = Ext.getCmp('login-panel');
-                form.show();
-                form.getForm().setValues(data);
+                    field.show();
+                    fieldLabel.show();                    
+                    form.getForm().setValues(data);                    
+                }  
+                btn.enable();
                 Ext.getCmp('bb-breadcrumbs').updateDetail(data);
             }
             ,failure: function ( result, request) { 
