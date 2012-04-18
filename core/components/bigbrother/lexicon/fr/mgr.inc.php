@@ -153,10 +153,10 @@ $_lang['bigbrother.show_pies_on_dashboard_desc'] = 'Afficher les visiteurs et le
 
 /* Account Options */
 $_lang['bigbrother.user_account_default'] = "default";
-$_lang['bigbrother.account_options_desc'] = "<p>Bigbrother par défaut utilise un compte pré-selectionné pour les rapports d'analyse.</p>
-<p>Toutefois, il est possible de selectionner un compte specifique par utilisateur qui aura la priorité sur le compte par défaut.</p>
-<p>Le compte séléectionné sera alors utilisé pour le CMP et le dashboard pour les rapports d'analyse</p>
-<p>Utilisez la grille ci-dessous pour selectionner un compte sur la gauche en cliquant sur la colonne \"compte\", une liste des compte disponibles apparaîtra.</p>
+$_lang['bigbrother.account_options_desc'] = "<p>Bigbrother par défaut utilise un compte pré-selectionné pour les rapports d'analyse.<br/>
+Toutefois, il est possible de selectionner un compte specifique par utilisateur qui aura la priorité sur le compte par défaut.</p>
+<p>Le compte séléectionné sera alors utilisé pour le CMP et le dashboard pour les rapports d'analyse<br/>
+Utilisez la grille ci-dessous pour selectionner un compte sur la gauche en cliquant sur la colonne \"compte\", une liste des compte disponibles apparaîtra.</p>
 <div class=\"warning\">
     <p><strong>Note : </strong>La liste des utilisateurs montre tous les utilisateurs indépendemment du fait qu'il aient accès au manager.</p>
 </div>";

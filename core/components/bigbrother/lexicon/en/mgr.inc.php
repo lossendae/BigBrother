@@ -154,10 +154,10 @@ $_lang['bigbrother.show_pies_on_dashboard_desc'] = 'Show Visitors and Traffic So
 
 /* Account Options */
 $_lang['bigbrother.user_account_default'] = "default";
-$_lang['bigbrother.account_options_desc'] = "<p>Bigbrother use a default pre-selected account has for the analytics reports.</p>
-<p>However, it is possible to attibute a specific google analytics account for report per user to override the default account setting.</p>
-<p>A user assigned to a specific account will use it for both the CMP and the dashboard.</p>
-<p>Use the grid below to select an account on the left by clicking on the account row, a list of all the available account will be shown.</p>
+$_lang['bigbrother.account_options_desc'] = "<p>Bigbrother use a default pre-selected account has for the analytics reports.<br/>
+However, it is possible to attibute a specific google analytics account for report per user to override the default account setting.</p>
+<p>A user assigned to a specific account will use it for both the CMP and the dashboard.<br/>
+Use the grid below to select an account on the left by clicking on the account row, a list of all the available account will be shown.</p>
 <div class=\"warning\">
     <p><strong>Note : </strong>The user list show all users regardless of wether they have access right to the manager.</p>
 </div>";
