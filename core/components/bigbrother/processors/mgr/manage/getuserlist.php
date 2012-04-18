@@ -16,6 +16,7 @@ $userSettingTable = $modx->getTableName('modUserSetting');
 $query = new xPDOCriteria($modx,
     'SELECT 
     `modUser`.`id`,
+    `modUser`.`username`,
     `Profile`.`fullname`,
     ( SELECT 
         `modUserSetting`.`value` 
@@ -34,9 +35,8 @@ $query->prepare();
 $users = $modx->getCollection('modUser', $query);
 foreach($users as $user){
     $row['id'] = $user->get('id'); 
-    $row['fullname'] = $user->get('fullname'); 
-    $account = $user->get('account');
-    $row['account'] = empty( $account ) ? 'none' : $account; 
+    $row['fullname'] = !empty( $user->fullname ) ? $user->fullname : $user->username; 
+    $row['account'] = empty( $user->account ) ? 'none' : $account; 
     $data[] = $row;
 }
 
