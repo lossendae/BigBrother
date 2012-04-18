@@ -13,7 +13,9 @@ $_lang['bigbrother.alert_failed'] = 'Échec';
 /* Action buttons - modAB */
 $_lang['bigbrother.revoke_authorization'] = 'Révoquer l\'autorisation';
 $_lang['bigbrother.revoke_permission'] = 'Révoquer les permissions ?';
-$_lang['bigbrother.revoke_permission_msg'] = "En révoquant l'autorisation, vous devrez passer à nouveau par le processus de configuration pour authoriser MODx à acceder a l'API de Google.<br/>Êtes-vous sûr de vouloir révoquer les autorisations";
+$_lang['bigbrother.revoke_permission_msg'] = "En révoquant l'autorisation, vous devrez passer à nouveau par le processus de configuration pour authoriser MODx à acceder a l'API de Google.<br/><br/>Êtes-vous sûr de vouloir révoquer les autorisations
+<span class=\"warning\"><strong>Note : </strong>Tous les comptes assignés aux utilisateurs seront également supprimés.
+</span>";
 
 /* Authenticate */
 $_lang['bigbrother.bd_root_desc'] = 'Vérifie si SimpleXML et l\'extension PHP cURL sont activées avant de continuer la phase d\'authentification';
@@ -43,6 +45,7 @@ $_lang['bigbrother.function_curl'] = '<strong>Il semblerait que <a href="http://
 $_lang['bigbrother.redirect_to_google'] = 'Redirection sur le site de Google, veuillez patienter...';
 $_lang['bigbrother.authentification_complete'] = 'Authentification terminée.</p><p>Sélectionnez le compte que vous désirez utiliser par défaut dans la liste ci-dessous.<br/> Vous pourrez à tout moment changez de compte via les options du CMP.';
 $_lang['bigbrother.account_set_succesfully_wait'] = 'Compte sélectionné avec succès! Veuillez patienter...';
+$_lang['bigbrother.not_authorized_to'] = "Vous n'avez pas l'autorisation de faire cette opération. Veuillez contacter l'administrateur du site.";
 
 /* Reports */
 $_lang['bigbrother.desc_markup'] = '<h3>{title}<span>{date_begin} - {date_end}</span></h3><div class="account-infos">{name}<span>{id}</span></div>';
@@ -149,6 +152,7 @@ $_lang['bigbrother.show_pies_on_dashboard'] = 'Dashboard Widget - Aperçu des vi
 $_lang['bigbrother.show_pies_on_dashboard_desc'] = 'Afficher les visiteurs et les sources de trafic sur le tableau de bord';
 
 /* Account Options */
+$_lang['bigbrother.user_account_default'] = "default";
 $_lang['bigbrother.account_options_desc'] = "<p>Bigbrother par défaut utilise un compte pré-selectionné pour les rapports d'analyse.</p>
 <p>Toutefois, il est possible de selectionner un compte specifique par utilisateur qui aura la priorité sur le compte par défaut.</p>
 <p>Le compte séléectionné sera alors utilisé pour le CMP et le dashboard pour les rapports d'analyse</p>

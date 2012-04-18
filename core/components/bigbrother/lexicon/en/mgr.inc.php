@@ -13,7 +13,9 @@ $_lang['bigbrother.alert_failed'] = 'Failed';
 /* Action buttons - modAB */
 $_lang['bigbrother.revoke_authorization'] = 'Revoke authorization';
 $_lang['bigbrother.revoke_permission'] = 'Revoke permission ?';
-$_lang['bigbrother.revoke_permission_msg'] = "By revoking permission, you'll have to go through the setup process again to authorize MODx to use Google Analytics's APIs. <br/> Are you sure you want to revoke permissions ?";
+$_lang['bigbrother.revoke_permission_msg'] = 'By revoking permission, you\'ll have to go through the setup process again to authorize MODx to use Google Analytics\'s APIs. <br/><br/> Are you sure you want to revoke permissions ?
+<span class="warning"><strong>Note : </strong>All override setting account assigned to users will be erased as well.
+</span>';
 
 /* Authenticate */
 $_lang['bigbrother.bd_root_desc'] = 'Verifying if SimpleXML and cURL PHP extensions are activated before proceeding to the login screen';
@@ -43,6 +45,7 @@ $_lang['bigbrother.function_curl'] = '<strong>It appears that <a href="http://ww
 $_lang['bigbrother.redirect_to_google'] = 'Redirect to Google, please wait...';
 $_lang['bigbrother.authentification_complete'] = 'Authentification complete.</p><p>Select the account you wish to use by default in the list below.<br/> At any time, you will be able to select another account in the dashboard.';
 $_lang['bigbrother.account_set_succesfully_wait'] = 'Account set successfully! Please wait...';
+$_lang['bigbrother.not_authorized_to'] = 'You do not have permission to do this operation. Please contact the site administrator.';
 
 /* Reports */
 $_lang['bigbrother.desc_markup'] = '<h3>{title}<span>{date_begin} - {date_end}</span></h3><div class="account-infos">{name}<span>{id}</span></div>';
@@ -53,6 +56,7 @@ $_lang['bigbrother.loading'] = 'Loading...';
 $_lang['bigbrother.content'] = 'Content';
 $_lang['bigbrother.content_overview'] = 'Content Overview';
 $_lang['bigbrother.site_content'] = 'Site Content';
+$_lang['bigbrother.visits_comparisons'] = 'Visits compared to the previous month';
 $_lang['bigbrother.visits_comparisons'] = 'Visits compared to the previous month';
 
 /* Audience Overview */
@@ -149,6 +153,7 @@ $_lang['bigbrother.show_pies_on_dashboard'] = 'Visitors and Traffic sources';
 $_lang['bigbrother.show_pies_on_dashboard_desc'] = 'Show Visitors and Traffic Sources pie charts on the dashboard';
 
 /* Account Options */
+$_lang['bigbrother.user_account_default'] = "default";
 $_lang['bigbrother.account_options_desc'] = "<p>Bigbrother use a default pre-selected account has for the analytics reports.</p>
 <p>However, it is possible to attibute a specific google analytics account for report per user to override the default account setting.</p>
 <p>A user assigned to a specific account will use it for both the CMP and the dashboard.</p>
