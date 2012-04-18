@@ -49,12 +49,13 @@ Ext.extend(BigBrother.MainPanel,MODx.Panel, {
     
     ,revokeAuthorizationPromptWindow: function(btn){
         Ext.Msg.show({
-            title: _('bigbrother.revoke_permission'),
-            msg: _('bigbrother.revoke_permission_msg'),
-            buttons: Ext.Msg.OKCANCEL,
-            fn: this.revokeAuthorization,
-            animEl: btn.id,
-            icon: Ext.MessageBox.WARNING  
+            title: _('bigbrother.revoke_permission')
+            ,msg: _('bigbrother.revoke_permission_msg')
+            ,cls: 'revoke-window'
+            ,buttons: Ext.Msg.OKCANCEL
+            ,fn: this.revokeAuthorization
+            ,animEl: btn.id
+            ,icon: Ext.MessageBox.WARNING  
         });
     }
     
@@ -64,9 +65,7 @@ Ext.extend(BigBrother.MainPanel,MODx.Panel, {
             pnl.disable();
             Ext.Ajax.request({
                 url : BigBrother.ConnectorUrl
-                ,params : { 
-                    action : 'manage/revoke'
-                }
+                ,params : { action : 'manage/revoke' }
                 ,method: 'GET'
                 ,scope: pnl
                 ,success: function ( result, request ) { 

@@ -299,6 +299,11 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
     padding: 15px 15px 8px;
 }
 .warning strong{}
+.revoke-window .warning{
+    display: inline-block;
+    margin: 10px 0 0;
+    padding: 15px;
+}
 
 .account-options{}
 .account-options p{
