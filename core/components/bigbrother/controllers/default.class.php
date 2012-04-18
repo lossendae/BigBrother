@@ -69,7 +69,7 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
         
         //Main Panels
         $admin = "";        
-        $groups = explode(',', 'Administrator');
+        $groups = explode(',', $this->modx->getOption('bigbrother.admin_groups', null, 'Administrator'));
         
         //Load the option menu only for specified user group
         if($this->modx->user->isMember($groups)){
