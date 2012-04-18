@@ -14,8 +14,8 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','BigBrother');
 define('PKG_NAMESPACE','bigbrother');
-define('PKG_VERSION','1.0.1');
-define('PKG_RELEASE','pl');
+define('PKG_VERSION','1.0.2');
+define('PKG_RELEASE','RC1');
 
 function getSnippetContent($path, $name, $debug = false) {
 	$name = ($debug) ? 'debug.'. $name .'.php' : $name .'.php';
