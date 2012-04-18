@@ -8,30 +8,31 @@
 $ga =& $modx->bigbrother;
 $response['success'] = false;
 $data = array();
+$start = $scriptProperties['start'];
+$limit = $scriptProperties['limit'];
 
-$userTable = $modx->getTableName('modUser');
-$profileTable = $modx->getTableName('modUserProfile');
-$userSettingTable = $modx->getTableName('modUserSetting');
+/* Subquery for account name */
+$subQuery = $modx->newQuery('modUserSetting');
+$subQuery->select(array(
+    $modx->getSelectColumns('modUserSetting', 'modUserSetting', '', array('value')),
+));
+$subQuery->where(array(
+    'key' => 'bigbrother.account_name',
+    '`modUserSetting`.`user` = `modUser`.`id`',
+));
+$subQuery->prepare();
 
-$query = new xPDOCriteria($modx,
-    'SELECT 
-    `modUser`.`id`,
-    `modUser`.`username`,
-    `Profile`.`fullname`,
-    ( SELECT 
-        `modUserSetting`.`value` 
-        FROM
-            '. $userSettingTable .' modUserSetting 
-        WHERE `modUserSetting`.`key` = \'bigbrother.account_name\' 
-            AND `modUserSetting`.`user` = `modUser`.`id` ) AS account 
-    FROM
-        '. $userTable .' AS `modUser` 
-        LEFT JOIN '. $profileTable .' `Profile` 
-            ON `modUser`.`id` = `Profile`.`internalKey` 
-    ORDER BY id ASC 
-    LIMIT 10'
-);
-$query->prepare();
+/* Main query */
+$query = $modx->newQuery('modUser');
+$query->select(array(
+    $modx->getSelectColumns('modUser', 'modUser', '', array('id')),
+    $modx->getSelectColumns('modUserProfile', 'Profile', '', array('fullname')),
+    '('. $subQuery->toSQL() .') AS `account`',
+));
+$query->leftJoin('modUserProfile', 'Profile');
+$query->sortBy('id');
+$query->limit($limit, $start);
+
 $users = $modx->getCollection('modUser', $query);
 foreach($users as $user){
     $row['id'] = $user->get('id'); 
@@ -40,7 +41,8 @@ foreach($users as $user){
     $data[] = $row;
 }
 
+/* Query should be prepared for getCount method - @TODO ask the team why ? */
+$response['total'] = $modx->getCount('modUser', $query->prepare());
 $response['success'] = true;
-$response['total'] = count($data);
 $response['data'] = $data;
 return $modx->toJSON($response);
