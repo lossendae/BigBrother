@@ -8,9 +8,12 @@
 $ga =& $modx->bigbrother;
 $response['success'] = false;
 
+/* Get the edited user object */
+$user = $modx->getObject('modUser', $scriptProperties['user']);
+
 /* Unassign override */
 if($scriptProperties['account'] == 'Not assigned'){
-    $settings = $this->modx->user->getMany('UserSettings');
+    $settings = $user->getMany('UserSettings');
     foreach($settings as $setting){
         $key = $setting->get('key');
         /* Remove account */
@@ -24,7 +27,7 @@ if($scriptProperties['account'] == 'Not assigned'){
     }
 /* Assign selected account to a user */    
 } else {
-    $settings = $this->modx->user->getMany('UserSettings');
+    $settings = $user->getMany('UserSettings');
     if(!$settings){
         $account = array();
         
@@ -42,7 +45,7 @@ if($scriptProperties['account'] == 'Not assigned'){
         $new->set('value', $scriptProperties['accountName']);
         $account[] = $new;    
         
-        $this->modx->user->addMany($account);
+        $user->addMany($account);
     } else {
         foreach($settings as $setting){
             $key = $setting->get('key');
@@ -59,7 +62,7 @@ if($scriptProperties['account'] == 'Not assigned'){
 }
 
 /* Save current user object */
-if( $this->modx->user->save() ){
+if( $user->save() ){
     $response['success'] = true;
 }
 return $modx->toJSON($response);
