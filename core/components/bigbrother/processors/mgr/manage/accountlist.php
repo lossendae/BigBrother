@@ -45,8 +45,8 @@ if($this->http_code != 200)    {
     $total = 0;
     $results = array();
     if(isset($scriptProperties['assign']) && $scriptProperties['assign']){
-        $account['name'] = 'Not assigned';
-        $account['id'] = 'Not assigned';
+        $account['name'] = $modx->lexicon('bigbrother.user_account_default');
+        $account['id'] = $modx->lexicon('bigbrother.user_account_default');
         $results[] = $account;
          $total++;
     }

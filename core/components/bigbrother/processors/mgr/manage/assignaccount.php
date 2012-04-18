@@ -11,8 +11,9 @@ $response['success'] = false;
 /* Get the edited user object */
 $user = $modx->getObject('modUser', $scriptProperties['user']);
 
+$defaultValue = $modx->lexicon('bigbrother.user_account_default');
 /* Unassign override */
-if($scriptProperties['account'] == 'Not assigned'){
+if($scriptProperties['account'] == $defaultValue){
     $settings = $user->getMany('UserSettings');
     foreach($settings as $setting){
         $key = $setting->get('key');

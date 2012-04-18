@@ -7,7 +7,18 @@
  */
 $ga =& $modx->bigbrother;
 
-//Delete all bigbrother's related system settings
+/* Delete all account assigned to a user */
+$query = $modx->newQuery('modUserSetting');
+$query->where(array(
+    'key' => 'bigbrother.account',
+));
+$query->orCondition(array(
+    'key' => 'bigbrother.account_name',
+));
+$modx->removeCollection('modUserSetting', $query);
+
+
+/* Delete all bigbrother's related system settings */
 $ga->deleteOption('oauth_token');
 $ga->deleteOption('oauth_secret');
 $ga->deleteOption('account');

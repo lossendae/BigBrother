@@ -36,7 +36,7 @@ $users = $modx->getCollection('modUser', $query);
 foreach($users as $user){
     $row['id'] = $user->get('id'); 
     $row['fullname'] = !empty( $user->fullname ) ? $user->fullname : $user->username; 
-    $row['account'] = empty( $user->account ) ? 'none' : $account; 
+    $row['account'] = empty( $user->account ) ? $modx->lexicon('bigbrother.user_account_default') : $user->account; 
     $data[] = $row;
 }
 

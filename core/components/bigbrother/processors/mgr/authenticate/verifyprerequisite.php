@@ -10,6 +10,12 @@ $response['text'] = '';
 $response['trail'] = array();
 $success = true;
 
+$groups = explode(',', $this->modx->getOption('bigbrother.admin_groups', null, 'Administrator'));
+if(!$this->modx->user->isMember($groups)){
+    $response['text'] .= $modx->lexicon('bigbrother.not_authorized_to');
+    $success = false;
+}
+
 if(!class_exists('SimpleXMLElement')){
     $response['text'] .= $modx->lexicon('bigbrother.class_simplexml');
     $success = false;
