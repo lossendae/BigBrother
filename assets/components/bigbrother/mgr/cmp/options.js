@@ -401,7 +401,7 @@ BigBrother.Grid.AssignAccountToUser = function(config) {
             }
         }
         ,bbar: new Ext.PagingToolbar({
-            pageSize: 25
+            pageSize: 10
             ,store: this.store
             ,displayInfo: true
             ,displayMsg: 'Displaying topics {0} - {1} of {2}'
@@ -456,7 +456,9 @@ Ext.extend(BigBrother.Grid.AssignAccountToUser, Ext.grid.EditorGridPanel,{
     }
     
     ,onAfterRender: function(){
-        this.store.load();
+        /* grid store */
+        this.store.load({params:{ start: 0, limit: 10 }});
+        /* Account list */
         this.comboStore.load();
     }
     
