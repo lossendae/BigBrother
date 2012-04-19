@@ -25,12 +25,20 @@ $subQuery->prepare();
 /* Main query */
 $query = $modx->newQuery('modUser');
 $query->select(array(
-    $modx->getSelectColumns('modUser', 'modUser', '', array('id')),
+    $modx->getSelectColumns('modUser', 'modUser', '', array('id','username')),
     $modx->getSelectColumns('modUserProfile', 'Profile', '', array('fullname')),
     '('. $subQuery->toSQL() .') AS `account`',
 ));
 $query->leftJoin('modUserProfile', 'Profile');
 $query->sortBy('id');
+
+/* Count total rows */
+if ($query->prepare() && $query->stmt->execute()) {
+    $rows = $query->stmt->fetchAll(PDO::FETCH_COLUMN);
+    $response['total'] = count($rows);
+}
+
+/* Paginate */
 $query->limit($limit, $start);
 
 $users = $modx->getCollection('modUser', $query);
@@ -41,8 +49,6 @@ foreach($users as $user){
     $data[] = $row;
 }
 
-/* Query should be prepared for getCount method - @TODO ask the team why ? */
-$response['total'] = $modx->getCount('modUser', $query->prepare());
 $response['success'] = true;
 $response['data'] = $data;
 return $modx->toJSON($response);
