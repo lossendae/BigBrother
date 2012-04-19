@@ -400,12 +400,35 @@ BigBrother.Grid.AssignAccountToUser = function(config) {
                 return rowClass;
             }
         }
+        ,tbar:['->',{
+            xtype: 'trigger'
+            ,id: 'albums-searchfield'
+            ,ctCls: 'customsearchfield'
+            ,emptyText: 'Search...'
+            ,onTriggerClick: function(){
+                this.reset();    
+                this.fireEvent('click');                
+            }
+            ,listeners: {
+                specialkey: function(field, e){
+                    if (e.getKey() == e.ENTER) {
+                        this.getStore().setBaseParam('query',field.getValue());
+                        this.getStore().load();
+                    }
+                }
+                ,click: function(trigger){
+                    this.getStore().setBaseParam('query','');
+                    this.getStore().load();
+                }
+                ,scope: this
+            }
+        }]
         ,bbar: new Ext.PagingToolbar({
             pageSize: 10
             ,store: this.store
             ,displayInfo: true
-            ,displayMsg: 'Displaying topics {0} - {1} of {2}'
-            ,emptyMsg: "No topics to display"
+            ,displayMsg: 'Listing {0} to {1} of {2} users'
+            ,emptyMsg: "No users found"
         })
         ,cls: 'bb-preview-grid'
     })
@@ -421,6 +444,8 @@ Ext.extend(BigBrother.Grid.AssignAccountToUser, Ext.grid.EditorGridPanel,{
             url: BigBrother.ConnectorUrl
             ,baseParams: { 
                 action: 'manage/getUserList'
+                ,start: 0
+                ,limit: 10
             }
             ,totalProperty: 'total'
             ,root: 'data'
@@ -457,7 +482,7 @@ Ext.extend(BigBrother.Grid.AssignAccountToUser, Ext.grid.EditorGridPanel,{
     
     ,onAfterRender: function(){
         /* grid store */
-        this.store.load({params:{ start: 0, limit: 10 }});
+        this.store.load();
         /* Account list */
         this.comboStore.load();
     }

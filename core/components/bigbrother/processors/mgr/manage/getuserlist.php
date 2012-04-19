@@ -10,6 +10,7 @@ $response['success'] = false;
 $data = array();
 $start = $scriptProperties['start'];
 $limit = $scriptProperties['limit'];
+$search = $modx->getOption('query',$scriptProperties, null);
 
 /* Subquery for account name */
 $subQuery = $modx->newQuery('modUserSetting');
@@ -30,12 +31,26 @@ $query->select(array(
     '('. $subQuery->toSQL() .') AS `account`',
 ));
 $query->leftJoin('modUserProfile', 'Profile');
+
+/* Search for specific user by username or fullname */
+if( isset($search) && !empty($search) ){
+    $search = "%{$search}%";
+    $query->where(array(
+        'username:LIKE' => $search,
+    ));
+    $query->orCondition(array(
+        'Profile.fullname:LIKE' => $search,
+    ));
+}
+
 $query->sortBy('id');
 
 /* Count total rows */
 if ($query->prepare() && $query->stmt->execute()) {
     $rows = $query->stmt->fetchAll(PDO::FETCH_COLUMN);
     $response['total'] = count($rows);
+    /* debug */
+    // $response['sql'] = $query->toSQL();
 }
 
 /* Paginate */
