@@ -14,21 +14,21 @@ Additionally, Administrator can switch account easily or revoke Google's authori
 
 ## Installation instructions: ##
 
-    Download & Install via MODx Package Manager
-    Reload the page
-    Go to the menu "Components" and select "Google Analytics"
-    Follow the instructions to allow Google Analytics API via OAuth.
+- Download & Install via MODx Package Manager
+- Reload the page
+- Go to the menu "Components" and select "Google Analytics"
+- Follow the instructions to allow Google Analytics API via OAuth.
 
 ## Roadmap: ##
 
-    Custom TV for single resource report
-    Sample plugin helper for Google Analytics front end tracking
-    Snippets for front end infos
+- Custom TV for single resource report
+- Sample plugin helper for Google Analytics front end tracking
+- Snippets for front end infos
 
 ## Notes & Credits: ##
 
-    The CMP uses Highcharts (www.highcharts.com) for the charts which require a license if you plan to use the plugin in a commercial website (CC3 license - www.highcharts.com/licence)
-    Inspired by the WP plugin by Carson McDonald : http://www.ioncannon.net/projects/google-analytics-dashboard-wordpress-widget/
+The CMP uses Highcharts (www.highcharts.com) for the charts which require a license if you plan to use the plugin in a commercial website (CC3 license - www.highcharts.com/licence).
+Inspired by the WP plugin by Carson McDonald : http://www.ioncannon.net/projects/google-analytics-dashboard-wordpress-widget/
 
 ### Bugs and Development: ###
 
