@@ -1,4 +1,4 @@
-# Cliche #
+# Big Brother #
 
 ## A Google Analytics addon for MODx Revolution 2.2 ##
 
