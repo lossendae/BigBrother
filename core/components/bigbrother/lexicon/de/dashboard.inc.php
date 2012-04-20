@@ -9,8 +9,7 @@
 $_lang['bigbrother.name']               = 'Google Analytics';
 $_lang['bigbrother.desc']               = 'BigBrother Dashboard Beschreibung';
 
-$_lang['bigbrother.notlogged_desc']     = 'Ihr Analytics Konto ist noch nicht konfiguriert.<br />
-                                           Klicken Sie auf den unten stehenden Button um die Konfigurationsseite aufzurufen.';
+$_lang['bigbrother.notlogged_desc']     = 'Ihr Analytics Konto ist noch nicht konfiguriert.<br />Klicken Sie auf den unten stehenden Button um die Konfigurationsseite aufzurufen.';
 $_lang['bigbrother.notlogged_btn']      = 'Analytics Konto einrichten';
 
 $_lang['bigbrother.desc_markup']        = "<h3>{title}<span>{date_begin} - {date_end}</span></h3><div class=\"account-infos\"><button onclick=\"Ext.getCmp(\'modx-panel-bigbrother\').redirect(); return false;\" class=\"inline-button green\">Vollst&auml;ndiger Bericht</button>{name}<span>{id}</span></div>";
