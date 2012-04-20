@@ -15,11 +15,11 @@ set_time_limit(0);
 define('PKG_NAME','BigBrother');
 define('PKG_NAMESPACE','bigbrother');
 define('PKG_VERSION','1.0.2');
-define('PKG_RELEASE','RC2');
+define('PKG_RELEASE','pl');
 
 function getSnippetContent($path, $name, $debug = false) {
-	$name = ($debug) ? 'debug.'. $name .'.php' : $name .'.php';
-	$filename = $path . $name;
+    $name = ($debug) ? 'debug.'. $name .'.php' : $name .'.php';
+    $filename = $path . $name;
     $o = file_get_contents($filename);
     $o = str_replace('<?php','',$o);
     $o = str_replace('?>','',$o);
@@ -33,12 +33,12 @@ $sources= array (
     'root' => $root,
     'files' => $root .'files/',
     'build' => $root .'_build/',
-	'data' => $root .'_build/data/',
+    'data' => $root .'_build/data/',
     'resolvers' => $root .'_build/resolvers/',
     'core' => $root.'core/components/'.PKG_NAMESPACE,
     'snippets' => $root.'core/components/'.PKG_NAMESPACE.'/elements/snippets/',
     'assets' => $root.'assets/components/'.PKG_NAMESPACE,
-	'lexicon' => $root . 'core/components/'.PKG_NAMESPACE.'/lexicon/',
+    'lexicon' => $root . 'core/components/'.PKG_NAMESPACE.'/lexicon/',
     'docs' => $root.'core/components/'.PKG_NAMESPACE.'/docs/',
     'model' => $root.'core/components/'.PKG_NAMESPACE.'/model/',
 );
@@ -101,8 +101,8 @@ $widgets = include $sources['data'].'transport.dashboard_widgets.php';
 if (empty($widgets)) $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in widgets.');
 $attributes = array(
     xPDOTransport::PRESERVE_KEYS => false,
-	xPDOTransport::UPDATE_OBJECT => true,
-	xPDOTransport::UNIQUE_KEY => array ('name'),
+    xPDOTransport::UPDATE_OBJECT => true,
+    xPDOTransport::UNIQUE_KEY => array ('name'),
 );
 
 foreach ($widgets as $widget) {
@@ -149,7 +149,7 @@ $builder->setPackageAttributes(array(
     'license' => file_get_contents($sources['docs'] . 'license.txt'),
     'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
     'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
-	'setup-options' => array(
+    'setup-options' => array(
         'source' => $sources['build'].'setup.options.php',
     ),
 ));

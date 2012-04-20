@@ -16,7 +16,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         $setting = $modx->getObject('modSystemSetting',array('key' => 'bigbrother.admin_groups'));
         if ($setting != null) { $values['admin_groups'] = $setting->get('value'); }
         unset($setting);
-		
+        
         $setting = $modx->getObject('modSystemSetting',array('key' => 'bigbrother.cache_timeout'));
         if ($setting != null) { $values['cache_timeout'] = $setting->get('value'); }
         unset($setting);
@@ -26,19 +26,19 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 
 $output = '
 <style type="text/css">
-	.field-desc{
-		color: #A0A0A0;
-		font-size: 11px;
-		font-style: italic;
-		line-height: 1;
-		margin: 5px -15px 0;
-		padding: 0 15px;
-	}
-	.field-desc.sep{
-		border-bottom: 1px solid #E0E0E0;
-		margin-bottom: 15px;
-		padding-bottom: 15px;
-	}
+    .field-desc{
+        color: #A0A0A0;
+        font-size: 11px;
+        font-style: italic;
+        line-height: 1;
+        margin: 5px -15px 0;
+        padding: 0 15px;
+    }
+    .field-desc.sep{
+        border-bottom: 1px solid #E0E0E0;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
 </style>';
 
 $output .= '<label for="admin_groups">Administrator Groups:</label>
