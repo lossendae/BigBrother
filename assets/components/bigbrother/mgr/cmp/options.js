@@ -30,7 +30,7 @@ BigBrother.Panel.Options = function(config) {
                 ,startingMarkup: '<tpl for=".">'
                     +'<h3>{text}</h3>'
                 +'</tpl>'
-                ,startingText: 'Google Analytics Options'
+                ,startingText: _('bigbrother.google_analytics_options')
                 ,columnWidth: 1
             },{
                 xtype: 'panel'
@@ -211,8 +211,8 @@ BigBrother.Panel.GeneralOptions = function(config) {
             ,listClass: 'account-list'
             ,store: new Ext.data.ArrayStore({
                 fields: ['d', 'v']
-                ,data : [['today', 'Today']
-                    ,['yesterday', 'Yesterday']
+                ,data : [['today', _('bigbrother.today')]
+                    ,['yesterday', _('bigbrother.yesterday')]
                 ]
             })
             ,displayField:'v'
@@ -375,8 +375,8 @@ BigBrother.Grid.AssignAccountToUser = function(config) {
         ,columns: [
             {header: "ID", dataIndex: 'id', hidden: true}
             // ,{id:'bb-user-grid-row', header: "name", dataIndex: 'fullname', renderer: { fn: this.rowRenderer, scope: this }}
-            ,{id:'bb-user-grid-row', header: "name", dataIndex: 'fullname'}
-            ,{header: "account", dataIndex: 'account'
+            ,{id:'bb-user-grid-row', header: _('bigbrother.rowheader_name'), dataIndex: 'fullname'}
+            ,{header: _('bigbrother.rowheader_account'), dataIndex: 'account'
                 , editor: new Ext.form.ComboBox({
                     typeAhead: false
                     ,mode: 'local'
@@ -404,7 +404,7 @@ BigBrother.Grid.AssignAccountToUser = function(config) {
             xtype: 'trigger'
             ,id: 'albums-searchfield'
             ,ctCls: 'customsearchfield'
-            ,emptyText: 'Search...'
+            ,emptyText: _('bigbrother.search_placeholder')
             ,onTriggerClick: function(){
                 this.reset();    
                 this.fireEvent('click');                
