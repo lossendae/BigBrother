@@ -76,7 +76,7 @@ class BigBrotherDefaultManagerController extends BigBrotherManagerController {
             $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/options.js');
             $admin .= 'var pnl = Ext.getCmp("bb-panel");
                 Ext.getCmp("bb-panel").actionToolbar.add({
-                    text: "Options"
+                    text: _("bigbrother.options")
                     ,id: "options-btn"
                     ,iconCls: "icon-options"
                     ,handler: function(b){ this.showOptionsPanel(); b.disable(); }
