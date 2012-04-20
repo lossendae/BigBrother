@@ -45,7 +45,8 @@ if($callbackUrl == null){
 }
 
 if($success){
-    $response['text'] = 'Use the button below to authorize MODx to use the Google Analytics API.</p><p><em>You will be redirected to the authorization page of Google for that site. Once authorized, you will be redirected back to this page and be prompted to choose which account to use for the analytics report.</em>';
+//  $response['text'] = 'Use the button below to authorize MODx to use the Google Analytics API.</p><p><em>You will be redirected to the authorization page of Google for that site. Once authorized, you will be redirected back to this page and be prompted to choose which account to use for the analytics report.</em>';
+    $response['text'] .= $modx->lexicon('bigbrother.account_authentication_desc');
     $response['trail'][] = array('text' => $modx->lexicon('bigbrother.bd_authorize'));
     $response['callback_url'] = $callbackUrl;
 }
