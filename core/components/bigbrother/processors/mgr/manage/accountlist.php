@@ -18,9 +18,9 @@ if(!$ga->loadOAuth()){
 
 $ch = curl_init();
         
-curl_setopt($ch, CURLOPT_URL, $ga->baseUrl . 'accounts/default');
+curl_setopt($ch, CURLOPT_URL, $ga->managementUrl . 'management/accounts');
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array($ga->createAuthHeader($ga->baseUrl . 'accounts/default', 'GET')));
+curl_setopt($ch, CURLOPT_HTTPHEADER, array($ga->createAuthHeader($ga->managementUrl . 'management/accounts', 'GET')));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 $return = curl_exec($ch);
@@ -37,29 +37,26 @@ if($this->http_code != 200)    {
     $response['success'] = false;
     return $modx->toJSON($response);
 } else {
-    $this->error_text = '';
-    $xml = new SimpleXMLElement($return);
-
+    $this->error_text = '';    
+    $json = $modx->fromJSON( $return );
+    
     curl_close($ch);
 
     $total = 0;
-    $results = array();
+    $results = $account = array();
     if(isset($scriptProperties['assign']) && $scriptProperties['assign']){
         $account['name'] = $modx->lexicon('bigbrother.user_account_default');
         $account['id'] = $modx->lexicon('bigbrother.user_account_default');
         $results[] = $account;
          $total++;
     }
-    foreach($xml->entry as $entry) {
-        $value = (string)$entry->id;
-        list($part1, $part2) = explode('accounts/', $value);
-        
-        $account['name'] = (string)$entry->title;
-        $account['id'] = $part2;
-        $results[] = $account;        
-        $total++;
+    foreach( $json['items'] as $value ){
+        $account['name'] = $value['name'];
+        $account['id'] = $value['id'];
+        $results[] = $account;
     }
-    $ga->updateOption('total_account', $total);
+    $ga->updateOption('total_account', $json['totalResults']);
+    
     $response['results'] = $results;
 }
 return $modx->toJSON($response);

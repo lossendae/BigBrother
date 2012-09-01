@@ -31,6 +31,7 @@ class BigBrother {
     public $sideReport = null;
     public $cacheKey = null;
     public $baseUrl = 'https://www.google.com/analytics/feeds/';
+    public $managementUrl = 'https://www.googleapis.com/analytics/v3/';
     private $output = null;    
 
     /**
