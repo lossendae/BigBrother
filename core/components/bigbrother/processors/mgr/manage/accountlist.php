@@ -52,11 +52,36 @@ if($this->http_code != 200)    {
     }
     foreach( $json['items'] as $value ){
         $account['name'] = $value['name'];
-        $account['id'] = $value['id'];
+        
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, $value['childLink']['href']);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array($ga->createAuthHeader($value['childLink']['href'], 'GET')));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $webProperties = curl_exec($ch);
+        $webProperties = $modx->fromJSON( $webProperties );
+        curl_close($ch);
+        
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, $webProperties['items'][0]['childLink']['href']);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array($ga->createAuthHeader($webProperties['items'][0]['childLink']['href'], 'GET')));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $profile = curl_exec($ch);
+        curl_close($ch);
+        
+        $profile = $modx->fromJSON( $profile );
+        $account['id'] = $profile['items'][0]['id'];
+        
         $results[] = $account;
     }
     $ga->updateOption('total_account', $json['totalResults']);
     
+    $response['raw'] = $json;
     $response['results'] = $results;
 }
 return $modx->toJSON($response);
