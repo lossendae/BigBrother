@@ -30,7 +30,7 @@ class BigBrother {
     public $report = null;
     public $sideReport = null;
     public $cacheKey = null;
-    public $baseUrl = 'https://www.google.com/analytics/feeds/';
+    public $baseUrl = 'https://www.googleapis.com/analytics/v3/';
     public $managementUrl = 'https://www.googleapis.com/analytics/v3/';
     private $output = null;    
 
@@ -161,13 +161,7 @@ class BigBrother {
     public function getTotalVisits($dateStart, $dateEnd){
         $url = $this->buildUrl($dateStart, $dateEnd, null, array('ga:visits'));
         $report = $this->getReport($url, true);
-        foreach($report->entry as $entry){        
-            foreach($entry->xpath('dxp:metric') as $metric){
-                $metricAttributes = $metric->attributes();
-                $value = intval($metricAttributes['value']); 
-            }
-        }
-        return $value;
+        return $report['rows'][0][0];
     }
     
     /**
@@ -369,17 +363,21 @@ class BigBrother {
      * @return string $url The url to retreive reports from or to build the cached result set
      */
     public function buildUrl($dateStart, $dateEnd, $dimensions = array(), $metrics = array(), $sort = array(), $filters = array(), $limit = null){
-        $url  = $this->baseUrl . 'data';
-        $url .= '?ids=' . $this->getOption('account');
-        $url .= sizeof($dimensions) > 0 ? ('&dimensions=' . join(array_reverse($dimensions), ',')) : '';
-        $url .= sizeof($metrics) > 0 ? ('&metrics=' . join($metrics, ',')) : '';
-        $url .= sizeof($sort) > 0 ? '&sort=' . join($sort, ',') : '';
-        $url .= sizeof($filters) > 0 ? '&filters=' . urlencode(join($filters, ',')) : '';
-        $url .= '&start-date=' . $dateStart;
-        $url .= '&end-date=' .$dateEnd;
-        $url .= ($limit != null) ? '&max-results=' .$limit : '';
+        $queryString = array();
+        $url  = $this->managementUrl . 'data/ga?';
         
-        $this->cacheKey = md5(urlencode($url));    
+        $queryString[] = 'ids=ga:' . $this->getOption('account');
+        if( sizeof($dimensions) > 0  ) $queryString[] = ('&dimensions=' . join(array_reverse($dimensions), ','));
+        if( sizeof($metrics) > 0 ) $queryString[] = ('&metrics=' . join($metrics, ','));
+        if( sizeof($sort) > 0 ) $queryString[] = '&sort=' . join($sort, ',');
+        if( sizeof($filters) > 0 ) $queryString[] = '&filters=' . urlencode(join($filters, ','));
+        $queryString[] = '&start-date=' . $dateStart;
+        $queryString[] = '&end-date=' .$dateEnd;
+        if( $limit != null ) $queryString[] = '&max-results=' .$limit;
+        
+        $url =  $url . implode('', $queryString);
+        $this->cacheKey = md5( urlencode( $url ) );
+
         return $url;
     }
     
@@ -387,10 +385,10 @@ class BigBrother {
      * Get a report from Google
      *
      * @param string $url The google url to retreive reports from
-     * @param boolean $returnXml Wether the xml should be returned directly
+     * @param boolean $returnArray Whether the result array should be returned directly
      * @return boolean true if the report is successfully fetched, false if any error
      */
-    public function getReport($url, $returnXml = false){
+    public function getReport($url, $returnArray = false){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -409,12 +407,12 @@ class BigBrother {
             $this->output = $return;
             return false;
         } else {
-            $xml = simplexml_load_string($return);
+            $arr = $this->modx->fromJSON( $return );
             curl_close($ch);
-            if($returnXml){
-                return $xml;
+            if( $returnArray ){
+                return $arr;
             }
-            $this->report = $xml;        
+            $this->report = $arr;
         }            
         return true;
     }
