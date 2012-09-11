@@ -31,7 +31,6 @@ class BigBrother {
     public $sideReport = null;
     public $cacheKey = null;
     public $baseUrl = 'https://www.googleapis.com/analytics/v3/';
-    public $managementUrl = 'https://www.googleapis.com/analytics/v3/';
     private $output = null;    
 
     /**
@@ -364,7 +363,7 @@ class BigBrother {
      */
     public function buildUrl($dateStart, $dateEnd, $dimensions = array(), $metrics = array(), $sort = array(), $filters = array(), $limit = null){
         $queryString = array();
-        $url  = $this->managementUrl . 'data/ga?';
+        $url  = $this->baseUrl . 'data/ga?';
         
         $queryString[] = 'ids=ga:' . $this->getOption('account');
         if( sizeof($dimensions) > 0  ) $queryString[] = ('&dimensions=' . join(array_reverse($dimensions), ','));
