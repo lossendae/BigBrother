@@ -20,7 +20,7 @@ h3 span{
     color: #868A8F;
     font-weight: bold;
 }
-.main-wrapper { padding: 20px; }
+.main-wrapper {    padding: 20px; }
 .daterange{
     color: #999999;
     display: block;
@@ -43,7 +43,7 @@ h3 span{
     margin: 20px 0;
     padding: 15px 25px !important;
 }
-.panel-title p{ font-size: 20px; }
+.panel-title p{    font-size: 20px; }
 .charts-wrapper,
 .metas-wrapper{ margin: 0 0 20px; }
 .metas-wrapper table{
@@ -314,14 +314,3 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
 .x-grid3 .x-small-editor .x-form-text, .x-grid3 .x-small-editor .x-form-field-wrap {
     margin-top: 0;
 }
-.customsearchfield .x-form-field-trigger-wrap .x-form-text {
-    background-color:#ffffff;
-    background-image:none;
-    border-right:1px solid #d0d0d0 !important;
-}
-.customsearchfield .x-form-field-trigger-wrap .x-form-empty-field { color: #AAAAAA !important; }
-.x-small-editor .customsearchfield .x-form-field-wrap { overflow: hidden; height: 32px; }
-.x-small-editor .customsearchfield .x-form-field-wrap .x-form-trigger { 
-    background: url("../images/clear.png") no-repeat scroll 7px 8px transparent;
-}
-.x-small-editor .customsearchfield .x-form-field-wrap .x-form-trigger-over { background-position:7px 8px; }
