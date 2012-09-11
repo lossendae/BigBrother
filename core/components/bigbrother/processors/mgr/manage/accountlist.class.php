@@ -18,7 +18,7 @@ class getAccountList extends modProcessor {
         if( !$this->ga->loadOAuth() ){
             return $this->failure( $this->modx->lexicon('bigbrother.err_load_oauth') );
         }
-        $result = $this->callAPI( $this->ga->baseUrl . 'management/accounts' );
+        $result = $this->callAPI( $this->ga->managementUrl . 'management/accounts' );
         if( !empty( $this->error ) ){
             return $this->failure( $this->error );
         }
