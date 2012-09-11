@@ -20,8 +20,8 @@ $_lang['bigbrother.revoke_permission_msg']         = "En révoquant l'autorisati
                                                       <span class=\"warning\"><strong>Note : </strong>Tous les comptes assignés aux utilisateurs seront également supprimés.</span>";
 
 /* Authenticate */
-$_lang['bigbrother.account_authentication_desc']   = 'Use the button below to authorize MODx to use the Google Analytics API.</p>
-                                                      <p><em>You will be redirected to the authorization page of Google for that site. Once authorized, you will be redirected back to this page and be prompted to choose which account to use for the analytics report.</em>';    // todo: French translation
+$_lang['bigbrother.account_authentication_desc']   = 'Utilisez le bouton ci-dessous pour autoriser MODX à accéder à l\'API de Google Analytics.</p>
+                                                      <p><em>Vous allez être redirigé vers la page d\'identification de Google. Une fois identifié, vous serrez redirigé vers cette présente page et vous pourrez choisir le compte Google Analytics que vous souhaitez utiliser.</em>';
 $_lang['bigbrother.bd_root_desc']                  = 'Vérifie si SimpleXML et l\'extension PHP cURL sont activées avant de continuer la phase d\'authentification';
 $_lang['bigbrother.bd_root_crumb_text']            = 'Vérification des pré-requis';
 
@@ -141,8 +141,8 @@ $_lang['bigbrother.30_jours']                      = '30 jours';
 $_lang['bigbrother.45_jours']                      = '45 jours';
 $_lang['bigbrother.60_jours']                      = '60 jours';
 
-$_lang['bigbrother.today']                         = 'Today';       //todo: French translation
-$_lang['bigbrother.yesterday']                     = 'Yesterday';   //todo: French translation
+$_lang['bigbrother.today']                         = 'Aujourd\'hui';
+$_lang['bigbrother.yesterday']                     = 'Hier';
 
 $_lang['bigbrother.report_end_date']               = 'Date de fin de rapport';
 $_lang['bigbrother.report_end_date_desc']          = 'Sélectionnez la date de fin de rapport';
@@ -170,6 +170,6 @@ $_lang['bigbrother.account_options_desc']          = "<p>Bigbrother par défaut 
                                                       <p>Le compte séléectionné sera alors utilisé pour le CMP et le dashboard pour les rapports d'analyse<br />
                                                       Utilisez la grille ci-dessous pour selectionner un compte sur la gauche en cliquant sur la colonne \"compte\", une liste des compte disponibles apparaîtra.</p>
                                                       <div class=\"warning\"><p><strong>Note : </strong>La liste des utilisateurs montre tous les utilisateurs indépendemment du fait qu'il aient accès au manager.</p></div>";
-$_lang['bigbrother.search_placeholder']            = "Search...";   // todo: French translation
-$_lang['bigbrother.rowheader_name']                = "Name";        // todo: French translation
-$_lang['bigbrother.rowheader_account']             = "Account";     // todo: French translation
+$_lang['bigbrother.search_placeholder']            = "Rechercher...";
+$_lang['bigbrother.rowheader_name']                = "Nom";
+$_lang['bigbrother.rowheader_account']             = "Compte";
