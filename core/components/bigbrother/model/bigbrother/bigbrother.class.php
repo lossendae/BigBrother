@@ -31,7 +31,7 @@ class BigBrother {
     public $sideReport = null;
     public $cacheKey = null;
     public $baseUrl = 'https://www.googleapis.com/analytics/v3/';
-    private $output = null;    
+    private $output = null;
 
     /**
      * The bigbrother Constructor.
@@ -48,8 +48,8 @@ class BigBrother {
 
         $core = $this->modx->getOption('bigbrother.core_path',$config,$this->modx->getOption('core_path').'components/bigbrother/');
         $assets_url = $this->modx->getOption('bigbrother.assets_url',$config,$this->modx->getOption('assets_url').'components/bigbrother/');
-        $assets_path = $this->modx->getOption('bigbrother.assets_path',$config,$this->modx->getOption('assets_path').'components/bigbrother/'); 
-        
+        $assets_path = $this->modx->getOption('bigbrother.assets_path',$config,$this->modx->getOption('assets_path').'components/bigbrother/');
+
         $this->config = array_merge(array(
             'core_path' => $core,
             'model_path' => $core.'model/',
@@ -67,7 +67,7 @@ class BigBrother {
         }
         $this->initDebug();
     }
-    
+
     /**
     * Load debugging settings
     */
@@ -87,7 +87,7 @@ class BigBrother {
             }
         }
     }
-    
+
     /**
      * Load the OAuth file containing the OAuth classes
      *
@@ -97,16 +97,16 @@ class BigBrother {
     public function loadOAuth() {
         $file = $this->config['model_path'].'bigbrother/OAuth.php';
         if (!file_exists($file)) {
-            return false;        
-        } 
-        require_once $file;            
+            return false;
+        }
+        require_once $file;
         $oauthToken = $this->getOption('oauth_token');
-        $oauthSecret = $this->getOption('oauth_secret');        
+        $oauthSecret = $this->getOption('oauth_secret');
         if($oauthToken != null && $oauthToken != ''){ $this->oauthToken = $oauthToken; }
-        if($oauthSecret != null && $oauthSecret != ''){ $this->oauthSecret = $oauthSecret; }        
+        if($oauthSecret != null && $oauthSecret != ''){ $this->oauthSecret = $oauthSecret; }
         return true;
     }
-    
+
     /**
      * Extract the cURL response params and create an associative array with the paired values
      *
@@ -124,7 +124,7 @@ class BigBrother {
         }
         return $params;
     }
-    
+
     /**
      * Get dates for the requested report
      *
@@ -133,25 +133,25 @@ class BigBrother {
      * @param boolean $delay Wheter to calculate date delayed for comparison
      * @return array The begin and end dates for the requested period
      */
-    public function getDates($format = 'Y-m-d', $delay = false){        
+    public function getDates($format = 'Y-m-d', $delay = false){
         $end = $this->getOption('date_end');
         $begin = $end .' - '. $this->getOption('date_begin') .' days';
-        if(!$delay){            
+        if(!$delay){
             $date['begin'] = date($format, strtotime($begin));
             $date['end'] = date($format, strtotime($end));
-        } else {    
+        } else {
             $dateBegin = $this->getOption('date_begin') + 1;
             $end = $end  .' - 35 days';
             $begin = $end .' - '. $this->getOption('date_begin') .' days';
             $date['begin'] = date($format, strtotime($begin));
             $date['end'] = date($format, strtotime($end));
-        }        
+        }
         return $date;
     }
-    
+
     /**
      * Wrapper method to get total visits for specified period
-     * 
+     *
      * @access public
      * @param string $dateStart The starting date
      * @param string $dateEnd The End date
@@ -162,10 +162,10 @@ class BigBrother {
         $report = $this->getReport($url, true);
         return $report['rows'][0][0];
     }
-    
+
     /**
      * Get a translated name for the specified metric
-     * 
+     *
      * @access public
      * @param string $key The metric to translate
      * @return string The translated metric
@@ -173,9 +173,9 @@ class BigBrother {
     public function getName($key) {
         $metrics = array(
             'ga:pageviewsPerVisit',
-            'ga:pageviews',            
+            'ga:pageviews',
             'ga:visits',
-            'ga:visitors',            
+            'ga:visitors',
             'ga:avgTimeOnSite',
             'ga:visitBounceRate',
             'ga:percentNewVisits',
@@ -185,9 +185,9 @@ class BigBrother {
         );
         $replacements = array(
             $this->modx->lexicon('bigbrother.pageviews_per_visit'),
-            $this->modx->lexicon('bigbrother.pageviews'),            
+            $this->modx->lexicon('bigbrother.pageviews'),
             $this->modx->lexicon('bigbrother.visits'),
-            $this->modx->lexicon('bigbrother.visitors'),            
+            $this->modx->lexicon('bigbrother.visitors'),
             $this->modx->lexicon('bigbrother.avg_time_on_site'),
             $this->modx->lexicon('bigbrother.bounce_rate'),
             $this->modx->lexicon('bigbrother.new_visits_in_percent'),
@@ -198,10 +198,10 @@ class BigBrother {
         $name = str_replace($metrics, $replacements, $key);
         return $name;
     }
-    
+
     /**
      * Get a translated name for the specified dimension
-     * 
+     *
      * @access public
      * @param string $key The dimension to translate
      * @return string The translated dimension
@@ -218,10 +218,10 @@ class BigBrother {
         $name = str_replace($dimensions, $replacements, $key);
         return $name;
     }
-    
+
     /**
      * Format metric value for front end display
-     * 
+     *
      * @access public
      * @param string $name The metric name
      * @param string $value The metric value
@@ -245,7 +245,7 @@ class BigBrother {
         }
         return $value;
     }
-    
+
     /**
      * Helper method to create a new MODx system setting
      *
@@ -266,7 +266,7 @@ class BigBrother {
         ),'',true);
         return $setting->save();
     }
-    
+
     /**
      * Helper method to update/create a new MODx system setting
      *
@@ -276,10 +276,10 @@ class BigBrother {
      * @access public
      * @return boolean
      */
-    public function updateOption($key, $value, $type = 'textfield') {        
+    public function updateOption($key, $value, $type = 'textfield') {
         $setting = $this->modx->getObject('modSystemSetting', array(
             'key' => 'bigbrother.'. $key,
-        ));        
+        ));
         if(!$setting){ $setting = $this->modx->newObject('modSystemSetting'); }
         $setting->fromArray(array(
             'key' => 'bigbrother.'. $key,
@@ -290,7 +290,7 @@ class BigBrother {
         ),'',true);
         return $setting->save();
     }
-    
+
     /**
      * Helper method to retreive a bigbrother related system setting
      *
@@ -301,20 +301,20 @@ class BigBrother {
      */
     public function getOption($key, $checkUser = true) {
         // Allow user Settings to override global system_settings when searching for a specific account
-        if($key == "account" && $checkUser || $key == "account_name" && $checkUser){            
+        if($key == "account" && $checkUser || $key == "account_name" && $checkUser){
             $setting = $this->modx->getObject('modUserSetting', array(
                 'key' => 'bigbrother.'. $key,
                 'user' => $this->modx->user->id,
             ));
             if($setting){ return $setting->value; }
-        } 
+        }
         $setting = $this->modx->getObject('modSystemSetting', array(
             'key' => 'bigbrother.'. $key,
-        ));    
-        if($setting){ return $setting->value; }        
+        ));
+        if($setting){ return $setting->value; }
         return null;
     }
-    
+
     /**
      * Helper method to remove a bigbrother related system setting
      *
@@ -326,7 +326,7 @@ class BigBrother {
         $setting = $this->modx->getObject('modSystemSetting', array('key' => 'bigbrother.'. $key));
         if($setting){ return $setting->remove(); }
     }
-    
+
     /**
      * Create the http header for cURL
      *
@@ -347,7 +347,7 @@ class BigBrother {
 
         return $oauthRequest->to_header();
     }
-    
+
     /**
      * Build the report url
      *
@@ -364,7 +364,7 @@ class BigBrother {
     public function buildUrl($dateStart, $dateEnd, $dimensions = array(), $metrics = array(), $sort = array(), $filters = array(), $limit = null){
         $queryString = array();
         $url  = $this->baseUrl . 'data/ga?';
-        
+
         $queryString[] = 'ids=ga:' . $this->getOption('account');
         if( sizeof($dimensions) > 0  ) $queryString[] = ('&dimensions=' . join(array_reverse($dimensions), ','));
         if( sizeof($metrics) > 0 ) $queryString[] = ('&metrics=' . join($metrics, ','));
@@ -373,13 +373,13 @@ class BigBrother {
         $queryString[] = '&start-date=' . $dateStart;
         $queryString[] = '&end-date=' .$dateEnd;
         if( $limit != null ) $queryString[] = '&max-results=' .$limit;
-        
+
         $url =  $url . implode('', $queryString);
         $this->cacheKey = md5( urlencode( $url ) );
 
         return $url;
     }
-    
+
     /**
      * Get a report from Google
      *
@@ -393,7 +393,7 @@ class BigBrother {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array($this->createAuthHeader($url, 'GET')));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        
+
         $return = curl_exec($ch);
 
         if(curl_errno($ch)){
@@ -412,10 +412,10 @@ class BigBrother {
                 return $arr;
             }
             $this->report = $arr;
-        }            
+        }
         return true;
     }
-    
+
     /**
      * Get the report result or any error message if any
      *
@@ -436,10 +436,10 @@ class BigBrother {
         $base_url =  $this->modx->getOption('base_url');
         $manager_url = $this->modx->getOption('manager_url');
         if($base_url == '/'){
-            $url = preg_replace('{/$}','', $site ) . $manager;
+            $url = preg_replace('{/$}','', $site_url ) . $manager_url;
         } else {
             $url = str_replace( $base_url, '' , $site_url ) . $manager_url;
-        }        
+        }
         return $url;
     }
 }
