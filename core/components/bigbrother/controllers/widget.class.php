@@ -13,32 +13,31 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
     public $bigbrother;
     /**
      * Allows widgets to specify a CSS class to attach to the block
-     * 
+     *
      * @var string
      */
     public $cssBlockClass = 'bigbrother';
-        
+
     public function render() {
-        $this->bigbrother = new BigBrother($this->modx);        
-        
+        $this->bigbrother = new BigBrother($this->modx);
+
         $this->modx->controller->addCss($this->bigbrother->config['css_url'] . 'dashboard.css');
-        
+
         //jQuery + charts class
-        $this->modx->controller->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/jquery.min.js');    
+        $this->modx->controller->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/jquery.min.js');
         $this->modx->controller->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/highcharts.js');
-        
-        //Basic reusable panels        
+
+        //Basic reusable panels
         $this->modx->controller->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/classes.js');
         $this->modx->controller->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/charts.js');
-        
+
         $account = $this->bigbrother->getOption('account');
-        $placeholders = $this->modx->lexicon->loadCache('bigbrother','dashboard');
         if($account == null){
-            $class = $this->getFileChunk($this->bigbrother->config['chunks_path'] . 'notlogged.tpl', $placeholders);
+            $this->modx->controller->addJavascript($this->bigbrother->config['assets_url'] . 'dashboard/notlogged.js');
         } else {
-            $class = $this->getFileChunk($this->bigbrother->config['chunks_path'] . 'dashboard.tpl', $placeholders);
+            $this->modx->controller->addJavascript($this->bigbrother->config['assets_url'] . 'dashboard/dashboard.js');
         }
-        
+
         $date = $this->bigbrother->getDates('d M Y');
         /** @var $page modAction */
         $page = $this->modx->getObject('modAction', array(
@@ -47,7 +46,7 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
         ));
 
         $url = $this->bigbrother->getManagerLink() . '?a='. $page->get('id');
-        
+
         $this->modx->controller->addHtml('<script type="text/javascript">
     BigBrother.RedirectUrl = "'.$url.'";
     BigBrother.ConnectorUrl = "'.$this->bigbrother->config['connector_url'].'";
@@ -55,7 +54,7 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
     BigBrother.DateEnd = "'.$date['end'].'";
     BigBrother.account = "'.$this->bigbrother->getOption('account').'";
     BigBrother.accountName = "'.$this->bigbrother->getOption('account_name').'";
-    '. $class .'
+    Ext.applyIf(MODx.lang, '. $this->modx->toJSON($this->modx->lexicon->loadCache('bigbrother', 'dashboard')) .');
     Ext.onReady(function() {
         MODx.load({
             xtype: "bb-panel"
@@ -65,6 +64,6 @@ class modDashboardWidgetBigBrother extends modDashboardWidgetInterface {
 </script>');
         return '<div id="bb-panel"></div>';
     }
-    
+
 }
 return 'modDashboardWidgetBigBrother';

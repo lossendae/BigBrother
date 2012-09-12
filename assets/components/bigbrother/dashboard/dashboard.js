@@ -1,21 +1,21 @@
 /**
  * The widget container for Quick overview
- * 
+ *
  * @class BigBrother.Panel.Dashboard
  * @extends MODx.Panel
  * @param {Object} config An object of options.
  * @xtype bb-panel
  */
 BigBrother.Panel.Dashboard = function(config) {
-    config = config || {};    
+    config = config || {};
     Ext.applyIf(config,{
         id: 'modx-panel-bigbrother'
-        ,unstyled: true        
+        ,unstyled: true
         ,defaults: { collapsible: false, autoHeight: true, unstyled: true }
         ,items: [{
             xtype: 'modx-desc-panel'
-            ,startingMarkup: '<tpl for=".">[[+bigbrother.desc_markup]]</tpl>'
-            ,startingText: '[[+bigbrother.desc_title]]'
+            ,startingMarkup: '<tpl for=".">' + _('bigbrother.desc_markup') + '</tpl>'
+            ,startingText: _('bigbrother.desc_title')
         },{
             xtype: 'panel'
             ,cls: 'main-wrapper'
@@ -25,7 +25,7 @@ BigBrother.Panel.Dashboard = function(config) {
         ,renderTo: "bb-panel"
     });
     BigBrother.Panel.Dashboard.superclass.constructor.call(this,config);
-    
+
     this.init();
 };
 Ext.extend(BigBrother.Panel.Dashboard,Ext.Panel,{
@@ -43,13 +43,13 @@ Ext.extend(BigBrother.Panel.Dashboard,Ext.Panel,{
         }
         container.doLayout();
     }
-    
+
     ,getPanels: function(panel){
         switch(panel){
             case 'visits':
-                return { 
-                     xtype: 'bb-areachart-panel'
-                    ,title: '[[+bigbrother.visits]]'
+                return {
+                    xtype: 'bb-areachart-panel'
+                    ,title: _('bigbrother.visits')
                     ,metrics: 'ga:visits'
                     ,id: 'visits-panel'
                     ,cls: 'bb-panel charts-wrapper charts-line visits'
@@ -57,7 +57,7 @@ Ext.extend(BigBrother.Panel.Dashboard,Ext.Panel,{
                 };
                 break;
             case 'metas':
-                return { 
+                return {
                     xtype:'bb-meta-panel'
                     ,id:'report-content-metas'
                     ,metrics: 'ga:visits,ga:visitors,ga:pageviews,ga:uniquePageviews,ga:percentNewVisits,ga:exitRate,ga:avgTimeOnSite,ga:visitBounceRate'
@@ -65,13 +65,13 @@ Ext.extend(BigBrother.Panel.Dashboard,Ext.Panel,{
                 };
                 break;
             case 'pies':
-                return { 
+                return {
                     layout: 'column'
                     ,id: 'widget-pies'
                     ,border: false
                     ,items:[{
                         xtype: 'bb-pie-panel'
-                        ,title: '[[+bigbrother.traffic_sources]]'
+                        ,title: _('bigbrother.traffic_sources')
                         ,dimensions: 'ga:medium'
                         ,metrics: 'ga:visits'
                         ,sort: 'ga:visits'
@@ -85,7 +85,7 @@ Ext.extend(BigBrother.Panel.Dashboard,Ext.Panel,{
                         }
                     },{
                         xtype: 'bb-pie-panel'
-                        ,title: '[[+bigbrother.visitors]]'
+                        ,title: _('bigbrother.visitors')
                         ,dimensions: 'ga:visitorType'
                         ,metrics: 'ga:visits'
                         ,sort: 'ga:visits'
@@ -103,11 +103,11 @@ Ext.extend(BigBrother.Panel.Dashboard,Ext.Panel,{
                 break;
         }
     }
-    
+
     ,fixWidth: function(){
         Ext.getCmp('bb-container').doLayout();
     }
-    
+
     ,redirect: function(){
         location.href = BigBrother.RedirectUrl;
     }

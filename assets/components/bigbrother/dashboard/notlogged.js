@@ -1,13 +1,13 @@
 /**
  * The panel widget if the user has not authorized Google API tobe used by MODx
- * 
+ *
  * @class MODx.panel.BigBrotherNotLogged
  * @extends MODx.Panel
  * @param {Object} config An object of options.
  * @xtype bb-panel
  */
 MODx.panel.BigBrotherNotLogged = function(config) {
-    config = config || {};    
+    config = config || {};
     Ext.applyIf(config,{
         id: 'modx-panel-bigbrother'
         ,unstyled: true
@@ -21,13 +21,13 @@ MODx.panel.BigBrotherNotLogged = function(config) {
                 ,bodyCssClass: 'centered'
                 ,startingMarkup: '<tpl for=".">'
                     +'<p>{text}</p>'
-                +'</tpl>'
-                ,startingText: '[[+bigbrother.notlogged_desc]]'
-                ,buttonAlign: 'center'            
+                    +'</tpl>'
+                ,startingText: _('bigbrother.notlogged_desc')
+                ,buttonAlign: 'center'
                 ,buttons: [{
-                     xtype: 'button'
+                    xtype: 'button'
                     ,id: 'action-btn'
-                    ,text: '[[+bigbrother.notlogged_btn]]'    
+                    ,text: _('bigbrother.notlogged_btn')
                     ,handler: function(){ location.href = BigBrother.RedirectUrl; }
                     ,scope: this
                 }]
