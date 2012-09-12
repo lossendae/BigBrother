@@ -1,5 +1,15 @@
 Reload the page after installation to access the menu item under "Components"
 
+Big Brother 1.1.0 RC2
+********************
+
+- Fix weird issue in French lexicon
+
+Big Brother 1.1.0 RC1
+********************
+
+- Updated components to use the last API changes for Google
+
 Big Brother 1.0.2 pl
 ********************
 
