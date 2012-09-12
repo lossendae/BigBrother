@@ -13,7 +13,7 @@ $_lang['bigbrother.notlogged_desc']     = 'Votre compte n\'a pas encore été co
 $_lang['bigbrother.notlogged_btn']      = 'Configurer votre compte Google Analytics';
 
 $_lang['bigbrother.desc_markup']        = "<h3>{title}<span>{date_begin} - {date_end}</span></h3><div class=\"account-infos\"><button onclick=\"Ext.getCmp(\'modx-panel-bigbrother\').redirect(); return false;\" class=\"inline-button green\">Voir le rapport complet</button>{name}<span>{id}</span></div>";
-$_lang['bigbrother.desc_title']         = 'Vue d\'ensemble';
+$_lang['bigbrother.desc_title']         = "Vue d\'ensemble";
 
 $_lang['bigbrother.visits']             = 'Visites';
 $_lang['bigbrother.visitors']           = 'Visiteurs';
