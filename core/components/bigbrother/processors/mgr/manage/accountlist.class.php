@@ -6,14 +6,14 @@
  * @subpackage processors
  */
 class getAccountList extends modProcessor {
-    public $ga = null; 
-    public $error = null; 
-    
+    public $ga = null;
+    public $error = null;
+
     public function initialize() {
         $this->ga =& $this->modx->bigbrother;
         return true;
     }
-    
+
     public function process() {
         if( !$this->ga->loadOAuth() ){
             return $this->failure( $this->modx->lexicon('bigbrother.err_load_oauth') );
@@ -22,7 +22,7 @@ class getAccountList extends modProcessor {
         if( !empty( $this->error ) ){
             return $this->failure( $this->error );
         }
-        
+
         $output = $account = array();
         $assign = $this->getProperty('assign', false);
         if( $assign ){
@@ -33,12 +33,12 @@ class getAccountList extends modProcessor {
         // Get account list
         foreach( $result['items'] as $value ){
             $account['name'] = $value['name'];
-            
+
             // Following GA API v3 from July 2012 - The only way to get the right profile ID is to call accountlist -> webproperties -> profile
             $webProperties = $this->callAPI( $value['childLink']['href'] );
             if( !empty( $this->error ) ){
                 return $this->failure( $this->error );
-            }            
+            }
             $profile = $this->callAPI( $webProperties['items'][0]['childLink']['href'] );
             if( !empty( $this->error ) ){
                 return $this->failure( $this->error );
@@ -47,16 +47,16 @@ class getAccountList extends modProcessor {
             $output[] = $account;
         }
         $this->ga->updateOption('total_account', $result['totalResults']);
-        return $this->success( $output );
+        return $this->successBB( $output );
     }
-    
+
     /**
      * Call the GA API via curl
      * @param string $url
      * @return string
      */
     public function callAPI( $url ){
-        $ch = curl_init();        
+        $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array( $this->ga->createAuthHeader($url, 'GET') ) );
@@ -74,13 +74,13 @@ class getAccountList extends modProcessor {
         curl_close($ch);
         return $this->modx->fromJSON( $result );
     }
-    
+
     /**
      * Return a success message from the processor.
      * @param array $output
      * @return string
      */
-    public function success( $output ){
+    public function successBB( $output ){
         $response = array(
             'success' => true,
             'results' => $output,
