@@ -6,12 +6,13 @@
  * @subpackage processors
  */
 class getMetas extends modProcessor {
-    public $ga = null; 
-    public $metrics = null; 
-    public $cols = null; 
-    public $results = array(); 
-    public $output = array(); 
-    
+    /** @var BigBrother */
+    public $ga = null;
+    public $metrics = null;
+    public $cols = null;
+    public $results = array();
+    public $output = array();
+
     public function initialize() {
         $this->ga =& $this->modx->bigbrother;
         $this->cols = $this->getProperty('cols', 4);
@@ -21,11 +22,11 @@ class getMetas extends modProcessor {
         }
         return true;
     }
-    
+
     public function process() {
         $date = $this->ga->getDates();
         $url = $this->ga->buildUrl($date['begin'], $date['end'], array('ga:date'), $this->metrics, array('-ga:visits'));
-        
+
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
@@ -33,10 +34,10 @@ class getMetas extends modProcessor {
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
-        }        
+        }
         if( !$this->ga->getReport($url) ){
             return $this->failure( $this->ga->getOutput() );
-        }        
+        }
         $this->formatData();
         $date = $this->ga->getDates('Y-m-d', true);
         $url = $this->ga->buildUrl($date['begin'], $date['end'], null, $this->metrics, array('-ga:visits'));
@@ -45,9 +46,9 @@ class getMetas extends modProcessor {
         }
         $this->compareData();
         $this->modx->cacheManager->set($cacheKey, $this->output, $this->ga->getOption('cache_timeout'));
-        return $this->success( $this->output );
+        return $this->successBB( $this->output );
     }
-    
+
     /**
      * Format data from the main report
      * @return void
@@ -58,7 +59,7 @@ class getMetas extends modProcessor {
             $this->results[$key]['value'] = intval( $value );
         }
     }
-    
+
     /**
      * Compare new report to the main set of data and update each key accordingly
      * @return void
@@ -79,40 +80,40 @@ class getMetas extends modProcessor {
                 }
                 $this->results[$key]['progression'] = $progression;
                 $this->results[$key]['progressionCls'] = $cls;
-                $this->results[$key]['value'] = $this->ga->formatValue($key, $value);            
+                $this->results[$key]['value'] = $this->ga->formatValue($key, $value);
             }
         }
         $this->formatOutput();
     }
-    
+
     /**
      * Helper method to format the output to be used by Ext templates
      * @return void
      */
     public function formatOutput(){
         $table = array();
-        $i = 0; 
-        foreach($this->results as $metric){    
-            $table[] = $metric;         
+        $i = 0;
+        foreach($this->results as $metric){
+            $table[] = $metric;
             $i++;
             if($i == $this->cols){
                 $this->output['metas'][] = $table;
-                $i = 0; 
+                $i = 0;
                 $table = array();
-            }    
-        }    
+            }
+        }
         if(!empty($table)){
             $this->output['metas'][] = $table;
-        } 
+        }
     }
-    
+
     /**
      * Return a success message from the processor.
      * @param array $output
      * @param boolean $fromCache
      * @return string
      */
-    public function success( $output, $fromCache = false ){
+    public function successBB( $output, $fromCache = false ){
         $response = array_merge(array(
             'success' => true,
             'fromCache' => $fromCache,

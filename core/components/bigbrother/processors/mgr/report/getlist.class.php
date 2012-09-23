@@ -6,14 +6,15 @@
  * @subpackage processors
  */
 class getDataForGrid extends modProcessor {
-    public $ga = null; 
-    public $limit = null; 
-    public $name = null; 
-    public $filters = null; 
-    public $metrics = null; 
-    public $dimension = null; 
+    /** @var BigBrother */
+    public $ga = null;
+    public $limit = null;
+    public $name = null;
+    public $filters = null;
+    public $metrics = null;
+    public $dimension = null;
     public $visits = null;
-    
+
     public function initialize() {
         $this->ga =& $this->modx->bigbrother;
         $this->limit = $this->getProperty('limit', 15);
@@ -23,7 +24,7 @@ class getDataForGrid extends modProcessor {
         $this->metrics = $this->formatProperty('metrics', array('ga:visits'));
         return true;
     }
-    
+
     public function formatProperty( $name, $default = null ){
         $property = $this->getProperty($name, $default);
         if( $property !== null && !is_array($property) ){
@@ -31,11 +32,11 @@ class getDataForGrid extends modProcessor {
         }
         return $property;
     }
-    
+
     public function process() {
         $date = $this->ga->getDates();
         $url = $this->ga->buildUrl($date['begin'], $date['end'], $this->dimension, $this->metrics, array('-ga:visits'), $this->filters, $this->limit);
-        
+
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
@@ -43,23 +44,23 @@ class getDataForGrid extends modProcessor {
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
-        }        
+        }
         if( !$this->ga->getReport($url) ){
             return $this->failure( $this->ga->getOutput() );
         }
         $this->visits = $this->ga->getTotalVisits($date['begin'], $date['end']);
         $response = $this->iterate();
         $this->modx->cacheManager->set($cacheKey, $response, $this->ga->getOption('cache_timeout'));
-        return $this->success( $response );
+        return $this->successBB( $response );
     }
-    
+
     /**
      * Iterate through the report data
-     * @return void
+     * @return array
      */
     public function iterate(){
         $response = $rows = $row = array();
-        foreach( $this->ga->report['rows'] as $key => $value ){    
+        foreach( $this->ga->report['rows'] as $key => $value ){
             $row[$this->name] = $value[0];
             $row['visits'] = intval($value[1]);
             $row['percent'] = round($row['visits'] / $this->visits * 100, 2) .' %';
@@ -69,13 +70,13 @@ class getDataForGrid extends modProcessor {
         $response['results'] = $rows;
         return $response;
     }
-    
+
     /**
      * Return a success message from the processor.
      * @param array $output
      * @return string
      */
-    public function success( $output, $fromCache = false ){
+    public function successBB( $output, $fromCache = false ){
         $response = array_merge( array(
             'success' => true,
             'fromCache' => $fromCache,
