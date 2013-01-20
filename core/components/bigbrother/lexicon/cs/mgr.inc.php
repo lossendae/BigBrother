@@ -1,9 +1,11 @@
 <?php
 /**
  * MGR Czech Lexicon Entries for BigBrother
+ * translated by Jiri Pavlicek jiri@pavlicek.cz
  *
  * @package bigbrother
  * @subpackage lexicon
+ * @language cz
  *
  */
 $_lang['bigbrother.main_title']                    = 'Google Analytics';
