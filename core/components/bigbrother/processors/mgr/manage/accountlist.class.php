@@ -18,7 +18,7 @@ class getAccountList extends modProcessor {
         if( !$this->ga->loadOAuth() ){
             return $this->failure( $this->modx->lexicon('bigbrother.err_load_oauth') );
         }
-        $result = $this->callAPI( $this->ga->baseUrl . 'management/accounts' );
+        $result = $this->callAPI( $this->ga->baseUrl . 'management/accounts/~all/webproperties/~all/profiles' );
         if( !empty( $this->error ) ){
             return $this->failure( $this->error );
         }
@@ -33,17 +33,7 @@ class getAccountList extends modProcessor {
         // Get account list
         foreach( $result['items'] as $value ){
             $account['name'] = $value['name'];
-            
-            // Following GA API v3 from July 2012 - The only way to get the right profile ID is to call accountlist -> webproperties -> profile
-            $webProperties = $this->callAPI( $value['childLink']['href'] );
-            if( !empty( $this->error ) ){
-                return $this->failure( $this->error );
-            }            
-            $profile = $this->callAPI( $webProperties['items'][0]['childLink']['href'] );
-            if( !empty( $this->error ) ){
-                return $this->failure( $this->error );
-            }
-            $account['id'] = $profile['items'][0]['id'];
+            $account['id'] = $value['id'];
             $output[] = $account;
         }
         $this->ga->updateOption('total_account', $result['totalResults']);

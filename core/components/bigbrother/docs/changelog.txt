@@ -1,4 +1,8 @@
 Reload the page after installation to access the menu item under "Components"
+Big Brother 1.2.1 RC1
+********************
+
+- Account list should now fetch all Properties and Profiles from the GA Api
 
 Big Brother 1.2.0 RC1
 ********************
