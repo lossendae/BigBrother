@@ -60,11 +60,13 @@ class getDataForGrid extends modProcessor {
      */
     public function iterate(){
         $response = $rows = $row = array();
-        foreach( $this->ga->report['rows'] as $key => $value ){
-            $row[$this->name] = $value[0];
-            $row['visits'] = intval($value[1]);
-            $row['percent'] = round($row['visits'] / $this->visits * 100, 2) .' %';
-            $rows[] = $row;
+        if (isset($this->ga->report['rows'])) {
+            foreach ($this->ga->report['rows'] as $key => $value) {
+                $row[$this->name] = $value[0];
+                $row['visits'] = intval($value[1]);
+                $row['percent'] = round($row['visits'] / $this->visits * 100, 2) . ' %';
+                $rows[] = $row;
+            }
         }
         $response['total'] = count($rows);
         $response['results'] = $rows;
