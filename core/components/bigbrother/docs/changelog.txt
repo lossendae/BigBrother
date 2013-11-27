@@ -1,5 +1,12 @@
 Reload the page after installation to access the menu item under "Components"
 
+2013/11/27:  1.2.1-beta
+********************
+- Added ability to use account "views" (previously known as profiles in GA)
+- Better checks before iterating reports
+- Fixed issue where *Processor::success() were causing issue due to arguments being different than mod*Processor::success()
+- Fixed issue where MODx.BigBrotherRedirect was not defined
+
 Big Brother 1.2.0 RC1
 ********************
 
@@ -51,7 +58,7 @@ Big Brother 1.0 pl
 Big Brother 1.0 beta5
 *********************
 
-- Added dashboard widget 
+- Added dashboard widget
 - Enabled Dashboard configuration tabs
 
 Big Brother 1.0 beta4
