@@ -160,11 +160,12 @@ BigBrother.Panel.GeneralOptions = function(config) {
             ,forceSelection: true
             ,listClass: 'account-list'
             ,ctCls: 'cb-account-list'
+            ,tpl: '<tpl for="."><div class="x-combo-list-item">{name} <br><i>{account}</i></div></tpl>'
             ,store: new Ext.data.JsonStore({
                 url: BigBrother.ConnectorUrl
                 ,root: 'results'
                 ,totalProperty: 'total'
-                ,fields: ['id', 'name']
+                ,fields: ['id', 'name', 'account']
                 ,errorReader: MODx.util.JSONReader
                 ,baseParams: {
                     action : 'manage/accountlist'

@@ -88,12 +88,12 @@ h3 span{
     text-align: center;
     top: 12px;
 }
-.metas-wrapper td .compare.up{ 
-    background: url("../images/arrow-up.png") no-repeat scroll top center transparent; 
+.metas-wrapper td .compare.up{
+    background: url("../images/arrow-up.png") no-repeat scroll top center transparent;
     right: 5px;
 }
-.metas-wrapper td .compare.down{ 
-    background: url("../images/arrow-down.png") no-repeat scroll top center transparent; 
+.metas-wrapper td .compare.down{
+    background: url("../images/arrow-down.png") no-repeat scroll top center transparent;
     right: 5px;
 }
 .full .x-grid3-cell{ border-right: 1px solid #DDDDDD; }
@@ -109,11 +109,11 @@ h3 span{
 }
 .ext-strict .x-grid3-hd-inner {
     white-space: normal;
-}    
+}
 .x-panel-body-noheader .x-grid3-header{}
-td.x-grid3-hd-over .x-grid3-hd-inner, 
-td.sort-desc .x-grid3-hd-inner, 
-td.sort-asc .x-grid3-hd-inner, 
+td.x-grid3-hd-over .x-grid3-hd-inner,
+td.sort-desc .x-grid3-hd-inner,
+td.sort-asc .x-grid3-hd-inner,
 td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 transparent; }
 .x-grid-panel .x-panel-body-noheader { border-color: transparent; }
 .x-panel-noborder .x-panel-bbar-noborder .x-toolbar { border-top-color: transparent; }
@@ -129,6 +129,11 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
     color: #404004;
     font-weight: bold;
     padding: 10px;
+}
+.account-list .x-combo-list-item i {
+    color: #666;
+    font-weight: normal;
+    font-size: .8em;
 }
 .cb-account-list .x-form-field-wrap{
     margin: 0 auto;
@@ -180,7 +185,7 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
     font-size: 9px;
     font-family: Arial,Helvetica,sans-serif;
     padding: 8px 10px !important;
-    text-transform: uppercase;    
+    text-transform: uppercase;
 }
 .bb-preview-grid .x-grid3-cell-inner {
     padding: 8px 10px;
@@ -206,8 +211,8 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
 }
 .x-grid3-row-alt .x-grid3-row-table { border: 0 none; }
 .x-grid3-hd-aright,
-.x-grid3-col-aright, 
-.x-grid3-hd-highlight , 
+.x-grid3-col-aright,
+.x-grid3-hd-highlight ,
 .x-grid3-col-highlight {
     text-align: center;
 }
@@ -221,7 +226,7 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
     font-weight: bold;
 }
 .x-grid3-row-alt .x-grid3-col-highlight {
-    background-color: #E7E7E7;    
+    background-color: #E7E7E7;
 }
 .vertical-tabs-body {
     padding: 20px;
@@ -236,8 +241,8 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
 .report-panel:last-child{
     margin-bottom: 0;
 }
-.main-wrapper .x-panel-header{ 
-    border-bottom-color: #E5E5E5; 
+.main-wrapper .x-panel-header{
+    border-bottom-color: #E5E5E5;
     padding: 6px 10px;
 }
 .wrapped.main-wrapper{
@@ -291,7 +296,7 @@ td.x-grid3-hd-menu-open .x-grid3-hd-inner { background: none repeat scroll 0 0 t
 .x-column-inner .x-column:first-child { margin-left: 0; }
 
 /* Account options */
-.warning{    
+.warning{
     background-color: #FEF8DC;
     border: 1px solid #E8DEC2;
     color: #565550;

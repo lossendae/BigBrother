@@ -30,9 +30,10 @@ class getAccountList extends modProcessor {
             $account['id'] = $this->modx->lexicon('bigbrother.user_account_default');
             $output[] = $account;
         }
+        $total = 0;
         // Get account list
         foreach( $result['items'] as $value ){
-            $account['name'] = $value['name'];
+            $account['account'] = $value['name'];
 
             // Following GA API v3 from July 2012 - The only way to get the right profile ID is to call accountlist -> webproperties -> profile
             $webProperties = $this->callAPI( $value['childLink']['href'] );
@@ -43,10 +44,15 @@ class getAccountList extends modProcessor {
             if( !empty( $this->error ) ){
                 return $this->failure( $this->error );
             }
-            $account['id'] = $profile['items'][0]['id'];
-            $output[] = $account;
+            foreach ($profile['items'] as $view) {
+                $account['name'] = $view['name'];
+                $account['id'] = $view['id'];
+                $output[] = $account;
+                $total += 1;
+            }
         }
-        $this->ga->updateOption('total_account', $result['totalResults']);
+        //$this->ga->updateOption('total_account', $result['totalResults']);
+        $this->ga->updateOption('total_account', $total);
         return $this->successBB( $output );
     }
 
