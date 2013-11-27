@@ -2,6 +2,7 @@ Reload the page after installation to access the menu item under "Components"
 
 2013/11/27:  1.2.1-beta
 ********************
+- Added translations (SV, CS, RU)
 - Added ability to use account "views" (previously known as profiles in GA)
 - Better checks before iterating reports
 - Fixed issue where *Processor::success() were causing issue due to arguments being different than mod*Processor::success()
