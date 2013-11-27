@@ -28,7 +28,7 @@ class getAreaSerieProcessor extends modProcessor {
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->success($fromCache, true);
+            return $this->successBB($fromCache, true);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
@@ -54,7 +54,6 @@ class getAreaSerieProcessor extends modProcessor {
             if( empty( $serie ) ){
                 // Create entries for each requested metrics
                 $serie['begin'] = $date;
-                $labelDate = $this->ga->getDates('d M Y');
                 $serie['name'] = strtoupper( $this->ga->getName( $this->getProperty('metrics', null) ) );
                 $serie['data'] = array();
             }

@@ -30,7 +30,7 @@ class getMetas extends modProcessor {
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->success($fromCache, true);
+            return $this->successBB($fromCache, true);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
@@ -70,6 +70,9 @@ class getMetas extends modProcessor {
                 $cls = '';
                 $value = $this->results[$key]['value'];
                 $compare = intval( $v );
+                if ($compare <= 0) {
+                    $compare = 1;
+                }
                 $progression = round(($value * 100 / $compare) - 100, 1);
                 if($progression > 0){
                     $progression = '+ '.$progression;

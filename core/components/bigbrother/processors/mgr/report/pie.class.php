@@ -39,7 +39,7 @@ class getPieSerieProcessor extends modProcessor {
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->success($fromCache, true);
+            return $this->successBB($fromCache, true);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');

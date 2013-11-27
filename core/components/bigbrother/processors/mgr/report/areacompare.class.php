@@ -25,10 +25,10 @@ class getSeriesForComparisonAreaChart extends modProcessor {
         $beforeDate = $this->ga->getDates('Y-m-d', true);
         $url = $this->ga->buildUrl($date['begin'], $date['end'], array('ga:date'), $this->metrics);
 
-        $cacheKey = md5($this->ga->cacheKey . $beforeDate);
+        $cacheKey = md5($this->ga->cacheKey /*. $beforeDate*/);
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->success($fromCache, true);
+            return $this->successBB($fromCache, true);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
@@ -63,6 +63,7 @@ class getSeriesForComparisonAreaChart extends modProcessor {
                 $serie['begin'] = $date;
                 $labelDate = $this->ga->getDates('d M Y');
                 $serie['name'] = strtoupper( $labelDate['begin'] .' - '.$labelDate['end'] );
+                //$serie['name'] = strtoupper( $this->formatDate($this->ga->report['query']['start-date'], 'd M Y') .' - '. $this->formatDate($this->ga->report['query']['end-date'], 'd M Y') );
                 $serie['data'] = array();
             }
             $row[] = $date;
@@ -71,6 +72,11 @@ class getSeriesForComparisonAreaChart extends modProcessor {
             $row = array();
         }
         $this->series[] = $serie;
+    }
+
+    protected function formatDate($date, $format = 'Y-m-d')
+    {
+        return date($format, strtotime($date));
     }
 
     /**
