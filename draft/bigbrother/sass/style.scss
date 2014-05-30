@@ -13,7 +13,7 @@
 @import "compass/css3/transition";
 @import "compass/css3/user-interface";
 @import "compass/utilities/general/clearfix";
-@import url(http://fonts.googleapis.com/css?family=Dosis:400,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 @import "compass/reset";
 
@@ -25,7 +25,7 @@ html {
 .bb {
   color:            $body-color;
   background-color: #FFFFFF;
-  font-family:      'Dosis', arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size:        1em;
   line-height:      normal;
   h1, h2, h3, h4, h5, h6 {
@@ -65,7 +65,7 @@ html {
       padding:    6px 22px 12px;
       a {
         color:       $bg-darker-link-color;
-        font-size:   0.9em;
+        font-size:   0.8em;
         font-weight: bold;
       }
       &.active,
@@ -88,6 +88,16 @@ html {
   .nv-x .tick  line,
   .nv-y .nv-axis path {
     display: none;
+  }
+
+  .nvd3 .nv-groups path.nv-line {
+    stroke-width: 3.5px;
+  }
+
+  svg text {
+    font-size: 0.8em;
+    fill: #858C96;
+    font-family: 'Open Sans', sans-serif;
   }
 
   table td.url {

@@ -39,7 +39,9 @@
         <nvd3-line-chart
             data="exampleData"
             id="exampleId"
-            height="300"
+            height="320"
+            color="themeColor()"
+            legendColor="themeColor()"
             showXAxis="true"
             showYAxis="true"
             y="yFunction()"
@@ -47,6 +49,8 @@
             useInteractiveGuideLine="true"
             tooltips="true"
             xAxisTickFormat="xAxisTickFormat()"
+            yAxisShowMaxMin="false"
+            xAxisShowMaxMin="false"
             >
         </nvd3-line-chart>
 
@@ -225,7 +229,7 @@
 
         function pDate(str){
             var p = str.split("/");
-            return new Date(p[2], p[0], p[1]);
+            return new Date(p[2], p[0] - 1, p[1]);
         }
 
         angular.forEach(visits, function(v){
@@ -237,15 +241,22 @@
 
         $scope.exampleData = [
             {
-                "key": "Series 1",
+                "key": "Visits",
                 "values": visits
             },
             {
-                "key": "Series 2",
+                "key": "Pageviews",
                 "area": true,
                 "values": uvs
             }
         ];
+
+        var colorArray = ['#8FB8F0', '#C5DE8A'];
+        $scope.themeColor = function() {
+            return function(d, i) {
+                return colorArray[i];
+            };
+        }
 
         $scope.yFunction = function () {
             return function (d) {
@@ -261,7 +272,7 @@
 
         $scope.xAxisTickFormat = function () {
             return function (d) {
-                return d3.time.format('%x')(new Date(d));  //uncomment for date format
+                return d3.time.format('%d %b')(new Date(d));  //uncomment for date format
             }
         }
 

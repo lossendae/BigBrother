@@ -3,7 +3,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-@import url(http://fonts.googleapis.com/css?family=Dosis:400,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 /* line 17, ../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -78,7 +78,7 @@ html {
 .bb {
   color: #878e98;
   background-color: #FFFFFF;
-  font-family: 'Dosis', arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1em;
   line-height: normal;
   /* TABLE */
@@ -116,7 +116,7 @@ html {
 .bb table.table {
   background: none repeat scroll 0 0 #FFFFFF;
   border-collapse: collapse;
-  font-size: 0.9em;
+  font-size: 0.8em;
   line-height: 3em;
   table-layout: fixed;
   text-align: left;
@@ -135,7 +135,7 @@ html {
   background: none repeat scroll 0 0 #eaedf2;
   font-size: 0.85em;
   font-weight: bold;
-  color: #afbcc5;
+  color: #858c96;
   line-height: 1;
   padding: 1em;
   text-transform: uppercase;
@@ -190,7 +190,7 @@ html {
 /* line 80, ../sass/_ui-kit.scss */
 .bb .table-pagination ul li {
   background-color: #FFFFFF;
-  border: 1px solid #afbcc5;
+  border: 1px solid #858c96;
   float: left;
   list-style: none outside none;
   margin-right: 3px;
@@ -203,11 +203,11 @@ html {
 }
 /* line 91, ../sass/_ui-kit.scss */
 .bb .table-pagination ul li.disabled {
-  background: none repeat scroll 0 0 #afbcc5;
+  background: none repeat scroll 0 0 #858c96;
 }
 /* line 93, ../sass/_ui-kit.scss */
 .bb .table-pagination ul li.disabled a, .bb .table-pagination ul li.disabled span {
-  color: #afbcc5;
+  color: #858c96;
 }
 /* line 39, ../sass/style.scss */
 .bb header {
@@ -244,8 +244,8 @@ html {
 }
 /* line 66, ../sass/style.scss */
 .bb .main-nav li a {
-  color: #afbcc5;
-  font-size: 0.9em;
+  color: #858c96;
+  font-size: 0.8em;
   font-weight: bold;
 }
 /* line 73, ../sass/style.scss */
@@ -267,6 +267,16 @@ html {
   display: none;
 }
 /* line 93, ../sass/style.scss */
+.bb .nvd3 .nv-groups path.nv-line {
+  stroke-width: 3.5px;
+}
+/* line 97, ../sass/style.scss */
+.bb svg text {
+  font-size: 0.8em;
+  fill: #858C96;
+  font-family: 'Open Sans', sans-serif;
+}
+/* line 103, ../sass/style.scss */
 .bb table td.url {
   color: #4087E3;
 }
