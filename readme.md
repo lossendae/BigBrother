@@ -1,7 +1,5 @@
 # Big Brother #
 
-test
-
 ## A Google Analytics addon for MODx Revolution 2.2 ##
 
 This component will give you access to a quick overview of Google Analytics reports directly from the manager.
