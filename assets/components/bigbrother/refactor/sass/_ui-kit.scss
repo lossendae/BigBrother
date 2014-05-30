@@ -1,0 +1,103 @@
+/* TABLE */
+
+$thead-bg: $bg-ui;
+$thead-bg-dark: #DBE2EC;
+$thead-text-color: $bg-ui-text-color;
+$thead-border-color: $border-color;
+$tbody-border-color: $border-color;
+$tbody-bg-odd: transparent;
+$tbody-bg-dark: #ECF1F7;
+$table-pagination-border-color: $bg-ui-text-color;
+$table-pagination-bg: $bg-ui-text-color;
+$table-pagination-bg-disabled: $bg-ui-text-color;
+
+table.table {
+  background:      none repeat scroll 0 0 #FFFFFF;
+  border-collapse: collapse;
+  font-size:       0.8em;
+  line-height:     3em;
+  table-layout:    fixed;
+  text-align:      left;
+  white-space:     nowrap;
+  width:           100%;
+  @include hyphenation();
+  thead {
+    > tr > th {
+      border:         1px solid $thead-border-color;
+      background:     none repeat scroll 0 0 $thead-bg;
+      font-size:      0.85em;
+      font-weight:    bold;
+      color:          $thead-text-color;
+      line-height:    1;
+      padding:        1em;
+      text-transform: uppercase;
+      &.checkbox-column {
+        text-align: center;
+        width:      20px;
+      }
+    }
+  }
+
+  tbody {
+    border: 1px solid $tbody-border-color;
+    > tr.odd {
+      background: none repeat scroll 0 0 $tbody-bg-odd;
+    }
+    > tr {
+      > td {
+        overflow:      hidden;
+        padding:       0.1em 1em;
+        text-overflow: ellipsis;
+        border-bottom: 1px solid $tbody-border-color;
+        &.tile {
+          background-color: #FFFDBB;
+        }
+        &.checkbox-column {
+          text-align: center;
+          width:      20px;
+        }
+      }
+    }
+  }
+  &.dark {
+    thead {
+      > tr > th {
+        background-color: $thead-bg-dark;
+        border-color: $thead-bg-dark;
+      }
+    }
+    tbody {
+      background-color: $tbody-bg-dark;
+      > tr > td {
+        border-color: $thead-bg-dark;
+      }
+    }
+  }
+}
+
+.table-pagination {
+  margin-top: 15px;
+  ul {
+    @include micro-clearfix();
+    padding: 0;
+    margin:  0;
+    li {
+      background-color: #FFFFFF;
+      border:           1px solid $table-pagination-border-color;
+      float:            left;
+      list-style:       none outside none;
+      margin-right:     3px;
+      a {
+        color:   $body-color;
+        display: block;
+        padding: 6px 12px;
+      }
+      &.disabled {
+        background: none repeat scroll 0 0 $table-pagination-bg-disabled;
+        a, span {
+          color: $table-pagination-bg-disabled;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+$body-color: #312D2C;
+
+$bg-ui: #F5F5F5;
+$bg-ui-text-color: #979797;
+$bg-ui-link-color: #979797;
+
+$border-color: #DDDDDD;
+
+// The micro clearfix http://nicolasgallagher.com/micro-clearfix-hack/
+@mixin micro-clearfix {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}

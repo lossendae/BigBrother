@@ -6,11 +6,10 @@
  * @subpackage processors
  */
 class getSeriesForComparisonAreaChart extends modProcessor {
-    /** @var BigBrother */
-    public $ga = null;
-    public $metrics = null;
-    public $series = array();
-
+    public $ga = null; 
+    public $metrics = null; 
+    public $series = array(); 
+    
     public function initialize() {
         $this->ga =& $this->modx->bigbrother;
         $this->metrics = $this->getProperty('metrics', null);
@@ -19,36 +18,36 @@ class getSeriesForComparisonAreaChart extends modProcessor {
         }
         return true;
     }
-
+    
     public function process() {
         $date = $this->ga->getDates();
         $beforeDate = $this->ga->getDates('Y-m-d', true);
         $url = $this->ga->buildUrl($date['begin'], $date['end'], array('ga:date'), $this->metrics);
-
-        $cacheKey = md5($this->ga->cacheKey /*. $beforeDate*/);
+        
+        $cacheKey = md5($this->ga->cacheKey . $beforeDate);
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->successBB($fromCache, true);
+            return $this->success($fromCache, true);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
-        }
+        }        
         if( !$this->ga->getReport($url) ){
             return $this->failure( $this->ga->getOutput() );
-        }
+        }        
         $this->addSerie();
-
+        
         // Get the second area for comparion
-        $url = $this->ga->buildUrl($beforeDate['begin'], $beforeDate['end'], array('ga:date'), $this->metrics);
+        $url = $this->ga->buildUrl($beforeDate['begin'], $beforeDate['end'], array('ga:date'), $this->metrics);        
         if( !$this->ga->getReport($url) ){
             return $this->failure( $this->ga->getOutput() );
-        }
-        $this->addSerie();
-
+        }         
+        $this->addSerie();  
+        
         $this->modx->cacheManager->set($cacheKey, $this->series, $this->ga->getOption('cache_timeout'));
-        return $this->successBB( $this->series );
+        return $this->success( $this->series );
     }
-
+    
     /**
      * Set a serie for the current loaded report
      * @return void
@@ -63,29 +62,23 @@ class getSeriesForComparisonAreaChart extends modProcessor {
                 $serie['begin'] = $date;
                 $labelDate = $this->ga->getDates('d M Y');
                 $serie['name'] = strtoupper( $labelDate['begin'] .' - '.$labelDate['end'] );
-                //$serie['name'] = strtoupper( $this->formatDate($this->ga->report['query']['start-date'], 'd M Y') .' - '. $this->formatDate($this->ga->report['query']['end-date'], 'd M Y') );
                 $serie['data'] = array();
             }
-            $row[] = $date;
+            $row[] = $date; 
             $row[] = intval( $value[1] );
             array_push( $serie['data'], $row );
             $row = array();
         }
         $this->series[] = $serie;
     }
-
-    protected function formatDate($date, $format = 'Y-m-d')
-    {
-        return date($format, strtotime($date));
-    }
-
+    
     /**
      * Return a success message from the processor.
      * @param array $series
      * @param boolean $fromCache
      * @return string
      */
-    public function successBB( $series, $fromCache = false ){
+    public function success( $series, $fromCache = false ){
         $response = array(
             'success' => true,
             'series' => $series,

@@ -1,115 +1,78 @@
 <?php
+
 /**
-* BigBrother
-*
-*
-* @package bigbrother
-* @subpackage controllers
-*/
-class BigBrotherDefaultManagerController extends BigBrotherManagerController {
+ * BigBrother
+ *
+ *
+ * @package    bigbrother
+ * @subpackage controllers
+ */
+class BigBrotherDefaultManagerController extends BigBrotherManagerController
+{
 
-    public function process(array $scriptProperties = array()) {}
+    protected static $js = array(
+        'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular.js',
+        'http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js',
+        'http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.js',
+        'http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.js',
+        'js/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
+        'js/angularjs-nvd3-directives/src/directives/legendDirectives.js',
+    );
+
+    protected static $css = array(
+        'http://cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.css',
+    );
+
     public function getPageTitle() { return $this->modx->lexicon('bigbrother'); }
-    public function loadCustomCssJs() {
-        $oauth_token = $this->bigbrother->getOption('oauth_token');
-        $account = $this->bigbrother->getOption('account');
-        
-        if($oauth_token == null && $oauth_token == ''){
-            $this->checkOauth();
-        } elseif($account == null){
-            $this->loadAuthCompletePanel();
-        } else {
-            $this->loadReportPanel();
-        }
-    }
-    public function getTemplateFile() { return ''; }
-    
-    public function checkOauth(){
-        if(isset($_REQUEST['oauth_return'])){
-            //We've got an anonymous token - let the user choose the account to use for reports
-            $this->loadAuthCompletePanel();
-        } else { 
-            //Authorize process
-            $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/authenticate/panel.js');    
-            $this->addHtml('<script type="text/javascript">
-                MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'";
-                Ext.onReady(function(){ MODx.add("bb-authorize-panel"); });
-            </script>');
-        }
-    }
-    
-    public function loadAuthCompletePanel(){
-        $oauth = null;
-        $oauth = ( isset($_REQUEST['oauth_verifier'])) ? 'MODx.OAuthVerifier = "'. $_REQUEST['oauth_verifier'] .'";' : null;
-        $oauth .= ( isset($_REQUEST['oauth_token'])) ? ' MODx.OAuthToken = "'. $_REQUEST['oauth_token'] .'";' : null;
-        
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/authenticate/authcomplete.js');
-        /** @var $page modAction */
-        $page = $this->modx->getObject('modAction', array(
-            'namespace' => 'bigbrother',
-            'controller' => 'index',
-        ));
 
-        $url = $this->bigbrother->getManagerLink() . '?a='. $page->get('id');
-        $this->addHtml('<script type="text/javascript">
-            MODx.BigBrotherRedirect = "'.$url.'";
-            MODx.BigBrotherConnectorUrl = "'.$this->bigbrother->config['connector_url'].'"; '. $oauth .'
-            Ext.onReady(function(){ MODx.add("bb-authcomplete"); });
-        </script>');
+    /**
+     * @return string
+     */
+    public function getTemplateFile()
+    {
+        return $this->service->config['mgr_template_path'] . 'cmp/index.tpl';
     }
-    
-    public function loadReportPanel(){
-        //jQuery + charts class
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/jquery.min.js');
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/highcharts.js');
-        
-        //Basic reusable panels
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/classes.js');
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/lib/charts.js');
-        
-        //Main Panels
-        $admin = "";        
-        $groups = explode(',', $this->modx->getOption('bigbrother.admin_groups', null, 'Administrator'));
-        
-        //Load the option menu only for specified user group
-        if($this->modx->user->isMember($groups)){
-            $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/options.js');
-            $admin .= 'var pnl = Ext.getCmp("bb-panel");
-                Ext.getCmp("bb-panel").actionToolbar.add({
-                    text: _("bigbrother.options")
-                    ,id: "options-btn"
-                    ,iconCls: "icon-options"
-                    ,handler: function(b){ this.showOptionsPanel(); b.disable(); }
-                });';
-        
-            $admin .= 'pnl.actionToolbar.add({
-                text: _("bigbrother.revoke_authorization")
-                ,iconCls: "icon-delete"
-                ,handler: function(me){ this.revokeAuthorizationPromptWindow(me) }
-            });
-            pnl.actionToolbar.doLayout();';
-            $admin .= '';
-        }
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/content.js');    
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/audience.js');    
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/traffic-sources.js');    
-        $this->addJavascript($this->bigbrother->config['assets_url'] . 'mgr/cmp/container.js');
-        /** @var $page modAction */
-        $page = $this->modx->getObject('modAction', array(
-            'namespace' => 'bigbrother',
-            'controller' => 'index',
-        ));    
-        $date = $this->bigbrother->getDates('d M Y');
 
-        $url = $this->bigbrother->getManagerLink() . '?a='. $page->get('id');
-        $this->addHtml('<script type="text/javascript">            
-            BigBrother.RedirectUrl = "'.$url.'";
-            BigBrother.ConnectorUrl = "'.$this->bigbrother->config['connector_url'].'";
-            BigBrother.DateBegin = "'.$date['begin'].'";
-            BigBrother.DateEnd = "'.$date['end'].'";
-            BigBrother.account = "'.$this->bigbrother->getOption('account').'";
-            BigBrother.accountName = "'.$this->bigbrother->getOption('account_name').'";
-            Ext.onReady(function(){ MODx.add("bb-panel"); '. $admin .' });            
-        </script>');
+    /**
+     * All the assets (JS & CSS) related to the CMP will be prepared and loaded from here
+     */
+    public function loadCustomCssJs()
+    {
+        foreach(static::$css as $css)
+        {
+            $css = substr($css, 0, 4) == 'http' ? $css: $this->service->config['assets_url'] . 'refactor/' . $css;
+            $this->addCss($css);
+        }
+    }
+
+    /**
+     * Handle the JS registration for the cmp
+     */
+    public function firePostRenderEvents()
+    {
+        foreach(static::$js as $js)
+        {
+            $js = substr($js, 0, 4) == 'http' ? $js: $this->service->config['assets_url'] . 'refactor/' . $js;
+            $this->injectBeforeClosingBodyTag('<script src="' . $js . '"></script>');
+        }
+
+        $bootstrapScript = file_get_contents($this->service->config['assets_path'] . 'refactor/js/test.js');
+        $this->injectBeforeClosingBodyTag('<script type="text/javascript">' . $bootstrapScript . '</script>');
+    }
+
+    /**
+     * Custom logic code here for setting placeholders, etc
+     *
+     * @param array $scriptProperties
+     * @return mixed
+     */
+    public function process(array $scriptProperties = array())
+    {
+
+    }
+
+    protected function injectBeforeClosingBodyTag($content)
+    {
+        $this->content = preg_replace("/(<\/body>)/i", $content . "\n\\1", $this->content, 1);
     }
 }

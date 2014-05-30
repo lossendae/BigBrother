@@ -1,0 +1,488 @@
+@charset "CP850";
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+/* line 17, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../../Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 19, ../sass/style.scss */
+html {
+  overflow-y: scroll;
+}
+
+/* line 23, ../sass/style.scss */
+.bb {
+  color: #312d2c;
+  background-color: #FFFFFF;
+  border-left: 1px solid #dddddd;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+  line-height: normal;
+  min-height: 100%;
+  padding-bottom: 50px;
+  /* TABLE */
+  /*
+  * Gridism
+  * A simple, responsive, and handy CSS grid by @cobyism
+  * https://github.com/cobyism/gridism
+  */
+  /* Preserve some sanity */
+  /* Set up some rules to govern the grid */
+  /* This ensures the outer gutters are equal to the (doubled) inner gutters. */
+  /* Nested grids already have padding though, so let’s nuke it */
+  /* Let people nuke the gutters/padding completely in a couple of ways */
+  /* Wrapping at a maximum width is optional */
+  /* Width classes also have shorthand versions numbered as fractions
+  * For example: for a grid unit 1/3 (one third) of the parent width,
+  * simply apply class="w-1-3" to the element. */
+  /* Golden section: smaller piece */
+  /* Golden section: larger piece */
+  /* Clearfix after every .grid */
+  /* Utility classes */
+  /* Responsive 1024 */
+  /* Responsive Mobile */
+  /* Expand the wrap a bit further on larger screens */
+}
+/* line 33, ../sass/style.scss */
+.bb h1, .bb h2, .bb h3, .bb h4, .bb h5, .bb h6 {
+  font-weight: 700;
+}
+/* line 36, ../sass/style.scss */
+.bb a {
+  text-decoration: none;
+}
+/* line 14, ../sass/_ui-kit.scss */
+.bb table.table {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-collapse: collapse;
+  font-size: 0.8em;
+  line-height: 3em;
+  table-layout: fixed;
+  text-align: left;
+  white-space: nowrap;
+  width: 100%;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+/* line 25, ../sass/_ui-kit.scss */
+.bb table.table thead > tr > th {
+  border: 1px solid #dddddd;
+  background: none repeat scroll 0 0 whitesmoke;
+  font-size: 0.85em;
+  font-weight: bold;
+  color: #979797;
+  line-height: 1;
+  padding: 1em;
+  text-transform: uppercase;
+}
+/* line 34, ../sass/_ui-kit.scss */
+.bb table.table thead > tr > th.checkbox-column {
+  text-align: center;
+  width: 20px;
+}
+/* line 41, ../sass/_ui-kit.scss */
+.bb table.table tbody {
+  border: 1px solid #dddddd;
+}
+/* line 43, ../sass/_ui-kit.scss */
+.bb table.table tbody > tr.odd {
+  background: none repeat scroll 0 0 transparent;
+}
+/* line 47, ../sass/_ui-kit.scss */
+.bb table.table tbody > tr > td {
+  overflow: hidden;
+  padding: 0.1em 1em;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #dddddd;
+}
+/* line 52, ../sass/_ui-kit.scss */
+.bb table.table tbody > tr > td.tile {
+  background-color: #FFFDBB;
+}
+/* line 55, ../sass/_ui-kit.scss */
+.bb table.table tbody > tr > td.checkbox-column {
+  text-align: center;
+  width: 20px;
+}
+/* line 64, ../sass/_ui-kit.scss */
+.bb table.table.dark thead > tr > th {
+  background-color: #dbe2ec;
+  border-color: #dbe2ec;
+}
+/* line 69, ../sass/_ui-kit.scss */
+.bb table.table.dark tbody {
+  background-color: #ecf1f7;
+}
+/* line 71, ../sass/_ui-kit.scss */
+.bb table.table.dark tbody > tr > td {
+  border-color: #dbe2ec;
+}
+/* line 78, ../sass/_ui-kit.scss */
+.bb .table-pagination {
+  margin-top: 15px;
+}
+/* line 80, ../sass/_ui-kit.scss */
+.bb .table-pagination ul {
+  *zoom: 1;
+  padding: 0;
+  margin: 0;
+}
+/* line 14, ../sass/_partials.scss */
+.bb .table-pagination ul:before, .bb .table-pagination ul:after {
+  content: "";
+  display: table;
+}
+/* line 18, ../sass/_partials.scss */
+.bb .table-pagination ul:after {
+  clear: both;
+}
+/* line 84, ../sass/_ui-kit.scss */
+.bb .table-pagination ul li {
+  background-color: #FFFFFF;
+  border: 1px solid #979797;
+  float: left;
+  list-style: none outside none;
+  margin-right: 3px;
+}
+/* line 90, ../sass/_ui-kit.scss */
+.bb .table-pagination ul li a {
+  color: #312d2c;
+  display: block;
+  padding: 6px 12px;
+}
+/* line 95, ../sass/_ui-kit.scss */
+.bb .table-pagination ul li.disabled {
+  background: none repeat scroll 0 0 #979797;
+}
+/* line 97, ../sass/_ui-kit.scss */
+.bb .table-pagination ul li.disabled a, .bb .table-pagination ul li.disabled span {
+  color: #979797;
+}
+/* line 43, ../sass/style.scss */
+.bb .header h3 {
+  font-size: 1.2em;
+  line-height: 1;
+  padding: 1.2em 25px 0em;
+}
+/* line 50, ../sass/style.scss */
+.bb .wrapper {
+  padding: 25px 25px 0;
+}
+/* line 54, ../sass/style.scss */
+.bb .tab-nav {
+  background: none repeat scroll 0 0 whitesmoke;
+  border: 1px solid #dddddd;
+  padding: 5px 5px 0;
+  *zoom: 1;
+}
+/* line 14, ../sass/_partials.scss */
+.bb .tab-nav:before, .bb .tab-nav:after {
+  content: "";
+  display: table;
+}
+/* line 18, ../sass/_partials.scss */
+.bb .tab-nav:after {
+  clear: both;
+}
+/* line 59, ../sass/style.scss */
+.bb .tab-nav ul {
+  padding: 0;
+  margin: 0;
+}
+/* line 63, ../sass/style.scss */
+.bb .tab-nav li {
+  float: left;
+  list-style: none outside none;
+  padding: 6px 22px 12px;
+}
+/* line 67, ../sass/style.scss */
+.bb .tab-nav li a {
+  color: #979797;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+/* line 74, ../sass/style.scss */
+.bb .tab-nav li.active a, .bb .tab-nav li:hover a {
+  color: #312d2c;
+}
+/* line 78, ../sass/style.scss */
+.bb .tab-nav li.active {
+  border-color: #dddddd;
+  border-image: none;
+  border-style: solid solid none;
+  border-width: 1px;
+  background: none repeat scroll 0 0 #FFFFFF;
+  margin-bottom: -1px;
+}
+/* line 90, ../sass/style.scss */
+.bb .nv-x .tick line,
+.bb .nv-y .nv-axis path {
+  display: none;
+}
+/* line 94, ../sass/style.scss */
+.bb .nvd3 .nv-groups path.nv-line {
+  stroke-width: 3.5px;
+}
+/* line 98, ../sass/style.scss */
+.bb svg text {
+  font-size: 0.8em;
+  fill: #858C96;
+  font-family: 'Open Sans', sans-serif;
+}
+/* line 104, ../sass/style.scss */
+.bb table td.url {
+  color: #4087E3;
+}
+/* line 11, ../sass/_gridism.scss */
+.bb .grid,
+.bb .unit {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 16, ../sass/_gridism.scss */
+.bb .grid {
+  display: block;
+  clear: both;
+}
+/* line 19, ../sass/_gridism.scss */
+.bb .grid .unit {
+  float: left;
+  width: 100%;
+  padding: 25px 25px 0 0;
+}
+/* line 27, ../sass/_gridism.scss */
+.bb .grid .unit:first-child {
+  padding-left: 25px;
+}
+/* line 28, ../sass/_gridism.scss */
+.bb .grid .unit:last-child {
+  padding-right: 25px;
+}
+/* line 31, ../sass/_gridism.scss */
+.bb .unit .unit:first-child {
+  padding-left: 0;
+}
+/* line 32, ../sass/_gridism.scss */
+.bb .unit .unit:last-child {
+  padding-right: 0;
+}
+/* line 33, ../sass/_gridism.scss */
+.bb .unit .grid:first-child > .unit {
+  padding-top: 0;
+}
+/* line 34, ../sass/_gridism.scss */
+.bb .unit .grid:last-child > .unit {
+  padding-bottom: 0;
+}
+/* line 38, ../sass/_gridism.scss */
+.bb .no-gutters .unit,
+.bb .unit.no-gutters {
+  padding: 0 !important;
+}
+/* line 44, ../sass/_gridism.scss */
+.bb .wrap .grid,
+.bb .grid.wrap {
+  max-width: 978px;
+  margin: 0 auto;
+}
+/* line 52, ../sass/_gridism.scss */
+.bb .grid .whole, .bb .grid .w-1-1 {
+  width: 100%;
+}
+/* line 53, ../sass/_gridism.scss */
+.bb .grid .half, .bb .grid .w-1-2 {
+  width: 50%;
+}
+/* line 54, ../sass/_gridism.scss */
+.bb .grid .one-third, .bb .grid .w-1-3 {
+  width: 33.3332%;
+}
+/* line 55, ../sass/_gridism.scss */
+.bb .grid .two-thirds, .bb .grid .w-2-3 {
+  width: 66.6665%;
+}
+/* line 56, ../sass/_gridism.scss */
+.bb .grid .one-quarter, .bb .grid .w-1-4 {
+  width: 25%;
+}
+/* line 57, ../sass/_gridism.scss */
+.bb .grid .three-quarters, .bb .grid .w-3-4 {
+  width: 75%;
+}
+/* line 58, ../sass/_gridism.scss */
+.bb .grid .one-fifth, .bb .grid .w-1-5 {
+  width: 20%;
+}
+/* line 59, ../sass/_gridism.scss */
+.bb .grid .two-fifths, .bb .grid .w-2-5 {
+  width: 40%;
+}
+/* line 60, ../sass/_gridism.scss */
+.bb .grid .three-fifths, .bb .grid .w-3-5 {
+  width: 60%;
+}
+/* line 61, ../sass/_gridism.scss */
+.bb .grid .four-fifths, .bb .grid .w-4-5 {
+  width: 80%;
+}
+/* line 62, ../sass/_gridism.scss */
+.bb .grid .golden-small, .bb .grid .w-g-s {
+  width: 38.2716%;
+}
+/* line 63, ../sass/_gridism.scss */
+.bb .grid .golden-large, .bb .grid .w-g-l {
+  width: 61.7283%;
+}
+/* line 66, ../sass/_gridism.scss */
+.bb .grid {
+  *zoom: 1;
+}
+/* line 69, ../sass/_gridism.scss */
+.bb .grid:before, .bb .grid:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 74, ../sass/_gridism.scss */
+.bb .grid:after {
+  clear: both;
+}
+/* line 80, ../sass/_gridism.scss */
+.bb .align-center {
+  text-align: center;
+}
+/* line 81, ../sass/_gridism.scss */
+.bb .align-left {
+  text-align: left;
+}
+/* line 82, ../sass/_gridism.scss */
+.bb .align-right {
+  text-align: right;
+}
+/* line 83, ../sass/_gridism.scss */
+.bb .pull-left {
+  float: left;
+}
+/* line 84, ../sass/_gridism.scss */
+.bb .pull-right {
+  float: right;
+}
+@media screen and (max-width: 1024px) {
+  /* line 23, ../sass/style.scss */
+  .bb {
+    /* Stack anything that isn’t full-width on smaller screens */
+  }
+  /* line 89, ../sass/_gridism.scss */
+  .bb .grid .unit {
+    padding: 1em 1em 0 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  /* line 23, ../sass/style.scss */
+  .bb {
+    /* Stack anything that isn’t full-width on smaller screens */
+    /* Sometimes, you just want to be different on small screens */
+  }
+  /* line 97, ../sass/_gridism.scss */
+  .bb .grid .unit {
+    width: 100% !important;
+    padding: 0.5em 0.5em 0 0.5em;
+  }
+  /* line 101, ../sass/_gridism.scss */
+  .bb .unit .grid .unit {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  /* line 105, ../sass/_gridism.scss */
+  .bb .grid .unit:first-child {
+    padding-left: 0.5em;
+  }
+  /* line 106, ../sass/_gridism.scss */
+  .bb .grid .unit:last-child {
+    padding-right: 0.5em;
+  }
+  /* line 109, ../sass/_gridism.scss */
+  .bb .center-on-mobiles {
+    text-align: center !important;
+  }
+  /* line 112, ../sass/_gridism.scss */
+  .bb .hide-on-mobiles {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 1180px) {
+  /* line 119, ../sass/_gridism.scss */
+  .bb .wider .grid {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+}
