@@ -53,7 +53,7 @@ class getAccountList extends modProcessor {
         }
         //$this->ga->updateOption('total_account', $result['totalResults']);
         $this->ga->updateOption('total_account', $total);
-        return $this->successBB( $output );
+        return $this->success( '', $output );
     }
 
     /**
@@ -86,7 +86,7 @@ class getAccountList extends modProcessor {
      * @param array $output
      * @return string
      */
-    public function successBB( $output ){
+    public function success( $msg = '', $output = null ){
         $response = array(
             'success' => true,
             'results' => $output,
