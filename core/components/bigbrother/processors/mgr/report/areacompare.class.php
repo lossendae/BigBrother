@@ -28,7 +28,7 @@ class getSeriesForComparisonAreaChart extends modProcessor {
         $cacheKey = md5($this->ga->cacheKey /*. $beforeDate*/);
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->successBB($fromCache, true);
+            return $this->success('Fetched data from cache', $fromCache);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
@@ -46,7 +46,7 @@ class getSeriesForComparisonAreaChart extends modProcessor {
         $this->addSerie();
 
         $this->modx->cacheManager->set($cacheKey, $this->series, $this->ga->getOption('cache_timeout'));
-        return $this->successBB( $this->series );
+        return $this->success('Fetched data from Google', $this->series);
     }
 
     /**
@@ -85,7 +85,7 @@ class getSeriesForComparisonAreaChart extends modProcessor {
      * @param boolean $fromCache
      * @return string
      */
-    public function successBB( $series, $fromCache = false ){
+    public function success( $msg = '', $series = null, $fromCache = false ){
         $response = array(
             'success' => true,
             'series' => $series,
