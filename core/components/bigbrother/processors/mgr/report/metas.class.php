@@ -30,7 +30,7 @@ class getMetas extends modProcessor {
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->successBB($fromCache, true);
+            return $this->success('Fetched data from cache', $fromCache, true);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
@@ -46,7 +46,7 @@ class getMetas extends modProcessor {
         }
         $this->compareData();
         $this->modx->cacheManager->set($cacheKey, $this->output, $this->ga->getOption('cache_timeout'));
-        return $this->successBB( $this->output );
+        return $this->success( 'Fetched data from Google', $this->output );
     }
 
     /**
@@ -116,7 +116,7 @@ class getMetas extends modProcessor {
      * @param boolean $fromCache
      * @return string
      */
-    public function successBB( $output, $fromCache = false ){
+    public function success( $msg = '', $output = null, $fromCache = false ){
         $response = array_merge(array(
             'success' => true,
             'fromCache' => $fromCache,

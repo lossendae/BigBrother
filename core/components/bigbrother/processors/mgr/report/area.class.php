@@ -28,7 +28,7 @@ class getAreaSerieProcessor extends modProcessor {
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->successBB($fromCache, true);
+            return $this->success('Fetched data from cache', $fromCache, true);
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
@@ -39,7 +39,7 @@ class getAreaSerieProcessor extends modProcessor {
         $this->addSerie();
 
         $this->modx->cacheManager->set($cacheKey, $this->series, $this->ga->getOption('cache_timeout'));
-        return $this->successBB( $this->series );
+        return $this->success( 'Fetched data from Google', $this->series );
     }
 
     /**
@@ -71,7 +71,7 @@ class getAreaSerieProcessor extends modProcessor {
      * @param boolean $fromCache
      * @return string
      */
-    public function successBB( $series, $fromCache = false ){
+    public function success( $msg = '', $series = null, $fromCache = false ){
         $response = array(
             'success' => true,
             'series' => $series,

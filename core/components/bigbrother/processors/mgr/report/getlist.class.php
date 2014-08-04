@@ -40,7 +40,7 @@ class getDataForGrid extends modProcessor {
         $cacheKey = $this->ga->cacheKey;
         $fromCache = $this->modx->cacheManager->get($cacheKey);
         if( !empty($fromCache) ){
-            return $this->successBB( $fromCache, true );
+            return $this->success( 'Fetched data from cache', $fromCache, true );
         }
         if( !$this->ga->loadOAuth() ){
             return $this->failure('Could not load the OAuth file.');
@@ -51,7 +51,7 @@ class getDataForGrid extends modProcessor {
         $this->visits = $this->ga->getTotalVisits($date['begin'], $date['end']);
         $response = $this->iterate();
         $this->modx->cacheManager->set($cacheKey, $response, $this->ga->getOption('cache_timeout'));
-        return $this->successBB( $response );
+        return $this->success( 'Fetched data from Google', $response );
     }
 
     /**
@@ -78,7 +78,7 @@ class getDataForGrid extends modProcessor {
      * @param array $output
      * @return string
      */
-    public function successBB( $output, $fromCache = false ){
+    public function success( $msg = '', $output = null, $fromCache = false ){
         $response = array_merge( array(
             'success' => true,
             'fromCache' => $fromCache,
